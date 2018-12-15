@@ -341,6 +341,21 @@
             <encoding>${project.build.sourceEncoding}</encoding>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.mybatis.generator</groupId>
+          <artifactId>mybatis-generator-maven-plugin</artifactId>
+          <version>${mybatis.generator.plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>mysql</groupId>
+              <artifactId>mysql-connector-java</artifactId>
+              <version>${mysql.version}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <overwrite>true</overwrite>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
