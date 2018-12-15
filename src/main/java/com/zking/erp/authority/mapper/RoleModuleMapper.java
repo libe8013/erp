@@ -1,6 +1,4 @@
-package com.zking.erp.statistics.mapper;
-
-import com.zking.erp.statistics.model.RoleModule;
+package com.zking.erp.authority.mapper;
 
 public interface RoleModuleMapper {
     int insert(RoleModule record);

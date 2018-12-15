@@ -1,6 +1,4 @@
-package com.zking.erp.statistics.mapper;
-
-import com.zking.erp.statistics.model.Module;
+package com.zking.erp.authority.mapper;
 
 public interface ModuleMapper {
     int deleteByPrimaryKey(String id);

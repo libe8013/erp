@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1.注解式开发-->
+    <!--2.导入外部jdbc.properties数据库连接配置文件-->
+    <!--3.注册dbcp2连接池-->
+    <!--4.mybatis与spring集成-->
+    <!--5.开启注解式事务-->
+    <!--6.开启动态代理-->
+
+</beans>

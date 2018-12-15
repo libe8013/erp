@@ -1,4 +1,4 @@
-package com.zking.erp.statistics.model;
+package com.zking.erp.authority.model;
 
 import java.io.Serializable;
 

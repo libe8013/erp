@@ -1,6 +1,4 @@
-package com.zking.erp.statistics.mapper;
-
-import com.zking.erp.statistics.model.EmpRole;
+package com.zking.erp.authority.mapper;
 
 public interface EmpRoleMapper {
     int insert(EmpRole record);
