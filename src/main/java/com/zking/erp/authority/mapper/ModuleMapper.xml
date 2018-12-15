@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zking.erp.statistics.mapper.ModuleMapper" >
-  <resultMap id="BaseResultMap" type="com.zking.erp.statistics.model.Module" >
+<mapper namespace="com.zking.erp.authority.mapper.ModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.authority.model.Module" >
     <constructor >
       <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="text" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -24,13 +24,13 @@
     delete from t_module
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.zking.erp.statistics.model.Module" >
+  <insert id="insert" parameterType="com.zking.erp.authority.model.Module" >
     insert into t_module (id, text, url, 
       icon, sort, pid)
     values (#{id,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
       #{icon,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zking.erp.statistics.model.Module" >
+  <insert id="insertSelective" parameterType="com.zking.erp.authority.model.Module" >
     insert into t_module
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.statistics.model.Module" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.authority.model.Module" >
     update t_module
     <set >
       <if test="text != null" >
@@ -94,7 +94,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zking.erp.statistics.model.Module" >
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.authority.model.Module" >
     update t_module
     set text = #{text,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},

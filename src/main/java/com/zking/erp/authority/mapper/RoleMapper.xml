@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zking.erp.statistics.mapper.RoleMapper" >
-  <resultMap id="BaseResultMap" type="com.zking.erp.statistics.model.Role" >
+<mapper namespace="com.zking.erp.authority.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.authority.model.Role" >
     <constructor >
       <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="rolename" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -21,13 +21,13 @@
     delete from t_role
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.zking.erp.statistics.model.Role" >
+  <insert id="insert" parameterType="com.zking.erp.authority.model.Role" >
     insert into t_role (id, rolename, remark
       )
     values (#{id,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zking.erp.statistics.model.Role" >
+  <insert id="insertSelective" parameterType="com.zking.erp.authority.model.Role" >
     insert into t_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.statistics.model.Role" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.authority.model.Role" >
     update t_role
     <set >
       <if test="rolename != null" >
@@ -64,7 +64,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zking.erp.statistics.model.Role" >
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.authority.model.Role" >
     update t_role
     set rolename = #{rolename,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}

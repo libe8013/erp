@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zking.erp.statistics.mapper.RoleModuleMapper" >
-  <resultMap id="BaseResultMap" type="com.zking.erp.statistics.model.RoleModule" >
+<mapper namespace="com.zking.erp.authority.mapper.RoleModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.authority.model.RoleModule" >
     <constructor >
       <arg column="roleid" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="moduleid" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
-  <insert id="insert" parameterType="com.zking.erp.statistics.model.RoleModule" >
+  <insert id="insert" parameterType="com.zking.erp.authority.model.RoleModule" >
     insert into t_role_module (roleid, moduleid)
     values (#{roleid,jdbcType=VARCHAR}, #{moduleid,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zking.erp.statistics.model.RoleModule" >
+  <insert id="insertSelective" parameterType="com.zking.erp.authority.model.RoleModule" >
     insert into t_role_module
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleid != null" >

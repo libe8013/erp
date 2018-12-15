@@ -1,5 +1,7 @@
 package com.zking.erp.authority.mapper;
 
+import com.zking.erp.authority.model.Role;
+
 public interface RoleMapper {
     int deleteByPrimaryKey(String id);
 
