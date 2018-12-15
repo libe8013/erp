@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.purchase.mapper.ReturnOrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.purchase.model.ReturnOrders" >
+    <constructor >
+      <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATETIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CHECKTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ENDTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATER" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="CHECKER" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ENDER" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="SUPPLIERUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="TOTALMONEY" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="WAYBILLSN" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ORDERSUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UUID, CREATETIME, CHECKTIME, ENDTIME, TYPE, CREATER, CHECKER, ENDER, SUPPLIERUUID, 
+    TOTALMONEY, STATE, WAYBILLSN, ORDERSUUID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from returnorders
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from returnorders
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+    insert into returnorders (UUID, CREATETIME, CHECKTIME, 
+      ENDTIME, TYPE, CREATER, 
+      CHECKER, ENDER, SUPPLIERUUID, 
+      TOTALMONEY, STATE, WAYBILLSN, 
+      ORDERSUUID)
+    values (#{uuid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{checktime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{creater,jdbcType=INTEGER}, 
+      #{checker,jdbcType=INTEGER}, #{ender,jdbcType=INTEGER}, #{supplieruuid,jdbcType=INTEGER}, 
+      #{totalmoney,jdbcType=REAL}, #{state,jdbcType=VARCHAR}, #{waybillsn,jdbcType=INTEGER}, 
+      #{ordersuuid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+    insert into returnorders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="checktime != null" >
+        CHECKTIME,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="checker != null" >
+        CHECKER,
+      </if>
+      <if test="ender != null" >
+        ENDER,
+      </if>
+      <if test="supplieruuid != null" >
+        SUPPLIERUUID,
+      </if>
+      <if test="totalmoney != null" >
+        TOTALMONEY,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="waybillsn != null" >
+        WAYBILLSN,
+      </if>
+      <if test="ordersuuid != null" >
+        ORDERSUUID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checktime != null" >
+        #{checktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=INTEGER},
+      </if>
+      <if test="checker != null" >
+        #{checker,jdbcType=INTEGER},
+      </if>
+      <if test="ender != null" >
+        #{ender,jdbcType=INTEGER},
+      </if>
+      <if test="supplieruuid != null" >
+        #{supplieruuid,jdbcType=INTEGER},
+      </if>
+      <if test="totalmoney != null" >
+        #{totalmoney,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillsn != null" >
+        #{waybillsn,jdbcType=INTEGER},
+      </if>
+      <if test="ordersuuid != null" >
+        #{ordersuuid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+    update returnorders
+    <set >
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checktime != null" >
+        CHECKTIME = #{checktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=INTEGER},
+      </if>
+      <if test="checker != null" >
+        CHECKER = #{checker,jdbcType=INTEGER},
+      </if>
+      <if test="ender != null" >
+        ENDER = #{ender,jdbcType=INTEGER},
+      </if>
+      <if test="supplieruuid != null" >
+        SUPPLIERUUID = #{supplieruuid,jdbcType=INTEGER},
+      </if>
+      <if test="totalmoney != null" >
+        TOTALMONEY = #{totalmoney,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillsn != null" >
+        WAYBILLSN = #{waybillsn,jdbcType=INTEGER},
+      </if>
+      <if test="ordersuuid != null" >
+        ORDERSUUID = #{ordersuuid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+    update returnorders
+    set CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CHECKTIME = #{checktime,jdbcType=TIMESTAMP},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CREATER = #{creater,jdbcType=INTEGER},
+      CHECKER = #{checker,jdbcType=INTEGER},
+      ENDER = #{ender,jdbcType=INTEGER},
+      SUPPLIERUUID = #{supplieruuid,jdbcType=INTEGER},
+      TOTALMONEY = #{totalmoney,jdbcType=REAL},
+      STATE = #{state,jdbcType=VARCHAR},
+      WAYBILLSN = #{waybillsn,jdbcType=INTEGER},
+      ORDERSUUID = #{ordersuuid,jdbcType=INTEGER}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.basic.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.basic.model.Goods" >
+    <constructor >
+      <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ORIGIN" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PRODUCER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UNIT" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="INPRICE" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="OUTPRICE" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="GOODSTYPEUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UUID, NAME, ORIGIN, PRODUCER, UNIT, INPRICE, OUTPRICE, GOODSTYPEUUID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from goods
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zking.erp.basic.model.Goods" >
+    insert into goods (UUID, NAME, ORIGIN, 
+      PRODUCER, UNIT, INPRICE, 
+      OUTPRICE, GOODSTYPEUUID)
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
+      #{producer,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{inprice,jdbcType=REAL}, 
+      #{outprice,jdbcType=REAL}, #{goodstypeuuid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.erp.basic.model.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="origin != null" >
+        ORIGIN,
+      </if>
+      <if test="producer != null" >
+        PRODUCER,
+      </if>
+      <if test="unit != null" >
+        UNIT,
+      </if>
+      <if test="inprice != null" >
+        INPRICE,
+      </if>
+      <if test="outprice != null" >
+        OUTPRICE,
+      </if>
+      <if test="goodstypeuuid != null" >
+        GOODSTYPEUUID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="producer != null" >
+        #{producer,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="inprice != null" >
+        #{inprice,jdbcType=REAL},
+      </if>
+      <if test="outprice != null" >
+        #{outprice,jdbcType=REAL},
+      </if>
+      <if test="goodstypeuuid != null" >
+        #{goodstypeuuid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.basic.model.Goods" >
+    update goods
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        ORIGIN = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="producer != null" >
+        PRODUCER = #{producer,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="inprice != null" >
+        INPRICE = #{inprice,jdbcType=REAL},
+      </if>
+      <if test="outprice != null" >
+        OUTPRICE = #{outprice,jdbcType=REAL},
+      </if>
+      <if test="goodstypeuuid != null" >
+        GOODSTYPEUUID = #{goodstypeuuid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.basic.model.Goods" >
+    update goods
+    set NAME = #{name,jdbcType=VARCHAR},
+      ORIGIN = #{origin,jdbcType=VARCHAR},
+      PRODUCER = #{producer,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      INPRICE = #{inprice,jdbcType=REAL},
+      OUTPRICE = #{outprice,jdbcType=REAL},
+      GOODSTYPEUUID = #{goodstypeuuid,jdbcType=INTEGER}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

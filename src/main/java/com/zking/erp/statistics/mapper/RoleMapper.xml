@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.statistics.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.statistics.model.Role" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="rolename" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, rolename, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zking.erp.statistics.model.Role" >
+    insert into t_role (id, rolename, remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.erp.statistics.model.Role" >
+    insert into t_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rolename != null" >
+        rolename,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null" >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.statistics.model.Role" >
+    update t_role
+    <set >
+      <if test="rolename != null" >
+        rolename = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.statistics.model.Role" >
+    update t_role
+    set rolename = #{rolename,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

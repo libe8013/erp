@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.stock.mapper.InventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.stock.model.Inventory" >
+    <constructor >
+      <arg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="GOODSUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="STOREUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATETIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CHECKTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CREATER" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="CHECKER" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.erp.stock.model.Inventory" >
+    insert into inventory (UUID, GOODSUUID, STOREUUID, 
+      NUM, TYPE, CREATETIME, 
+      CHECKTIME, CREATER, CHECKER, 
+      STATE, REMARK)
+    values (#{uuid,jdbcType=VARCHAR}, #{goodsuuid,jdbcType=INTEGER}, #{storeuuid,jdbcType=INTEGER}, 
+      #{num,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{checktime,jdbcType=TIMESTAMP}, #{creater,jdbcType=INTEGER}, #{checker,jdbcType=INTEGER}, 
+      #{state,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.erp.stock.model.Inventory" >
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="goodsuuid != null" >
+        GOODSUUID,
+      </if>
+      <if test="storeuuid != null" >
+        STOREUUID,
+      </if>
+      <if test="num != null" >
+        NUM,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="checktime != null" >
+        CHECKTIME,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="checker != null" >
+        CHECKER,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsuuid != null" >
+        #{goodsuuid,jdbcType=INTEGER},
+      </if>
+      <if test="storeuuid != null" >
+        #{storeuuid,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checktime != null" >
+        #{checktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=INTEGER},
+      </if>
+      <if test="checker != null" >
+        #{checker,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

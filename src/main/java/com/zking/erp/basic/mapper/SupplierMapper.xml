@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.basic.mapper.SupplierMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.basic.model.Supplier" >
+    <constructor >
+      <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CONTACT" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TELE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UUID, NAME, ADDRESS, CONTACT, TELE, EMAIL, TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from supplier
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from supplier
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zking.erp.basic.model.Supplier" >
+    insert into supplier (UUID, NAME, ADDRESS, 
+      CONTACT, TELE, EMAIL, 
+      TYPE)
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{contact,jdbcType=VARCHAR}, #{tele,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.erp.basic.model.Supplier" >
+    insert into supplier
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="contact != null" >
+        CONTACT,
+      </if>
+      <if test="tele != null" >
+        TELE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null" >
+        #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.basic.model.Supplier" >
+    update supplier
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        CONTACT = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null" >
+        TELE = #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.basic.model.Supplier" >
+    update supplier
+    set NAME = #{name,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      CONTACT = #{contact,jdbcType=VARCHAR},
+      TELE = #{tele,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>
