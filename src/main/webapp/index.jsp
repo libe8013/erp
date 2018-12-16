@@ -12,9 +12,10 @@
     <title>layout</title>
     <%@ include file="/common/head.jsp"%>
     <link rel="stylesheet" href="/erp/css/index.css">
-    <script src="/erp/js/common/index.js"></script>
+    <script src="/erp/base/js/common/index.js"></script>
 </head>
 <body class="layui-layout-body">
+<input type="hidden" value="${ctx}" id="absolutePath"/>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">layui 后台布局</div>
@@ -24,7 +25,7 @@
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;">
+                <a href="javascript:void(0)">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                     贤心
                 </a>
@@ -64,9 +65,15 @@
         </div>
     </div>
 
+
     <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
+        <div class="layui-tab" lay-filter="demo" style="width: 100%;height: 100%;">
+            <ul class="layui-tab-title">
+            </ul>
+            <!-- 内容主体区域 -->
+            <div class="layui-tab-content clildFrame">
+            </div>
+        </div>
     </div>
 
     <div class="layui-footer">
