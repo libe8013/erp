@@ -20,6 +20,19 @@
     from t_module
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="queryModuleLike" resultType="com.zking.erp.authority.model.Module"
+          parameterType="com.zking.erp.authority.model.Module">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from t_module
+    where 1=1
+    <if test="null!=pid">
+      and pid like #{pid}
+    </if>
+    <if test="null!=id">
+      and id like #{id}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_module
     where id = #{id,jdbcType=VARCHAR}

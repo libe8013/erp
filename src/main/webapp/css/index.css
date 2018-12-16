@@ -36,3 +36,5 @@
 .layui-tree-skin-sidebar li a.active{
     background: #009688;
 }
+.clildFrame.layui-tab-content{ padding-right: 0; }
+.clildFrame.layui-tab-content iframe{ width: 100%; height:100%; border:none; min-width: 320px; position:absolute; }

@@ -1,12 +1,10 @@
-package com.zking.erp.authority.mapper;
+package com.zking.erp.authority.service;
 
 import com.zking.erp.authority.model.Module;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface ModuleMapper {
+public interface IModuleService {
     int deleteByPrimaryKey(String id);
 
     int insert(Module record);
