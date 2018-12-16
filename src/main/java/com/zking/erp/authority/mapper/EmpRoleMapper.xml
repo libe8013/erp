@@ -30,4 +30,13 @@
       </if>
     </trim>
   </insert>
+  <update id="updateEmpRole" parameterType="com.zking.erp.authority.model.EmpRole">
+    update t_emp_role
+    SET roleid = #{roleid}
+    WHERE userid = #{userid}
+  </update>
+  <delete id="deleteEmpOrRole" parameterType="com.zking.erp.authority.model.EmpRole">
+    delete FROM t_emp_role
+    where userid = #{userid}
+  </delete>
 </mapper>

@@ -18,6 +18,17 @@
     from storedetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryStoreLikePage" resultType="map" parameterType="com.zking.erp.stock.vo.StoredetailVo">
+    SELECT
+    g.name as gname,s.name as sname,st.num FROM goods g,store s,storedetail st
+    WHERE 1=1
+    <if test="null!=goods.name and ''!=goods.name">
+      and g.name like #{goods.name}
+    </if>
+    <if test="null!=store.name and ''!=store.name">
+      and s.name LIKE #{store.name}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from storedetail
     where UUID = #{uuid,jdbcType=VARCHAR}

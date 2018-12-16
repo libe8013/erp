@@ -24,6 +24,21 @@
     from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryEmpPage" resultType="map" parameterType="com.zking.erp.personnel.vo.EmpVo">
+    SELECT e.`USERNAME`,e.`PWD`,e.`NAME`,e.`GENDER`,e.`EMAIL`,
+    e.`TELE`,e.`ADDRESS`,e.`BIRTHDAY`,e.`DEPUUID`,r.`rolename`,r.`remark`
+    FROM emp e,t_role r,t_emp_role er
+    WHERE e.`UUID`=er.`userid` AND r.`id`=er.`roleid`
+    <if test="null!=username and ''!=username">
+      and e.username like #{username}
+    </if>
+    <if test="null!=email and ''!=email">
+      and e.email like #{email}
+    </if>
+    <if test="null!=role.rolename and ''!=role.rolename">
+      and r.rolename like #{role.rolename}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -35,7 +50,7 @@
       DEPUUID)
     values (#{uuid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
-      #{tele,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{tele,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
       #{depuuid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zking.erp.personnel.model.Emp" >
