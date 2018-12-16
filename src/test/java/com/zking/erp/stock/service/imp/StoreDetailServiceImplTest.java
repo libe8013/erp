@@ -32,7 +32,7 @@ public class StoreDetailServiceImplTest extends BaseTestCase {
         store.setName("二%");
         storedetailVo.setGoods(goods);
         storedetailVo.setStore(store);
-        List<Map<String, Object>> maps = storeDetailService.queryStoreLike(storedetailVo);
+        List<Map<String, Object>> maps = storeDetailService.queryStoreLikePage(storedetailVo);
         for (Map<String, Object> map : maps) {
             System.out.println(map);
         }
