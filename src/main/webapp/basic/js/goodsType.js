@@ -1,10 +1,10 @@
 layui.use(['table','form'],function () {
-    initTable();
-    queryGoodsType();
+    var table = layui.table;
+    initTable(table);
+    queryGoodsType(table);
 });
 
-function initTable(){
-    var table = layui.table;
+function initTable(table){
     table.render({
         elem : '#goodsTypeTab',
         height: 312,
@@ -19,7 +19,7 @@ function initTable(){
     });
 }
 
-function queryGoodsType() {
-    var table = $('#goodsTypeTab');
-    console.log(table.option);
+function queryGoodsType(table) {
+    var tableObject = table.render({});
+    console.log(tableObject.options);
 }

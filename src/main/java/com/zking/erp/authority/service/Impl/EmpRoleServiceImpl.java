@@ -1,4 +1,4 @@
-package com.zking.erp.authority.service.imp;
+package com.zking.erp.authority.service.Impl;
 
 import com.zking.erp.authority.mapper.EmpRoleMapper;
 import com.zking.erp.authority.model.EmpRole;
