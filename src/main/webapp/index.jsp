@@ -12,7 +12,7 @@
     <title>layout</title>
     <%@ include file="/common/head.jsp"%>
     <link rel="stylesheet" href="/erp/css/index.css">
-    <script src="/erp/js/common/index.js"></script>
+    <script src="/erp/base/js/common/index.js"></script>
 </head>
 <body class="layui-layout-body">
 <input type="hidden" value="${ctx}" id="absolutePath"/>

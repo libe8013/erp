@@ -1,12 +1,10 @@
-package com.zking.erp.basic.mapper;
+package com.zking.erp.basic.service;
 
 import com.zking.erp.basic.model.GoodsType;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface GoodsTypeMapper {
+public interface IGoodsTypeService {
     int deleteByPrimaryKey(String uuid);
 
     int insert(GoodsType record);
