@@ -16,7 +16,7 @@ function initTable(table){
             height: 312,
             toolbar : '#toolbarTop',
             id : 'goodsType',
-            url: '/erp/goodsType/queryGoodsTypePager', //数据接口
+            url: '', //数据接口
             page: true, //开启分页
             cols: [[ //表头
                 {type:'checkbox', fixed: 'left',width:'4%'},
@@ -33,8 +33,10 @@ function queryGoodsType(table) {
     table.reload("goodsType", { //此处是上文提到的 初始化标识id
         where: {
             //key: { //该写法上文已经提到
-            url: ''
+            url: '/erp/goodsType/queryGoodsTypePager'
             //}
         }
     });
+    var render = table.render({});
+    console.log(render);
 }

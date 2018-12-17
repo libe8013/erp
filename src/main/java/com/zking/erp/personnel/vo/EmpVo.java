@@ -2,6 +2,7 @@ package com.zking.erp.personnel.vo;
 
 import com.zking.erp.authority.model.EmpRole;
 import com.zking.erp.authority.model.Role;
+import com.zking.erp.personnel.model.Emp;
 
 public class EmpVo extends Emp {
 
