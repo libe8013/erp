@@ -4,25 +4,43 @@
   <resultMap id="BaseResultMap" type="com.zking.erp.market.model.OrderDetail" >
     <constructor >
       <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="GOODSUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="GOODSNAME" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="PRICE" jdbcType="REAL" javaType="java.lang.Float" />
       <arg column="NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="MONEY" jdbcType="REAL" javaType="java.lang.Float" />
       <arg column="ENDTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="ENDER" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="STOREUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ENDER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STOREUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="ORDERSUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ORDERSUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zking.erp.market.model.OrderDetail" >
+    <constructor >
+      <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="GOODSNAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PRICE" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="MONEY" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="ENDTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ENDER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STOREUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ORDERSUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="GOODSUUID" jdbcType="VARBINARY" javaType="_byte[]" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    UUID, GOODSUUID, GOODSNAME, PRICE, NUM, MONEY, ENDTIME, ENDER, STOREUUID, STATE, 
-    ORDERSUUID
+    UUID, GOODSNAME, PRICE, NUM, MONEY, ENDTIME, ENDER, STOREUUID, STATE, ORDERSUUID
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <sql id="Blob_Column_List" >
+    GOODSUUID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from orderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
@@ -31,23 +49,20 @@
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zking.erp.market.model.OrderDetail" >
-    insert into orderdetail (UUID, GOODSUUID, GOODSNAME, 
-      PRICE, NUM, MONEY, ENDTIME, 
+    insert into orderdetail (UUID, GOODSNAME, PRICE, 
+      NUM, MONEY, ENDTIME, 
       ENDER, STOREUUID, STATE, 
-      ORDERSUUID)
-    values (#{uuid,jdbcType=VARCHAR}, #{goodsuuid,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, 
-      #{price,jdbcType=REAL}, #{num,jdbcType=INTEGER}, #{money,jdbcType=REAL}, #{endtime,jdbcType=TIMESTAMP}, 
-      #{ender,jdbcType=INTEGER}, #{storeuuid,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
-      #{ordersuuid,jdbcType=INTEGER})
+      ORDERSUUID, GOODSUUID)
+    values (#{uuid,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{num,jdbcType=INTEGER}, #{money,jdbcType=REAL}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{ender,jdbcType=VARCHAR}, #{storeuuid,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{ordersuuid,jdbcType=VARCHAR}, #{goodsuuid,jdbcType=VARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.zking.erp.market.model.OrderDetail" >
     insert into orderdetail
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
         UUID,
-      </if>
-      <if test="goodsuuid != null" >
-        GOODSUUID,
       </if>
       <if test="goodsname != null" >
         GOODSNAME,
@@ -76,13 +91,13 @@
       <if test="ordersuuid != null" >
         ORDERSUUID,
       </if>
+      <if test="goodsuuid != null" >
+        GOODSUUID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
         #{uuid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsuuid != null" >
-        #{goodsuuid,jdbcType=INTEGER},
       </if>
       <if test="goodsname != null" >
         #{goodsname,jdbcType=VARCHAR},
@@ -100,25 +115,25 @@
         #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="ender != null" >
-        #{ender,jdbcType=INTEGER},
+        #{ender,jdbcType=VARCHAR},
       </if>
       <if test="storeuuid != null" >
-        #{storeuuid,jdbcType=INTEGER},
+        #{storeuuid,jdbcType=VARCHAR},
       </if>
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},
       </if>
       <if test="ordersuuid != null" >
-        #{ordersuuid,jdbcType=INTEGER},
+        #{ordersuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsuuid != null" >
+        #{goodsuuid,jdbcType=VARBINARY},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.market.model.OrderDetail" >
     update orderdetail
     <set >
-      <if test="goodsuuid != null" >
-        GOODSUUID = #{goodsuuid,jdbcType=INTEGER},
-      </if>
       <if test="goodsname != null" >
         GOODSNAME = #{goodsname,jdbcType=VARCHAR},
       </if>
@@ -135,32 +150,48 @@
         ENDTIME = #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="ender != null" >
-        ENDER = #{ender,jdbcType=INTEGER},
+        ENDER = #{ender,jdbcType=VARCHAR},
       </if>
       <if test="storeuuid != null" >
-        STOREUUID = #{storeuuid,jdbcType=INTEGER},
+        STOREUUID = #{storeuuid,jdbcType=VARCHAR},
       </if>
       <if test="state != null" >
         STATE = #{state,jdbcType=VARCHAR},
       </if>
       <if test="ordersuuid != null" >
-        ORDERSUUID = #{ordersuuid,jdbcType=INTEGER},
+        ORDERSUUID = #{ordersuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsuuid != null" >
+        GOODSUUID = #{goodsuuid,jdbcType=VARBINARY},
       </if>
     </set>
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zking.erp.market.model.OrderDetail" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zking.erp.market.model.OrderDetail" >
     update orderdetail
-    set GOODSUUID = #{goodsuuid,jdbcType=INTEGER},
-      GOODSNAME = #{goodsname,jdbcType=VARCHAR},
+    set GOODSNAME = #{goodsname,jdbcType=VARCHAR},
       PRICE = #{price,jdbcType=REAL},
       NUM = #{num,jdbcType=INTEGER},
       MONEY = #{money,jdbcType=REAL},
       ENDTIME = #{endtime,jdbcType=TIMESTAMP},
-      ENDER = #{ender,jdbcType=INTEGER},
-      STOREUUID = #{storeuuid,jdbcType=INTEGER},
+      ENDER = #{ender,jdbcType=VARCHAR},
+      STOREUUID = #{storeuuid,jdbcType=VARCHAR},
       STATE = #{state,jdbcType=VARCHAR},
-      ORDERSUUID = #{ordersuuid,jdbcType=INTEGER}
+      ORDERSUUID = #{ordersuuid,jdbcType=VARCHAR},
+      GOODSUUID = #{goodsuuid,jdbcType=VARBINARY}
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.market.model.OrderDetail" >
+    update orderdetail
+    set GOODSNAME = #{goodsname,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=REAL},
+      NUM = #{num,jdbcType=INTEGER},
+      MONEY = #{money,jdbcType=REAL},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      ENDER = #{ender,jdbcType=VARCHAR},
+      STOREUUID = #{storeuuid,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      ORDERSUUID = #{ordersuuid,jdbcType=VARCHAR}
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

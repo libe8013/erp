@@ -1,6 +1,5 @@
 package com.zking.erp.personnel.service;
 
-import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.personnel.vo.EmpVo;
 
 import java.util.List;

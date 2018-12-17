@@ -1,9 +1,11 @@
 package com.zking.erp.basic.service.Impl;
 
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.mapper.GoodsTypeMapper;
 import com.zking.erp.basic.model.GoodsType;
 import com.zking.erp.basic.service.IGoodsTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,7 +47,7 @@ public class GoodsTypeServiceImpl implements IGoodsTypeService {
     }
 
     @Override
-    public List<GoodsType> queryGoodsType(GoodsType goodsType) {
+    public List<GoodsType> queryGoodsTypePager(GoodsType goodsType, PageBean pageBean) {
         return goodsTypeMapper.queryGoodsType(goodsType);
     }
 }

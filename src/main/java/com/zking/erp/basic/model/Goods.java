@@ -17,9 +17,9 @@ public class Goods implements Serializable {
 
     private Float outprice;
 
-    private Integer goodstypeuuid;
+    private String goodstypeuuid;
 
-    public Goods(String uuid, String name, String origin, String producer, String unit, Float inprice, Float outprice, Integer goodstypeuuid) {
+    public Goods(String uuid, String name, String origin, String producer, String unit, Float inprice, Float outprice, String goodstypeuuid) {
         this.uuid = uuid;
         this.name = name;
         this.origin = origin;
@@ -90,11 +90,11 @@ public class Goods implements Serializable {
         this.outprice = outprice;
     }
 
-    public Integer getGoodstypeuuid() {
+    public String getGoodstypeuuid() {
         return goodstypeuuid;
     }
 
-    public void setGoodstypeuuid(Integer goodstypeuuid) {
+    public void setGoodstypeuuid(String goodstypeuuid) {
         this.goodstypeuuid = goodstypeuuid;
     }
 }

@@ -7,9 +7,9 @@ public class Store implements Serializable {
 
     private String name;
 
-    private Integer empuuid;
+    private String empuuid;
 
-    public Store(String uuid, String name, Integer empuuid) {
+    public Store(String uuid, String name, String empuuid) {
         this.uuid = uuid;
         this.name = name;
         this.empuuid = empuuid;
@@ -35,11 +35,11 @@ public class Store implements Serializable {
         this.name = name;
     }
 
-    public Integer getEmpuuid() {
+    public String getEmpuuid() {
         return empuuid;
     }
 
-    public void setEmpuuid(Integer empuuid) {
+    public void setEmpuuid(String empuuid) {
         this.empuuid = empuuid;
     }
 }

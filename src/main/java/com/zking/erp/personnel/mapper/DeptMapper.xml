@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zking.erp.personnel.mapper.DepMapper" >
-  <resultMap id="BaseResultMap" type="com.zking.erp.personnel.model.Dep" >
+<mapper namespace="com.zking.erp.personnel.mapper.DeptMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.personnel.model.Dept" >
     <constructor >
       <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -21,13 +21,13 @@
     delete from dep
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.zking.erp.personnel.model.Dep" >
+  <insert id="insert" parameterType="com.zking.erp.personnel.model.Dept" >
     insert into dep (UUID, NAME, TELE
       )
     values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{tele,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zking.erp.personnel.model.Dep" >
+  <insert id="insertSelective" parameterType="com.zking.erp.personnel.model.Dept" >
     insert into dep
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.Dep" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.Dept" >
     update dep
     <set >
       <if test="name != null" >
@@ -64,7 +64,7 @@
     </set>
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zking.erp.personnel.model.Dep" >
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.personnel.model.Dept" >
     update dep
     set NAME = #{name,jdbcType=VARCHAR},
       TELE = #{tele,jdbcType=VARCHAR}

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zking.erp.purchase.mapper.ReturnOrdersMapper" >
-  <resultMap id="BaseResultMap" type="com.zking.erp.purchase.model.ReturnOrders" >
+<mapper namespace="com.zking.erp.personnel.mapper.ReturnOrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.personnel.model.ReturnOrders" >
     <constructor >
       <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CREATETIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="CHECKTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="ENDTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="CREATER" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="CHECKER" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="ENDER" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="SUPPLIERUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="CREATER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CHECKER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ENDER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SUPPLIERUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="TOTALMONEY" jdbcType="REAL" javaType="java.lang.Float" />
       <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="WAYBILLSN" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="ORDERSUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="WAYBILLSN" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ORDERSUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -32,19 +32,19 @@
     delete from returnorders
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+  <insert id="insert" parameterType="com.zking.erp.personnel.model.ReturnOrders" >
     insert into returnorders (UUID, CREATETIME, CHECKTIME, 
       ENDTIME, TYPE, CREATER, 
       CHECKER, ENDER, SUPPLIERUUID, 
       TOTALMONEY, STATE, WAYBILLSN, 
       ORDERSUUID)
     values (#{uuid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{checktime,jdbcType=TIMESTAMP}, 
-      #{endtime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{creater,jdbcType=INTEGER}, 
-      #{checker,jdbcType=INTEGER}, #{ender,jdbcType=INTEGER}, #{supplieruuid,jdbcType=INTEGER}, 
-      #{totalmoney,jdbcType=REAL}, #{state,jdbcType=VARCHAR}, #{waybillsn,jdbcType=INTEGER}, 
-      #{ordersuuid,jdbcType=INTEGER})
+      #{endtime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
+      #{checker,jdbcType=VARCHAR}, #{ender,jdbcType=VARCHAR}, #{supplieruuid,jdbcType=VARCHAR}, 
+      #{totalmoney,jdbcType=REAL}, #{state,jdbcType=VARCHAR}, #{waybillsn,jdbcType=VARCHAR}, 
+      #{ordersuuid,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+  <insert id="insertSelective" parameterType="com.zking.erp.personnel.model.ReturnOrders" >
     insert into returnorders
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
@@ -104,16 +104,16 @@
         #{type,jdbcType=VARCHAR},
       </if>
       <if test="creater != null" >
-        #{creater,jdbcType=INTEGER},
+        #{creater,jdbcType=VARCHAR},
       </if>
       <if test="checker != null" >
-        #{checker,jdbcType=INTEGER},
+        #{checker,jdbcType=VARCHAR},
       </if>
       <if test="ender != null" >
-        #{ender,jdbcType=INTEGER},
+        #{ender,jdbcType=VARCHAR},
       </if>
       <if test="supplieruuid != null" >
-        #{supplieruuid,jdbcType=INTEGER},
+        #{supplieruuid,jdbcType=VARCHAR},
       </if>
       <if test="totalmoney != null" >
         #{totalmoney,jdbcType=REAL},
@@ -122,14 +122,14 @@
         #{state,jdbcType=VARCHAR},
       </if>
       <if test="waybillsn != null" >
-        #{waybillsn,jdbcType=INTEGER},
+        #{waybillsn,jdbcType=VARCHAR},
       </if>
       <if test="ordersuuid != null" >
-        #{ordersuuid,jdbcType=INTEGER},
+        #{ordersuuid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.ReturnOrders" >
     update returnorders
     <set >
       <if test="createtime != null" >
@@ -145,16 +145,16 @@
         TYPE = #{type,jdbcType=VARCHAR},
       </if>
       <if test="creater != null" >
-        CREATER = #{creater,jdbcType=INTEGER},
+        CREATER = #{creater,jdbcType=VARCHAR},
       </if>
       <if test="checker != null" >
-        CHECKER = #{checker,jdbcType=INTEGER},
+        CHECKER = #{checker,jdbcType=VARCHAR},
       </if>
       <if test="ender != null" >
-        ENDER = #{ender,jdbcType=INTEGER},
+        ENDER = #{ender,jdbcType=VARCHAR},
       </if>
       <if test="supplieruuid != null" >
-        SUPPLIERUUID = #{supplieruuid,jdbcType=INTEGER},
+        SUPPLIERUUID = #{supplieruuid,jdbcType=VARCHAR},
       </if>
       <if test="totalmoney != null" >
         TOTALMONEY = #{totalmoney,jdbcType=REAL},
@@ -163,28 +163,28 @@
         STATE = #{state,jdbcType=VARCHAR},
       </if>
       <if test="waybillsn != null" >
-        WAYBILLSN = #{waybillsn,jdbcType=INTEGER},
+        WAYBILLSN = #{waybillsn,jdbcType=VARCHAR},
       </if>
       <if test="ordersuuid != null" >
-        ORDERSUUID = #{ordersuuid,jdbcType=INTEGER},
+        ORDERSUUID = #{ordersuuid,jdbcType=VARCHAR},
       </if>
     </set>
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zking.erp.purchase.model.ReturnOrders" >
+  <update id="updateByPrimaryKey" parameterType="com.zking.erp.personnel.model.ReturnOrders" >
     update returnorders
     set CREATETIME = #{createtime,jdbcType=TIMESTAMP},
       CHECKTIME = #{checktime,jdbcType=TIMESTAMP},
       ENDTIME = #{endtime,jdbcType=TIMESTAMP},
       TYPE = #{type,jdbcType=VARCHAR},
-      CREATER = #{creater,jdbcType=INTEGER},
-      CHECKER = #{checker,jdbcType=INTEGER},
-      ENDER = #{ender,jdbcType=INTEGER},
-      SUPPLIERUUID = #{supplieruuid,jdbcType=INTEGER},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CHECKER = #{checker,jdbcType=VARCHAR},
+      ENDER = #{ender,jdbcType=VARCHAR},
+      SUPPLIERUUID = #{supplieruuid,jdbcType=VARCHAR},
       TOTALMONEY = #{totalmoney,jdbcType=REAL},
       STATE = #{state,jdbcType=VARCHAR},
-      WAYBILLSN = #{waybillsn,jdbcType=INTEGER},
-      ORDERSUUID = #{ordersuuid,jdbcType=INTEGER}
+      WAYBILLSN = #{waybillsn,jdbcType=VARCHAR},
+      ORDERSUUID = #{ordersuuid,jdbcType=VARCHAR}
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

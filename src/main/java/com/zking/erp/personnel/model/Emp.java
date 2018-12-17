@@ -3,7 +3,7 @@ package com.zking.erp.personnel.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Emp implements Serializable {
+public class Emp  implements Serializable {
     private String uuid;
 
     private String username;
@@ -12,7 +12,7 @@ public class Emp implements Serializable {
 
     private String name;
 
-    private Integer gender;
+    private String gender;
 
     private String email;
 
@@ -22,9 +22,9 @@ public class Emp implements Serializable {
 
     private Date birthday;
 
-    private Integer depuuid;
+    private String depuuid;
 
-    public Emp(String uuid, String username, String pwd, String name, Integer gender, String email, String tele, String address, Date birthday, Integer depuuid) {
+    public Emp(String uuid, String username, String pwd, String name, String gender, String email, String tele, String address, Date birthday, String depuuid) {
         this.uuid = uuid;
         this.username = username;
         this.pwd = pwd;
@@ -73,11 +73,11 @@ public class Emp implements Serializable {
         this.name = name;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -113,11 +113,11 @@ public class Emp implements Serializable {
         this.birthday = birthday;
     }
 
-    public Integer getDepuuid() {
+    public String getDepuuid() {
         return depuuid;
     }
 
-    public void setDepuuid(Integer depuuid) {
+    public void setDepuuid(String depuuid) {
         this.depuuid = depuuid;
     }
 }

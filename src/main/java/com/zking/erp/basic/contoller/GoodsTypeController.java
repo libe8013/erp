@@ -1,5 +1,6 @@
 package com.zking.erp.basic.contoller;
 
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.model.GoodsType;
 import com.zking.erp.basic.service.IGoodsTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ public class GoodsTypeController {
     @RequestMapping("/queryGoodsTypePager")
     @ResponseBody
     public Map<String,Object> queryGoodsTypePager(GoodsType goodsType){
-        List<GoodsType> goodsTypes = goodsTypeService.queryGoodsType(goodsType);
+
+        PageBean pageBean = new PageBean();
+        List<GoodsType> goodsTypes = goodsTypeService.queryGoodsTypePager(goodsType,pageBean);
         Map<String,Object> map = new HashMap<>();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",10);
+        map.put("count",pageBean.getTotal());
         map.put("data",goodsTypes);
 
         return map;

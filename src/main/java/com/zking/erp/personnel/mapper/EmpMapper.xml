@@ -7,12 +7,12 @@
       <arg column="USERNAME" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="PWD" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="GENDER" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="GENDER" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="TELE" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="BIRTHDAY" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="DEPUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="DEPUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -24,21 +24,6 @@
     from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
-  <select id="queryEmpPage" resultType="map" parameterType="com.zking.erp.personnel.vo.EmpVo">
-    SELECT e.`USERNAME`,e.`PWD`,e.`NAME`,e.`GENDER`,e.`EMAIL`,
-    e.`TELE`,e.`ADDRESS`,e.`BIRTHDAY`,e.`DEPUUID`,r.`rolename`,r.`remark`
-    FROM emp e,t_role r,t_emp_role er
-    WHERE e.`UUID`=er.`userid` AND r.`id`=er.`roleid`
-    <if test="null!=username and ''!=username">
-      and e.username like #{username}
-    </if>
-    <if test="null!=email and ''!=email">
-      and e.email like #{email}
-    </if>
-    <if test="null!=role.rolename and ''!=role.rolename">
-      and r.rolename like #{role.rolename}
-    </if>
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -49,9 +34,9 @@
       TELE, ADDRESS, BIRTHDAY, 
       DEPUUID)
     values (#{uuid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
-      #{tele,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
-      #{depuuid,jdbcType=INTEGER})
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{tele,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{depuuid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zking.erp.personnel.model.Emp" >
     insert into emp
@@ -101,7 +86,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
-        #{gender,jdbcType=INTEGER},
+        #{gender,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
@@ -116,7 +101,7 @@
         #{birthday,jdbcType=TIMESTAMP},
       </if>
       <if test="depuuid != null" >
-        #{depuuid,jdbcType=INTEGER},
+        #{depuuid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -133,7 +118,7 @@
         NAME = #{name,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
-        GENDER = #{gender,jdbcType=INTEGER},
+        GENDER = #{gender,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         EMAIL = #{email,jdbcType=VARCHAR},
@@ -148,7 +133,7 @@
         BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
       </if>
       <if test="depuuid != null" >
-        DEPUUID = #{depuuid,jdbcType=INTEGER},
+        DEPUUID = #{depuuid,jdbcType=VARCHAR},
       </if>
     </set>
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -158,12 +143,12 @@
     set USERNAME = #{username,jdbcType=VARCHAR},
       PWD = #{pwd,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
-      GENDER = #{gender,jdbcType=INTEGER},
+      GENDER = #{gender,jdbcType=VARCHAR},
       EMAIL = #{email,jdbcType=VARCHAR},
       TELE = #{tele,jdbcType=VARCHAR},
       ADDRESS = #{address,jdbcType=VARCHAR},
       BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
-      DEPUUID = #{depuuid,jdbcType=INTEGER}
+      DEPUUID = #{depuuid,jdbcType=VARCHAR}
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

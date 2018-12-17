@@ -5,7 +5,7 @@
     <constructor >
       <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="EMPUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="EMPUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -24,7 +24,7 @@
   <insert id="insert" parameterType="com.zking.erp.basic.model.Store" >
     insert into store (UUID, NAME, EMPUUID
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{empuuid,jdbcType=INTEGER}
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{empuuid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zking.erp.basic.model.Store" >
@@ -48,7 +48,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="empuuid != null" >
-        #{empuuid,jdbcType=INTEGER},
+        #{empuuid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -59,7 +59,7 @@
         NAME = #{name,jdbcType=VARCHAR},
       </if>
       <if test="empuuid != null" >
-        EMPUUID = #{empuuid,jdbcType=INTEGER},
+        EMPUUID = #{empuuid,jdbcType=VARCHAR},
       </if>
     </set>
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -67,7 +67,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zking.erp.basic.model.Store" >
     update store
     set NAME = #{name,jdbcType=VARCHAR},
-      EMPUUID = #{empuuid,jdbcType=INTEGER}
+      EMPUUID = #{empuuid,jdbcType=VARCHAR}
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

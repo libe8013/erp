@@ -1,5 +1,6 @@
 package com.zking.erp.basic.service;
 
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.model.GoodsType;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface IGoodsTypeService {
 
     int updateByPrimaryKey(GoodsType record);
 
-    List<GoodsType> queryGoodsType(GoodsType goodsType);
+    List<GoodsType> queryGoodsTypePager(GoodsType goodsType, PageBean pageBean);
 }

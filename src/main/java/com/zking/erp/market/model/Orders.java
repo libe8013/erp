@@ -3,7 +3,7 @@ package com.zking.erp.market.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Orders implements Serializable{
+public class Orders implements Serializable {
     private String uuid;
 
     private Date createtime;
@@ -16,23 +16,23 @@ public class Orders implements Serializable{
 
     private String type;
 
-    private Integer creater;
+    private String creater;
 
-    private Integer checker;
+    private String checker;
 
-    private Integer starter;
+    private String starter;
 
-    private Integer ender;
+    private String ender;
 
-    private Integer supplieruuid;
+    private String supplieruuid;
 
     private Float totalmoney;
 
     private String state;
 
-    private Integer waybillsn;
+    private String waybillsn;
 
-    public Orders(String uuid, Date createtime, Date checktime, Date starttime, Date endtime, String type, Integer creater, Integer checker, Integer starter, Integer ender, Integer supplieruuid, Float totalmoney, String state, Integer waybillsn) {
+    public Orders(String uuid, Date createtime, Date checktime, Date starttime, Date endtime, String type, String creater, String checker, String starter, String ender, String supplieruuid, Float totalmoney, String state, String waybillsn) {
         this.uuid = uuid;
         this.createtime = createtime;
         this.checktime = checktime;
@@ -101,43 +101,43 @@ public class Orders implements Serializable{
         this.type = type;
     }
 
-    public Integer getCreater() {
+    public String getCreater() {
         return creater;
     }
 
-    public void setCreater(Integer creater) {
+    public void setCreater(String creater) {
         this.creater = creater;
     }
 
-    public Integer getChecker() {
+    public String getChecker() {
         return checker;
     }
 
-    public void setChecker(Integer checker) {
+    public void setChecker(String checker) {
         this.checker = checker;
     }
 
-    public Integer getStarter() {
+    public String getStarter() {
         return starter;
     }
 
-    public void setStarter(Integer starter) {
+    public void setStarter(String starter) {
         this.starter = starter;
     }
 
-    public Integer getEnder() {
+    public String getEnder() {
         return ender;
     }
 
-    public void setEnder(Integer ender) {
+    public void setEnder(String ender) {
         this.ender = ender;
     }
 
-    public Integer getSupplieruuid() {
+    public String getSupplieruuid() {
         return supplieruuid;
     }
 
-    public void setSupplieruuid(Integer supplieruuid) {
+    public void setSupplieruuid(String supplieruuid) {
         this.supplieruuid = supplieruuid;
     }
 
@@ -157,11 +157,11 @@ public class Orders implements Serializable{
         this.state = state;
     }
 
-    public Integer getWaybillsn() {
+    public String getWaybillsn() {
         return waybillsn;
     }
 
-    public void setWaybillsn(Integer waybillsn) {
+    public void setWaybillsn(String waybillsn) {
         this.waybillsn = waybillsn;
     }
 }

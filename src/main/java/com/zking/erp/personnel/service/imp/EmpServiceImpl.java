@@ -1,11 +1,8 @@
 package com.zking.erp.personnel.service.imp;
 
 import com.zking.erp.authority.mapper.EmpRoleMapper;
-import com.zking.erp.authority.mapper.RoleMapper;
 import com.zking.erp.authority.model.EmpRole;
-import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.personnel.service.IEmpService;
-import com.zking.erp.personnel.mapper.EmpMapper;
 import com.zking.erp.personnel.vo.EmpVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

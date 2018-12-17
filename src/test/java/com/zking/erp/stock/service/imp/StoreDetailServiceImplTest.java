@@ -1,8 +1,6 @@
 package com.zking.erp.stock.service.imp;
 
 import com.zking.erp.base.util.BaseTestCase;
-import com.zking.erp.basic.model.Goods;
-import com.zking.erp.basic.model.Store;
 import com.zking.erp.stock.service.IStoreDetailService;
 import com.zking.erp.stock.vo.StoredetailVo;
 import org.junit.Before;
@@ -11,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class StoreDetailServiceImplTest extends BaseTestCase {
 

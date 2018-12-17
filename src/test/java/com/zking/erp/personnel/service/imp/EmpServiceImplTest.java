@@ -3,7 +3,6 @@ package com.zking.erp.personnel.service.imp;
 import com.zking.erp.authority.model.EmpRole;
 import com.zking.erp.authority.model.Role;
 import com.zking.erp.base.util.BaseTestCase;
-import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.personnel.service.IEmpService;
 import com.zking.erp.personnel.vo.EmpVo;
 import org.junit.Test;
@@ -14,8 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 public class EmpServiceImplTest extends BaseTestCase {
 

@@ -1,6 +1,6 @@
-package com.zking.erp.purchase.mapper;
+package com.zking.erp.personnel.mapper;
 
-import com.zking.erp.purchase.model.ReturnOrders;
+import com.zking.erp.personnel.model.ReturnOrders;
 
 public interface ReturnOrdersMapper {
     int deleteByPrimaryKey(String uuid);

@@ -13,5 +13,7 @@ public interface OrderDetailMapper {
 
     int updateByPrimaryKeySelective(OrderDetail record);
 
+    int updateByPrimaryKeyWithBLOBs(OrderDetail record);
+
     int updateByPrimaryKey(OrderDetail record);
 }

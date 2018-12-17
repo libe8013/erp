@@ -14,8 +14,22 @@
 </head>
 <body>
 <div>
+    <label class="layui-form-label">类型名称：</label>
+    <div class="layui-input-inline">
+            <input type="text" id="name" name="name" placeholder="请输入您要查询的内容" class="layui-input"/>
+    </div>
+    <button class="layui-btn" id="goodsTypeQuery">查询</button>
+</div>
+<div>
     <table class="layui-table" id="goodsTypeTab"lay-filter="goodsTypeTab">
     </table>
 </div>
+<script type="text/html" id="toolbarTop">
+    <a class="layui-btn layui-btn-sm"><i class="layui-icon"><font size="2">增加</font></i></a>
+</script>
+<script type="text/html" id="crud">
+    <a class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon"></i></a>
+    <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="del"><i class="layui-icon"></i></a>
+</script>
 </body>
 </html>

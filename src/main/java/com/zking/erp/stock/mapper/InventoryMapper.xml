@@ -4,14 +4,14 @@
   <resultMap id="BaseResultMap" type="com.zking.erp.stock.model.Inventory" >
     <constructor >
       <arg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="GOODSUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="STOREUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="GOODSUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STOREUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CREATETIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="CHECKTIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="CREATER" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="CHECKER" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="CREATER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CHECKER" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
@@ -21,9 +21,9 @@
       NUM, TYPE, CREATETIME, 
       CHECKTIME, CREATER, CHECKER, 
       STATE, REMARK)
-    values (#{uuid,jdbcType=VARCHAR}, #{goodsuuid,jdbcType=INTEGER}, #{storeuuid,jdbcType=INTEGER}, 
+    values (#{uuid,jdbcType=VARCHAR}, #{goodsuuid,jdbcType=VARCHAR}, #{storeuuid,jdbcType=VARCHAR}, 
       #{num,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{checktime,jdbcType=TIMESTAMP}, #{creater,jdbcType=INTEGER}, #{checker,jdbcType=INTEGER}, 
+      #{checktime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{checker,jdbcType=VARCHAR}, 
       #{state,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zking.erp.stock.model.Inventory" >
@@ -68,10 +68,10 @@
         #{uuid,jdbcType=VARCHAR},
       </if>
       <if test="goodsuuid != null" >
-        #{goodsuuid,jdbcType=INTEGER},
+        #{goodsuuid,jdbcType=VARCHAR},
       </if>
       <if test="storeuuid != null" >
-        #{storeuuid,jdbcType=INTEGER},
+        #{storeuuid,jdbcType=VARCHAR},
       </if>
       <if test="num != null" >
         #{num,jdbcType=INTEGER},
@@ -86,10 +86,10 @@
         #{checktime,jdbcType=TIMESTAMP},
       </if>
       <if test="creater != null" >
-        #{creater,jdbcType=INTEGER},
+        #{creater,jdbcType=VARCHAR},
       </if>
       <if test="checker != null" >
-        #{checker,jdbcType=INTEGER},
+        #{checker,jdbcType=VARCHAR},
       </if>
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},

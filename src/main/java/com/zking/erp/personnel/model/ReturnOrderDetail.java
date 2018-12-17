@@ -1,12 +1,12 @@
-package com.zking.erp.purchase.model;
+package com.zking.erp.personnel.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class ReturnOrdersDetail implements Serializable {
+public class ReturnOrderDetail implements Serializable {
     private String uuid;
 
-    private Integer goodsuuid;
+    private String goodsuuid;
 
     private String goodsname;
 
@@ -18,15 +18,15 @@ public class ReturnOrdersDetail implements Serializable {
 
     private Date endtime;
 
-    private Integer ender;
+    private String ender;
 
-    private Integer storeuuid;
+    private String storeuuid;
 
     private String state;
 
-    private Integer ordersuuid;
+    private String ordersuuid;
 
-    public ReturnOrdersDetail(String uuid, Integer goodsuuid, String goodsname, Float price, Integer num, Float money, Date endtime, Integer ender, Integer storeuuid, String state, Integer ordersuuid) {
+    public ReturnOrderDetail(String uuid, String goodsuuid, String goodsname, Float price, Integer num, Float money, Date endtime, String ender, String storeuuid, String state, String ordersuuid) {
         this.uuid = uuid;
         this.goodsuuid = goodsuuid;
         this.goodsname = goodsname;
@@ -40,7 +40,7 @@ public class ReturnOrdersDetail implements Serializable {
         this.ordersuuid = ordersuuid;
     }
 
-    public ReturnOrdersDetail() {
+    public ReturnOrderDetail() {
         super();
     }
 
@@ -52,11 +52,11 @@ public class ReturnOrdersDetail implements Serializable {
         this.uuid = uuid;
     }
 
-    public Integer getGoodsuuid() {
+    public String getGoodsuuid() {
         return goodsuuid;
     }
 
-    public void setGoodsuuid(Integer goodsuuid) {
+    public void setGoodsuuid(String goodsuuid) {
         this.goodsuuid = goodsuuid;
     }
 
@@ -100,19 +100,19 @@ public class ReturnOrdersDetail implements Serializable {
         this.endtime = endtime;
     }
 
-    public Integer getEnder() {
+    public String getEnder() {
         return ender;
     }
 
-    public void setEnder(Integer ender) {
+    public void setEnder(String ender) {
         this.ender = ender;
     }
 
-    public Integer getStoreuuid() {
+    public String getStoreuuid() {
         return storeuuid;
     }
 
-    public void setStoreuuid(Integer storeuuid) {
+    public void setStoreuuid(String storeuuid) {
         this.storeuuid = storeuuid;
     }
 
@@ -124,11 +124,11 @@ public class ReturnOrdersDetail implements Serializable {
         this.state = state;
     }
 
-    public Integer getOrdersuuid() {
+    public String getOrdersuuid() {
         return ordersuuid;
     }
 
-    public void setOrdersuuid(Integer ordersuuid) {
+    public void setOrdersuuid(String ordersuuid) {
         this.ordersuuid = ordersuuid;
     }
 }

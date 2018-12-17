@@ -10,7 +10,7 @@
       <arg column="UNIT" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="INPRICE" jdbcType="REAL" javaType="java.lang.Float" />
       <arg column="OUTPRICE" jdbcType="REAL" javaType="java.lang.Float" />
-      <arg column="GOODSTYPEUUID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="GOODSTYPEUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -32,7 +32,7 @@
       OUTPRICE, GOODSTYPEUUID)
     values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
       #{producer,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{inprice,jdbcType=REAL}, 
-      #{outprice,jdbcType=REAL}, #{goodstypeuuid,jdbcType=INTEGER})
+      #{outprice,jdbcType=REAL}, #{goodstypeuuid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zking.erp.basic.model.Goods" >
     insert into goods
@@ -85,7 +85,7 @@
         #{outprice,jdbcType=REAL},
       </if>
       <if test="goodstypeuuid != null" >
-        #{goodstypeuuid,jdbcType=INTEGER},
+        #{goodstypeuuid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -111,7 +111,7 @@
         OUTPRICE = #{outprice,jdbcType=REAL},
       </if>
       <if test="goodstypeuuid != null" >
-        GOODSTYPEUUID = #{goodstypeuuid,jdbcType=INTEGER},
+        GOODSTYPEUUID = #{goodstypeuuid,jdbcType=VARCHAR},
       </if>
     </set>
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -124,7 +124,7 @@
       UNIT = #{unit,jdbcType=VARCHAR},
       INPRICE = #{inprice,jdbcType=REAL},
       OUTPRICE = #{outprice,jdbcType=REAL},
-      GOODSTYPEUUID = #{goodstypeuuid,jdbcType=INTEGER}
+      GOODSTYPEUUID = #{goodstypeuuid,jdbcType=VARCHAR}
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -6,9 +6,9 @@ import java.util.Date;
 public class Inventory implements Serializable {
     private String uuid;
 
-    private Integer goodsuuid;
+    private String goodsuuid;
 
-    private Integer storeuuid;
+    private String storeuuid;
 
     private Integer num;
 
@@ -18,15 +18,15 @@ public class Inventory implements Serializable {
 
     private Date checktime;
 
-    private Integer creater;
+    private String creater;
 
-    private Integer checker;
+    private String checker;
 
     private String state;
 
     private String remark;
 
-    public Inventory(String uuid, Integer goodsuuid, Integer storeuuid, Integer num, String type, Date createtime, Date checktime, Integer creater, Integer checker, String state, String remark) {
+    public Inventory(String uuid, String goodsuuid, String storeuuid, Integer num, String type, Date createtime, Date checktime, String creater, String checker, String state, String remark) {
         this.uuid = uuid;
         this.goodsuuid = goodsuuid;
         this.storeuuid = storeuuid;
@@ -52,19 +52,19 @@ public class Inventory implements Serializable {
         this.uuid = uuid;
     }
 
-    public Integer getGoodsuuid() {
+    public String getGoodsuuid() {
         return goodsuuid;
     }
 
-    public void setGoodsuuid(Integer goodsuuid) {
+    public void setGoodsuuid(String goodsuuid) {
         this.goodsuuid = goodsuuid;
     }
 
-    public Integer getStoreuuid() {
+    public String getStoreuuid() {
         return storeuuid;
     }
 
-    public void setStoreuuid(Integer storeuuid) {
+    public void setStoreuuid(String storeuuid) {
         this.storeuuid = storeuuid;
     }
 
@@ -100,19 +100,19 @@ public class Inventory implements Serializable {
         this.checktime = checktime;
     }
 
-    public Integer getCreater() {
+    public String getCreater() {
         return creater;
     }
 
-    public void setCreater(Integer creater) {
+    public void setCreater(String creater) {
         this.creater = creater;
     }
 
-    public Integer getChecker() {
+    public String getChecker() {
         return checker;
     }
 
-    public void setChecker(Integer checker) {
+    public void setChecker(String checker) {
         this.checker = checker;
     }
 
