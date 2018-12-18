@@ -1,10 +1,12 @@
-package com.zking.erp.market.mapper;
+package com.zking.erp.market.service;
 
 import com.zking.erp.market.model.OrderDetail;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface OrderDetailMapper {
+
+public interface IOrderDetailService {
     int deleteByPrimaryKey(String uuid);
 
     int insert(OrderDetail record);
@@ -18,11 +20,10 @@ public interface OrderDetailMapper {
     int updateByPrimaryKeyWithBLOBs(OrderDetail record);
 
     int updateByPrimaryKey(OrderDetail record);
-
     /**
      * 查询订单详情
      * @param orderDetail
      * @return
      */
-    List<OrderDetail> orderDetailquery(OrderDetail orderDetail);
+    List<OrderDetail> OrderDetailquery(OrderDetail orderDetail);
 }

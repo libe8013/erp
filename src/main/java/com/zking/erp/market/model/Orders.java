@@ -1,8 +1,11 @@
 package com.zking.erp.market.model;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@ToString
 public class Orders implements Serializable {
     private String uuid;
 

@@ -44,7 +44,13 @@
     from orderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="orderDetailquery" resultType="com.zking.erp.market.model.OrderDetail"
+            parameterType="com.zking.erp.market.model.OrderDetail">
+      select
+      <include refid="Base_Column_List"/>
+      from orderdetail where 1=1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from orderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>

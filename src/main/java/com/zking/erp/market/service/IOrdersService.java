@@ -1,11 +1,12 @@
-package com.zking.erp.market.mapper;
+package com.zking.erp.market.service;
 
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.market.model.Orders;
 import com.zking.erp.market.vo.OrderVo;
 
 import java.util.List;
 
-public interface OrdersMapper {
+public interface IOrdersService {
     int deleteByPrimaryKey(String uuid);
 
     int insert(Orders record);
@@ -23,5 +24,5 @@ public interface OrdersMapper {
      * @param orders
      * @return
      */
-    List<Orders> queryOrdersPage(OrderVo orders);
+    List<Orders> queryOrdersPager(OrderVo orders, PageBean pageBean);
 }

@@ -29,6 +29,15 @@
     from orders
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryOrdersPage" resultType="com.zking.erp.market.model.Orders"
+          parameterType="com.zking.erp.market.model.Orders">
+   select  a.uuid,a.createtime,a.starttime,a.starter,a.ender,b.name,a.totalmoney,a.state  FROM orders a,emp b where 1=1
+  <if test="null!=emp.name and ''!=emp.name">
+    and b.name like concat(concat('%',#{emp.name}),'%')
+  </if>
+
+  order by a.createtime desc
+</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from orders
     where UUID = #{uuid,jdbcType=VARCHAR}
