@@ -1,12 +1,11 @@
-package com.zking.erp.basic.mapper;
+package com.zking.erp.basic.service;
 
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.model.Goods;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface GoodsMapper {
+public interface IGoodsService {
     int deleteByPrimaryKey(String uuid);
 
     int insert(Goods record);
@@ -19,5 +18,5 @@ public interface GoodsMapper {
 
     int updateByPrimaryKey(Goods record);
 
-    List<Goods> queryGoodsLikePager(Goods goods);
+    List<Goods> queryGoodsLikePager(Goods goods, PageBean pageBean);
 }

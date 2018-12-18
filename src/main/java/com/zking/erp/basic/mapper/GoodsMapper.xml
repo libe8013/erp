@@ -22,6 +22,24 @@
     from goods
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryGoodsLikePager" resultType="com.zking.erp.basic.model.Goods"
+          parameterType="com.zking.erp.basic.model.Goods">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from goods where 1=1
+    <if test="null!=name and ''!=name">
+      and name like concat(concat('%',#{name}),'%')
+    </if>
+    <if test="null!=origin and ''!=origin">
+      and origin like concat(concat('%',#{origin}),'%')
+    </if>
+    <if test="null!=producer and ''!=producer">
+      and producer like concat(concat('%',#{producer}),'%')
+    </if>
+    <if test="null!=goodstypeuuid and ''!=goodstypeuuid">
+      and goodstypeuuid=#{goodstypeuuid}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from goods
     where UUID = #{uuid,jdbcType=VARCHAR}

@@ -36,7 +36,7 @@ function initTable(){
             page: true, //开启分页
             cols: [[ //表头
                 {type:'checkbox',width:'4%'},
-                {field:'uuid', width:'23%', title: 'ID',align:'center'},
+                {field:'uuid', width:'20%', title: 'ID',align:'center'},
                 {field:'name', width:'23%', title: '类型名称',align:'center'},
                 {field:'操作', width:'50%', title: '操作',align:'center',toolbar: '#crud'}
             ]],

@@ -10,7 +10,7 @@
 <head>
     <%@include file="/common/head.jsp"%>
     <%--<script src="basic/js/goodsType.js"></script>--%>
-    <script src="${ctx}/basic/js/goodsType.js"></script>
+    <script src="${ctx}/basic/js/goods.js"></script>
     <style>
         .layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
             top: 50%;
@@ -21,14 +21,40 @@
 <body>
 <input type="hidden" id="path" value="${ctx}"/>
 <div>
-    <label class="layui-form-label">类型名称：</label>
-    <div class="layui-input-inline">
-            <input type="text" id="name" name="name" placeholder="请输入您要查询的内容" class="layui-input"/>
+    <div class="layui-inline">
+        <label class="layui-form-label">商品名称：</label>
+        <div class="layui-input-inline">
+                <input type="text" id="name" name="name" placeholder="请输入您要查询的名称" class="layui-input"/>
+        </div>
     </div>
-    <button class="layui-btn" id="goodsTypeQuery">查询</button>
+    <div class="layui-inline">
+        <label class="layui-form-label">商品产地：</label>
+        <div class="layui-input-inline">
+            <input type="text" id="origin" name="origin" placeholder="请输入您要查询的产地" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">商品厂家：</label>
+        <div class="layui-input-inline">
+            <input type="text" id="PRODUCER" name="PRODUCER" placeholder="请输入您要查询的厂家" class="layui-input"/>
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <form class="layui-form" action="">
+        <label class="layui-form-label">商品类型：</label>
+        <div class="layui-input-inline">
+            <select name="goodstypeuuid" id="goodstypeuuid" lay-verify="required" lay-search="">
+                <option value="0">请选择您要查询的类型</option>
+            </select>
+        </div>
+        <a href="javascript:void(0);" class="layui-btn" id="goodsQuery">查询</a>
+        </form>
+    </div>
 </div>
+
 <div>
-    <table class="layui-table" id="goodsTypeTab" lay-filter="goodsTypeTab">
+    <table class="layui-table" id="goodsTable" lay-filter="goodsTypeTab">
     </table>
 </div>
 <script type="text/html" id="toolbarTop">
