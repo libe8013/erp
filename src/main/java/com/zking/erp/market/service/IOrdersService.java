@@ -5,6 +5,7 @@ import com.zking.erp.market.model.Orders;
 import com.zking.erp.market.vo.OrderVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IOrdersService {
     int deleteByPrimaryKey(String uuid);

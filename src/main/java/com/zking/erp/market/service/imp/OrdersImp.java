@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrdersImp implements IOrdersService{
+
     @Autowired
     private OrdersMapper ordersMapper;
+
     @Override
     public int deleteByPrimaryKey(String uuid) {
         return 0;
@@ -47,6 +50,7 @@ public class OrdersImp implements IOrdersService{
 
     @Override
     public List<Orders> queryOrdersPager(OrderVo orders, PageBean pageBean) {
+        System.out.println(1111);
         return ordersMapper.queryOrdersPage(orders);
     }
 

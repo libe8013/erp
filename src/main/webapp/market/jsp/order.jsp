@@ -15,18 +15,19 @@
 </head>
 <body>
 <input type="hidden" id="path" value="${ctx}"/>
+<div>
     <div class="layui-inline">
-        <form class="layui-form" action="">
+        <form class="layui-form">
             <label class="layui-form-label">客户：</label>
             <div class="layui-input-inline">
                 <select name="empname" id="empname" lay-search="">
                     <option value="0">请选择您要查询的客户</option>
                 </select>
             </div>
-            <button class="layui-btn" id="queryOrder">查询</button>
+            <a href="javascript:void(0)" class="layui-btn" id="queryOrder">查询</a>
         </form>
     </div>
-
+</div>
 
 <div>
     <table class="layui-table" id="orderTable" lay-filter="orderTable"></table>

@@ -29,7 +29,7 @@
     from orders
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
-  <select id="queryOrdersPage" resultType="com.zking.erp.market.model.Orders"
+  <select id="queryOrdersPage" resultType="map"
           parameterType="com.zking.erp.market.model.Orders">
    select  a.uuid,a.createtime,a.starttime,a.starter,a.ender,b.name,a.totalmoney,a.state  FROM orders a,emp b where 1=1
   <if test="null!=emp.name and ''!=emp.name">
