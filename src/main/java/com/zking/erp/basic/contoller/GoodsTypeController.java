@@ -71,4 +71,21 @@ public class GoodsTypeController {
         return map;
     }
 
+    @RequestMapping("/editGoodsType")
+    @ResponseBody
+    public Map<String,Object> editGoodsType(GoodsType goodsType){
+        Map<String,Object> map = new HashMap<>();
+        String message = "保存成功";
+
+        try {
+            goodsTypeService.updateByPrimaryKey(goodsType);
+        } catch (Exception e) {
+            message = "保存失败";
+        }
+
+        map.put("message",message);
+
+        return map;
+    }
+
 }

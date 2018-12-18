@@ -68,11 +68,30 @@ function add(){
 }
 
 function addForm() {
+    var result = [];
+    $.ajax({
+        url : path+'/goodsType/queryGoodsTypePager',
+        data : {},
+        dataType : 'json',
+        type : 'post',
+        async : false,
+        success : function (data) {
+            result = data.data;
+        }
+    });
     var name = $('#gname').val();
     if(null==name || ''==name){
         layer.msg('类型名称不能为空');
         return;
     }
+
+    for (var i=0;i<result.length;i++){
+        if(result[i].name==name){
+            layer.msg('类型名称重复');
+            return;
+        }
+    }
+
     $.ajax({
         url : path+'/goodsType/addGoodsType',
         data : {name:name},
@@ -110,13 +129,26 @@ function delDiv(uuid) {
 }
 
 function edit(obj){
+    var table = layui.table;
+    var result = table.cache.goodsTypeTable;
     //弹出一个iframe层
     layer.open({
         type: 2,
         title: '编辑商品类型',
         maxmin: true,
         shadeClose: true, //点击遮罩关闭层
-        area : ['450px' , '270px'],
-        content: path+'/basic/jsp/goodsTypeEdit.jsp'
+        area : ['500px' , '270px'],
+        content: path+'/basic/jsp/goodsTypeEdit.jsp',
+        success : function (layero,index) {
+            var body = layer.getChildFrame('body',index);
+            var inputBody = body.find('input');
+            for (var i=0;i<inputBody.length;i++){
+                if(inputBody[i].id=="uuid"){
+                    $(inputBody[i]).val(obj.uuid);
+                }else if(inputBody[i].id=="name"){
+                    $(inputBody[i]).val(obj.name);
+                }
+            }
+        }
     });
 }
