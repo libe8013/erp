@@ -19,6 +19,8 @@ public class Goods implements Serializable {
 
     private String goodstypeuuid;
 
+    private Integer sort;
+
     public Goods(String uuid, String name, String origin, String producer, String unit, Float inprice, Float outprice, String goodstypeuuid) {
         this.uuid = uuid;
         this.name = name;
@@ -96,5 +98,13 @@ public class Goods implements Serializable {
 
     public void setGoodstypeuuid(String goodstypeuuid) {
         this.goodstypeuuid = goodstypeuuid;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

@@ -57,9 +57,13 @@ function initTree(){
 }
 
 function initTab(text,url,id) {
+
     var element = layui.element;
 
+
     if ( $(".layui-tab-title li[lay-id="+id+"]").length > 0 ) {
+        //切换到指定Tab项
+        element.tabChange('demo', id);
         //已经存在
         return;
     }

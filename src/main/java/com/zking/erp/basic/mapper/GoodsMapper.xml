@@ -39,6 +39,7 @@
     <if test="null!=goodstypeuuid and ''!=goodstypeuuid">
       and goodstypeuuid=#{goodstypeuuid}
     </if>
+    order by sort desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from goods
