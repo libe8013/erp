@@ -35,9 +35,11 @@
 <script type="text/html" id="addDiv">
     <div class="layui-form-item" style="padding:20px;">
         <label class="layui-form-label">类型名称：</label>
+        <form id="ff">
         <div class="layui-input-inline">
             <input type="text" id="gname" name="name" lay-verify="required" placeholder="请输入您要添加的类型名称" class="layui-input"/>
         </div>
+        </form>
         <button class="layui-btn" id="addForm">保存</button>
     </div>
 </script>

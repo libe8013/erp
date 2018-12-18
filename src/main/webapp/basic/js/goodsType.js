@@ -30,6 +30,7 @@ function initTable(){
         table.render({
             elem : '#goodsTypeTab',
             height: 600,
+            data : [],
             toolbar : '#toolbarTop',
             id : 'goodsTypeTable',
             // url: '', //数据接口
@@ -101,6 +102,7 @@ function addForm() {
         success : function (data) {
             layer.msg(data.message);
             queryGoodsType();
+            $('#ff')[0].reset();
         },
         error:function(result) {
 
@@ -130,7 +132,7 @@ function delDiv(uuid) {
 
 function edit(obj){
     var table = layui.table;
-    var result = table.cache.goodsTypeTable;
+    // var result = table.cache.goodsTypeTable;
     //弹出一个iframe层
     layer.open({
         type: 2,
@@ -142,13 +144,13 @@ function edit(obj){
         success : function (layero,index) {
             var body = layer.getChildFrame('body',index);
             var inputBody = body.find('input');
-            for (var i=0;i<inputBody.length;i++){
-                if(inputBody[i].id=="uuid"){
-                    $(inputBody[i]).val(obj.uuid);
-                }else if(inputBody[i].id=="name"){
-                    $(inputBody[i]).val(obj.name);
+            $.each(obj, function(j) {
+                for (var i=0;i<inputBody.length;i++){
+                    if(inputBody[i].id==j){
+                        $(inputBody[i]).val(obj[j]);
+                    }
                 }
-            }
+            });
         }
     });
 }

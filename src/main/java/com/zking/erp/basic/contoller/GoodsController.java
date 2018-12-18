@@ -41,19 +41,55 @@ public class GoodsController {
     @RequestMapping("/addGoods")
     @ResponseBody
     public Map<String,Object> addGoods(Goods goods){
-        return null;
+        String message = "添加成功";
+
+        goods.setUuid(UUID.randomUUID().toString().replace("-",""));
+
+        Map<String,Object> map  = new HashMap<>();
+
+        try {
+            goodsService.insert(goods);
+        } catch (Exception e) {
+            message = "添加失败";
+        }
+
+        map.put("meg",message);
+
+        return map;
     }
 
     @RequestMapping("/delGoods")
     @ResponseBody
     public Map<String,Object> delGoods(Goods goods){
-        return null;
+        String message = "删除成功";
+
+        Map<String,Object> map  = new HashMap<>();
+
+        try {
+            goodsService.deleteByPrimaryKey(goods.getUuid());
+        } catch (Exception e) {
+            message = "删除失败";
+        }
+
+        map.put("message",message);
+        return map;
     }
 
     @RequestMapping("/editGoods")
     @ResponseBody
     public Map<String,Object> editGoods(Goods goods){
-        return null;
+        String message = "保存成功";
+
+        Map<String,Object> map  = new HashMap<>();
+
+        try {
+            goodsService.updateByPrimaryKeySelective(goods);
+        } catch (Exception e) {
+            message = "保存失败";
+        }
+
+        map.put("message",message);
+        return map;
     }
 
 }
