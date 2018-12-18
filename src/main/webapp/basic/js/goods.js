@@ -14,6 +14,7 @@ function initTable(){
     table.render({
         elem : '#goodsTable',
         id : 'goodsTable',
+        toolbar : '#toolbarTop',
         height: 600,
         url : '',
         page: true, //开启分页
@@ -27,7 +28,7 @@ function initTable(){
             {field:'inprice', width:'8%', title: '进货价格',align:'center'},
             {field:'outprice', width:'8%', title: '销售价格',align:'center'},
             {field:'goodstypeuuid', width:'10%', title: '商品类型',align:'center'},
-            {field:'操作', width:'15%', title: '操作',align:'center'}
+            {field:'操作', width:'15%', title: '操作',align:'center',toolbar:'#crud'}
         ]],
     });
 }
@@ -76,4 +77,28 @@ function initSelect(){
             form.render('select');
         }
     });
+}
+
+function add(){
+    var addDiv = $('#addDiv').html();
+    //弹出一个页面层
+    layer.open({
+        type: 1,
+        area: ['700px', '440px'],
+        shadeClose: true, //点击遮罩关闭
+        content: addDiv,
+        title : '新增商品分类'
+    });
+    initSelect();
+}
+
+function addForm() {
+    var name = $('#name1').val();
+    var origin1 = $('#origin1').val();
+    var PRODUCER1 = $('#PRODUCER1').val();
+    var unit = $('#unit').val();
+    var inprice = $('#inprice').val();
+    var outprice = $('#outprice').val();
+    var goodstypeuuid = $('#goodstypeuuid option:selected').val();
+    console.log(name+"_"+origin1+"_"+PRODUCER1+"_"+unit+"_"+inprice+"_"+outprice+"_"+outprice+"_"+goodstypeuuid);
 }

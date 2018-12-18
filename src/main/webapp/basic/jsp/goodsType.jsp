@@ -10,13 +10,7 @@
 <head>
     <%@include file="/common/head.jsp"%>
     <%--<script src="basic/js/goodsType.js"></script>--%>
-    <script src="${ctx}/basic/js/goodsType.js"></script>
-    <style>
-        .layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
-            top: 50%;
-            transform: translateY(-50%);
-        }
-    </style>
+    <script src="/erp/basic/js/goodsType.js"></script>
 </head>
 <body>
 <input type="hidden" id="path" value="${ctx}"/>
@@ -42,7 +36,7 @@
     <div class="layui-form-item" style="padding:20px;">
         <label class="layui-form-label">类型名称：</label>
         <div class="layui-input-inline">
-            <input type="text" id="gname" name="name" autocomplete="off" lay-verify="required" placeholder="请输入您要添加的类型名称" class="layui-input"/>
+            <input type="text" id="gname" name="name" lay-verify="required" placeholder="请输入您要添加的类型名称" class="layui-input"/>
         </div>
         <button class="layui-btn" id="addForm">保存</button>
     </div>
