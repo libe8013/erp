@@ -1,0 +1,11 @@
+/*表格复选框*/
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/*模态框下拉框被挡*/
+
+body .layer-ext-Select .layui-layer-content {
+    overflow: visible;
+}

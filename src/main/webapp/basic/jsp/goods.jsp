@@ -11,12 +11,6 @@
     <%@include file="/common/head.jsp"%>
     <%--<script src="basic/js/goodsType.js"></script>--%>
     <script src="${ctx}/basic/js/goods.js"></script>
-    <style>
-        .layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
-            top: 50%;
-            transform: translateY(-50%);
-        }
-    </style>
 </head>
 <body>
 <input type="hidden" id="path" value="${ctx}"/>

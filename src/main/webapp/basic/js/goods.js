@@ -59,7 +59,7 @@ function queryGoodsType() {
 }
 
 function initSelect(){
-    var form = layui.form;
+    layui.form;
     $.get(path + '/goodsType/queryGoodsTypePager', {}, function (data) {
         var goodsType = "";
         if (data.data != null) {
@@ -74,7 +74,7 @@ function initSelect(){
             //反选
             // $("select[name='???']").val($("#???").val());
             //append后必须从新渲染
-            form.render('select');
+            layui.form.render('select');
         }
     });
 }
@@ -83,6 +83,7 @@ function add(){
     var addDiv = $('#addDiv').html();
     //弹出一个页面层
     layer.open({
+        skin : 'layer-ext-Select',
         type: 1,
         area: ['700px', '440px'],
         shadeClose: true, //点击遮罩关闭

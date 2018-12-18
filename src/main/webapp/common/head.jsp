@@ -9,6 +9,7 @@
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <link rel="stylesheet" href="${ctx}/base/js/layui/css/layui.css">
+<link rel="stylesheet" href="${ctx}/common/base.css">
 <script src="${ctx}/base/js/common/jquery.min.js"></script>
 <script src="${ctx}/base/js/layui/layui.js"></script>
 
