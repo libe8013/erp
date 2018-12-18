@@ -1,4 +1,7 @@
-layui.use(['tree','element'],function () {
+var path;
+layui.use(['tree','element','jquery'],function () {
+    $ = layui.jquery;
+    path = $('#path').val();
     initTree();
 })
 

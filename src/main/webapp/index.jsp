@@ -15,7 +15,7 @@
     <script src="/erp/base/js/common/index.js"></script>
 </head>
 <body class="layui-layout-body">
-<input type="hidden" value="${ctx}" id="absolutePath"/>
+<input type="hidden" id="path" value="${ctx}"/>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">layui 后台布局</div>

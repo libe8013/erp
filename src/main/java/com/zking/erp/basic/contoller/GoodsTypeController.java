@@ -8,10 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 @RequestMapping("/goodsType")
@@ -22,15 +21,52 @@ public class GoodsTypeController {
 
     @RequestMapping("/queryGoodsTypePager")
     @ResponseBody
-    public Map<String,Object> queryGoodsTypePager(GoodsType goodsType){
+    public Map<String,Object> queryGoodsTypePager(GoodsType goodsType, HttpServletRequest req){
 
         PageBean pageBean = new PageBean();
+        pageBean.setRequest(req);
+
         List<GoodsType> goodsTypes = goodsTypeService.queryGoodsTypePager(goodsType,pageBean);
         Map<String,Object> map = new HashMap<>();
         map.put("code",0);
         map.put("msg","");
         map.put("count",pageBean.getTotal());
         map.put("data",goodsTypes);
+
+        return map;
+    }
+
+    @RequestMapping("/addGoodsType")
+    @ResponseBody
+    public Map<String,Object> addGoodsType(GoodsType goodsType){
+        Map<String,Object> map = new HashMap<>();
+        String message = "保存成功";
+
+        try {
+            goodsType.setUuid(UUID.randomUUID().toString().replace("-",""));
+            goodsTypeService.insert(goodsType);
+        } catch (Exception e) {
+            message = "保存失败";
+        }
+
+        map.put("message",message);
+
+        return map;
+    }
+
+    @RequestMapping("/delGoodsType")
+    @ResponseBody
+    public Map<String,Object> delGoodsType(GoodsType goodsType){
+        Map<String,Object> map = new HashMap<>();
+        String message = "删除成功";
+
+        try {
+            goodsTypeService.deleteByPrimaryKey(goodsType.getUuid());
+        } catch (Exception e) {
+            message = "删除失败";
+        }
+
+        map.put("message",message);
 
         return map;
     }

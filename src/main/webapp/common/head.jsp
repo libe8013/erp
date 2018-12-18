@@ -8,7 +8,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<link rel="stylesheet" href="/erp/base/js/layui/css/layui.css">
-<script src="/erp/base/js/common/jquery.min.js"></script>
-<script src="/erp/base/js/layui/layui.js"></script>
+<link rel="stylesheet" href="${ctx}/base/js/layui/css/layui.css">
+<script src="${ctx}/base/js/common/jquery.min.js"></script>
+<script src="${ctx}/base/js/layui/layui.js"></script>
 

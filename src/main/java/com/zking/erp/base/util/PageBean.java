@@ -28,7 +28,7 @@ public class PageBean implements Serializable {
 	//设置请求参数
 	public void setRequest(HttpServletRequest req) {
 		String page=req.getParameter("page");
-		String rows=req.getParameter("rows");
+		String rows=req.getParameter("limit");
 		String pagination=req.getParameter("pagination");
 		this.setPage(page);
 		this.setRows(rows);

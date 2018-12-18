@@ -27,10 +27,10 @@
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zking.erp.basic.model.Goods" >
-    insert into goods (UUID, NAME, ORIGIN, 
+    insert into goods (UUID,NAME, ORIGIN,
       PRODUCER, UNIT, INPRICE, 
       OUTPRICE, GOODSTYPEUUID)
-    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR},
       #{producer,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{inprice,jdbcType=REAL}, 
       #{outprice,jdbcType=REAL}, #{goodstypeuuid,jdbcType=VARCHAR})
   </insert>
