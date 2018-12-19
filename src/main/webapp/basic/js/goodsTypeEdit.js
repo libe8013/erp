@@ -31,7 +31,7 @@ function editGoodsType(){
         type : 'post',
         async : false,
         success : function (data) {
-            layer.msg(data.message);
+            parent.layer.msg(data.message);
             window.parent.queryGoodsType();
             var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
             parent.layer.close(index);

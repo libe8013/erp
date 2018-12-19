@@ -25,6 +25,8 @@
                 </select>
             </div>
             <a href="javascript:void(0)" class="layui-btn" id="queryOrder">查询</a>
+            <%--<button type="button" class="layui-btn" id="queryOrder">查询</button>--%>
+            <%--<input type="submit" class="layui-btn" id="queryOrder" value="查询"/>--%>
         </form>
     </div>
 </div>

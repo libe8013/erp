@@ -1,12 +1,14 @@
-package com.zking.erp.basic.mapper;
+package com.zking.erp.basic.service;
 
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.model.Supplier;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository
-public interface SupplierMapper {
+@Service
+public interface ISupplierService {
     int deleteByPrimaryKey(String uuid);
 
     int insert(Supplier record);
@@ -19,5 +21,5 @@ public interface SupplierMapper {
 
     int updateByPrimaryKey(Supplier record);
 
-    List<Supplier> querySupplierLikePager(Supplier supplier);
+    List<Supplier> querySupplierLikePager(Supplier supplier, PageBean pageBean);
 }

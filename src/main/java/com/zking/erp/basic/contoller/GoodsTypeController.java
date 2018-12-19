@@ -88,4 +88,13 @@ public class GoodsTypeController {
         return map;
     }
 
+    @RequestMapping("/queryGoodsTypeSingle")
+    @ResponseBody
+    public GoodsType queryGoodsTypeSingle(String uuid){
+
+        GoodsType goodsType = goodsTypeService.selectByPrimaryKey(uuid);
+
+        return goodsType;
+    }
+
 }

@@ -52,7 +52,10 @@ function queryGoodsType() {
         url+='?name='+name;
     }
     layui.table.reload("goodsTypeTable", { //此处是上文提到的 初始化标识id
-        url: url
+        url: url,
+        page : {
+            curr : 1
+        }
     });
 }
 

@@ -21,7 +21,29 @@
     from supplier
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="querySupplierLikePager" resultType="com.zking.erp.basic.model.Supplier"
+            parameterType="com.zking.erp.basic.model.Supplier">
+      SELECT
+      <include refid="Base_Column_List"/>
+      from supplier where 1=1
+      <if test="null!=name and ''!=name">
+        and name like concat(concat('%',#{name}),'%')
+      </if>
+      <if test="null!=address and ''!=address">
+        and address like concat(concat('%',#{address}),'%')
+      </if>
+      <if test="null!=contact and ''!=contact">
+        and contact like concat(concat('%',#{contact}),'%')
+      </if>
+      <if test="null!=email and ''!=email">
+        and email like concat(concat('%',#{email}),'%')
+      </if>
+      <if test="null!=tele and ''!=tele">
+        and tele like concat(concat('%',#{tele}),'%')
+      </if>
+      group by sort desc
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from supplier
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
