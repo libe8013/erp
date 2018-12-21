@@ -1,9 +1,13 @@
 var path;
+var index;
 layui.use(['form','jquery','layer'],function () {
     $ = layui.jquery;
     path = $('#path').val();
     $(document).on('click','#editGoodsType',function () {
         editGoodsType();
+    });
+    $(document).on('click','#editClose',function () {
+        parent.layer.closeAll();
     })
 });
 

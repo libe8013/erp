@@ -38,7 +38,7 @@
         <form class="layui-form" action="">
         <label class="layui-form-label">商品类型：</label>
         <div class="layui-input-inline">
-            <select name="goodstypeuuid" id="goodstypeuuid" lay-verify="required" lay-search="">
+            <select name="goodstypeuuid2" id="gtypeuuid" lay-verify="" lay-search="">
                 <option value="0">请选择您要查询的类型</option>
             </select>
         </div>
@@ -160,12 +160,12 @@
                 <div class="layui-inline" style="padding:20px;">
                     <label class="layui-form-label">商品类型：</label>
                     <div class="layui-input-inline">
-                        <select name="goodstypeuuid2" lay-verify="goodstypeuuid" id="goodstypeuuid2" lay-verify="required" lay-search="">
+                        <select name="goodstypeuuid" lay-verify="goodstypeuuid" id="goodstypeuuid2" lay-verify="required" lay-search="">
                             <%--<option value="0">请选择商品类型</option>--%>
                         </select>
                     </div>
                 </div><br>
-                <button style="margin-left: 43%" href="javascript:void(0);" lay-submit class="layui-btn"  id="editGoods">保存</button>
+                <button lay-filter="edit" style="margin-left: 43%" lay-submit class="layui-btn"  id="editGoods">保存</button>
             </div><br><br>
         </form>
     </div>

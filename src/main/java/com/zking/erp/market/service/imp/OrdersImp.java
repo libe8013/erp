@@ -54,5 +54,16 @@ public class OrdersImp implements IOrdersService{
         return ordersMapper.queryOrdersPage(orders);
     }
 
+    /**
+     * 查询采购订单并分页
+     * @param orders
+     * @param pageBean
+     * @return
+     */
+    @Override
+    public List<Orders> queryOrderPurchasePager(Orders orders, PageBean pageBean) {
+        return ordersMapper.queryOrderPurchase(orders);
+    }
+
 
 }

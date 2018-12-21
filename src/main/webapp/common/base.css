@@ -9,3 +9,10 @@
 body .layer-ext-Select .layui-layer-content {
     overflow: visible;
 }
+
+/*设置 layui 表格中单元格内容溢出可见样式*/
+/*table-overlay在盒子设置*/
+.table-overlay .layui-table-view,
+.table-overlay .layui-table-box,
+.table-overlay .layui-table-body{overflow: visible;}
+.table-overlay .layui-table-cell{height: auto; overflow: visible;}

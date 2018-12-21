@@ -25,7 +25,7 @@ public class SupplierController {
     @ResponseBody
     public Map<String,Object> querySupplierLikePager(Supplier supplier, HttpServletRequest req){
 
-        supplier.setUuid(UUID.randomUUID().toString().replace("-",""));
+//        supplier.setUuid(UUID.randomUUID().toString().replace("-",""));
 
         PageBean pageBean = new PageBean();
         pageBean.setRequest(req);

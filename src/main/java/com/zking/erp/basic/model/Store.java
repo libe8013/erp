@@ -9,10 +9,13 @@ public class Store implements Serializable {
 
     private String empuuid;
 
-    public Store(String uuid, String name, String empuuid) {
+    private String  address;
+
+    public Store(String uuid, String name, String empuuid,String address) {
         this.uuid = uuid;
         this.name = name;
         this.empuuid = empuuid;
+        this.address=address;
     }
 
     public Store() {
@@ -41,5 +44,13 @@ public class Store implements Serializable {
 
     public void setEmpuuid(String empuuid) {
         this.empuuid = empuuid;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

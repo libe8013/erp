@@ -24,6 +24,18 @@
     from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+    <select id="queryEmpLikePager" resultType="com.zking.erp.personnel.model.Emp"
+            parameterType="com.zking.erp.personnel.model.Emp">
+      SELECT
+      <include refid="Base_Column_List"/>
+      from emp where 1=1
+    </select>
+  <select id="queryEmpStoreRole" resultType="map" parameterType="com.zking.erp.authority.model.Role">
+    SELECT e.uuid,r.*,e.name FROM emp e,t_emp_role er,t_role r WHERE e.uuid=er.`userid` AND er.`roleid`=r.`id`
+    <if test="null!=id and ''!=id">
+      and r.id=#{id}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from emp
     where UUID = #{uuid,jdbcType=VARCHAR}

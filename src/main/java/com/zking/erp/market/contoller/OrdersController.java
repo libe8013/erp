@@ -42,4 +42,28 @@ public class OrdersController {
         return map;
 
     }
+
+    /**
+     * 查询采购订单
+     * @param orders
+     * @param req
+     * @return
+     */
+    @RequestMapping("/queryPurchasePager")
+    @ResponseBody
+    public Map<String,Object> queryPurchasePager(Orders orders,HttpServletRequest req){
+        Map<String,Object> map = new HashMap<>();
+
+        PageBean pageBean = new PageBean();
+        pageBean.setRequest(req);
+
+        List<Orders> orders1 = ordersService.queryOrderPurchasePager(orders, pageBean);
+
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",pageBean.getTotal());
+        map.put("data",orders1);
+
+        return map;
+    }
 }

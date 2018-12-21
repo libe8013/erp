@@ -26,6 +26,9 @@
       SELECT
       <include refid="Base_Column_List"/>
       from supplier where 1=1
+      <if test="uuid!=name and ''!=name">
+        and uuid like concat(concat('%',#{uuid},'%'))
+      </if>
       <if test="null!=name and ''!=name">
         and name like concat(concat('%',#{name}),'%')
       </if>
@@ -40,6 +43,9 @@
       </if>
       <if test="null!=tele and ''!=tele">
         and tele like concat(concat('%',#{tele}),'%')
+      </if>
+      <if test="null!=type and ''!=type">
+        and type like concat(concat('%',#{type}),'%')
       </if>
       group by sort desc
     </select>

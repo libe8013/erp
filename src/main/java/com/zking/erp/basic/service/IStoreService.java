@@ -1,12 +1,12 @@
-package com.zking.erp.basic.mapper;
+package com.zking.erp.basic.service;
 
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.model.Store;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface StoreMapper {
+public interface IStoreService {
     int deleteByPrimaryKey(String uuid);
 
     int insert(Store record);
@@ -19,5 +19,5 @@ public interface StoreMapper {
 
     int updateByPrimaryKey(Store record);
 
-    List<Store> queryStoreLikePager(Store store);
+    List<Store> queryStoreLikePager(Store store, PageBean pageBean);
 }

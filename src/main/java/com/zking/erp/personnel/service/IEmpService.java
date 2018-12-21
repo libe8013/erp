@@ -1,5 +1,7 @@
 package com.zking.erp.personnel.service;
 
+import com.zking.erp.authority.model.Role;
+import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.personnel.vo.EmpVo;
 
 import java.util.List;
@@ -12,7 +14,11 @@ public interface IEmpService {
 
     int updateByPrimaryKey(EmpVo empVo);
 
+    Emp selectByPrimaryKey(String uuid);
+
     int updateByPrimaryKeySelective(EmpVo empVo);
 
     List<Map<String,Object>> queryEmpPage(EmpVo empVo);
+
+    List<Map<String,Object>> queryEmpStoreRole(Role role);
 }

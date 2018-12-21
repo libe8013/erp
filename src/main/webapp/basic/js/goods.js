@@ -3,9 +3,10 @@ var index;
 layui.use(['jquery','form','layer','table'],function () {
     $ = layui.jquery;
     path = $('#path').val();
+    var form = layui.form;
     var layer = layui.layer;
     initTable();
-    initSelect(null,'goodstypeuuid');
+    initSelect(null,'goodstypeuuid2');
     custom_rule();
     $(document).on('click','#goodsQuery',function () {
         queryGoodsType();
@@ -14,8 +15,8 @@ layui.use(['jquery','form','layer','table'],function () {
         addForm();
         return false;
     });
-    $(document).on('submit','#ff1',function () {
-        editForm();
+    form.on('submit(edit)',function (obj) {
+        editForm(obj.field);
         return false;
     });
     layui.table.on('tool(goodsTab)',function (obj) {
@@ -69,7 +70,7 @@ function queryGoodsType() {
     var name = $('#name').val();
     var origin = $('#origin').val();
     var PRODUCER = $('#PRODUCER').val();
-    var goodsTypeId = $('#goodstypeuuid option:selected').val();
+    var goodsTypeId = $('#gtypeuuid option:selected').val();
     var url = path+'/goods/queryGoodsLikePager?1=1';
 
     if(null!=name && ''!=name){
@@ -84,7 +85,6 @@ function queryGoodsType() {
     if(0!=goodsTypeId){
         url+="&goodstypeuuid="+goodsTypeId;
     }
-
     layui.table.reload("goodsTable", { //此处是上文提到的 初始化标识id
         url: url,
         page : {
@@ -100,15 +100,15 @@ function initSelect(id,htmlid){
         var goodsType = "";
         if (data.data != null) {
             $.each(data.data, function (index, item) {
-                    if (item.uuid){
-                        if(id!=null && id!=0 && item.uuid==id){
-                            goodsType += "<option class='generate' selected='selected' value='" + item.uuid + "'>" + item.name + "</option>";
-                        }else{
-                            goodsType += "<option class='generate' value='" + item.uuid + "'>" + item.name + "</option>";
-                        }
+                if (item.uuid){
+                    if(id!=null && id!=0 && item.uuid==id){
+                        goodsType += "<option class='generate' selected='selected' value='" + item.uuid + "'>" + item.name + "</option>";
                     }else{
-                        goodsType += "<option value='" + item.uuid + "'>" + item.name + "</option>";
+                        goodsType += "<option class='generate' value='" + item.uuid + "'>" + item.name + "</option>";
                     }
+                }else{
+                    goodsType += "<option value='" + item.uuid + "'>" + item.name + "</option>";
+                }
             });
             $("select[name='"+htmlid+"']").append(goodsType);
             //反选
@@ -121,7 +121,6 @@ function initSelect(id,htmlid){
 
 function add(){
     var addDiv = $('#addDiv').html();
-    alert(addDiv);
     //弹出一个页面层
     layer.open({
         skin : 'layer-ext-Select',
@@ -237,7 +236,7 @@ function edit(obj){
         content: editDiv,
         title : '编辑商品信息'
     });
-    initSelect(obj.goodstypeuuid,'goodstypeuuid2');
+    initSelect(obj.goodstypeuuid,'goodstypeuuid');
     $("#goodstypeuuid2").find("option[value='"+obj.goodstypeuuid+"']").prop("selected",true);
     $('#uuid').val(obj.uuid);
     $('#name2').val(obj.name);
@@ -250,9 +249,10 @@ function edit(obj){
 }
 
 
-function editForm() {
+function editForm(obj) {
     var result = [];
     var arr = {};
+    var data = obj;
     $.ajax({
         url : path+'/goods/queryGoodsLikePager',
         data : {},
@@ -264,17 +264,8 @@ function editForm() {
         }
     });
 
-    var uuid = $('#uuid').val();
-    var name = $('#name2').val();
-    var origin1 = $('#origin2').val();
-    var producerl = $('#PRODUCER2').val();
-    var unit = $('#unit2').val();
-    var inprice = $('#inprice2').val();
-    var outprice = $('#outprice2').val();
-    var goodstypeuuid = $('#goodstypeuuid2 option:selected').val();
-    var data = {uuid:uuid,name:name,origin:origin1,producer:producerl,unit:unit,inprice:inprice,outprice:outprice,goodstypeuuid:goodstypeuuid};
     for(var i=0;i<result.length;i++){
-        if(result[i].uuid==uuid){
+        if(result[i].uuid==data.uuid){
             arr = result[i];
             break;
         }
@@ -282,12 +273,13 @@ function editForm() {
 
     if(arr.name!=data.name){
         for(var i=0;i<result.length;i++){
-            if(result[i].name==name){
+            if(result[i].name==data.name){
                 layer.msg('已有该商品名称');
                 return;
             }
         }
     }
+
     $.ajax({
         url : path+'/goods/editGoods',
         data : data,

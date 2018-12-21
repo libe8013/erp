@@ -6,10 +6,11 @@
       <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="EMPUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    UUID, NAME, EMPUUID
+    UUID, NAME, EMPUUID,address
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -17,14 +18,29 @@
     from store
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryStoreLikePager" resultType="com.zking.erp.basic.model.Store"
+          parameterType="com.zking.erp.basic.model.Store">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from store where 1=1
+    <if test="null!=name and ''!=name">
+      and name like concat(concat('%',#{name}),'%')
+    </if>
+    <if test="null!=address and ''!=address">
+      and address like concat(concat('%',#{address}),'%')
+    </if>
+    <if test="null!=empuuid and ''!=empuuid">
+      and empuuid like concat(concat('%',#{empuuid}),'%')
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from store
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zking.erp.basic.model.Store" >
-    insert into store (UUID, NAME, EMPUUID
+    insert into store (UUID, NAME, EMPUUID,address
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{empuuid,jdbcType=VARCHAR}
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{empuuid,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zking.erp.basic.model.Store" >
@@ -39,6 +55,9 @@
       <if test="empuuid != null" >
         EMPUUID,
       </if>
+      <if test="address != null " >
+        address,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
@@ -49,6 +68,9 @@
       </if>
       <if test="empuuid != null" >
         #{empuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -61,13 +83,17 @@
       <if test="empuuid != null" >
         EMPUUID = #{empuuid,jdbcType=VARCHAR},
       </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR}
+      </if>
     </set>
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zking.erp.basic.model.Store" >
     update store
     set NAME = #{name,jdbcType=VARCHAR},
-      EMPUUID = #{empuuid,jdbcType=VARCHAR}
+      EMPUUID = #{empuuid,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
     where UUID = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

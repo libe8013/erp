@@ -34,7 +34,7 @@ function initTable(){
         page: true, //开启分页
         cols: [[ //表头
             {type:'checkbox',width:'3%'},
-            // {field:'uuid', width:'18%', title: '编号',align:'center'},
+            {field:'uuid', width:'18%', title: '编号',align:'center'},
             {field:'name', width:'10%', title: '名称',align:'center'},
             {field:'address', width:'15%', title: '地址',align:'center'},
             {field:'contact', width:'13%', title: '联系人',align:'center'},
@@ -69,7 +69,7 @@ function querySupplier() {
         url+='&email='+email;
     }
 
-    url+="&type=0";
+    url+="&type=1";
 
     layui.table.reload("supplierTable", { //此处是上文提到的 初始化标识id
         url: url
@@ -120,7 +120,7 @@ function addForm() {
     }
     $.ajax({
         url : path+'/supplier/addSupplier',
-        data : {name:name,address:address,contact:contact,tele:tele,email:email},
+        data : {name:name,address:address,contact:contact,tele:tele,email:email,type:'1'},
         dataType : 'json',
         type : 'post',
         async : false,

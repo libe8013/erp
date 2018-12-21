@@ -26,4 +26,11 @@ public interface IOrdersService {
      * @return
      */
     List<Orders> queryOrdersPager(OrderVo orders, PageBean pageBean);
+
+    /**
+     * 查询采购订单
+     * @param orders
+     * @return
+     */
+    List<Orders> queryOrderPurchasePager(Orders orders,PageBean pageBean);
 }

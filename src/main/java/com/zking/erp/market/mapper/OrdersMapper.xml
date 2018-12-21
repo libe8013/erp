@@ -38,6 +38,12 @@
 
   order by a.createtime desc
 </select>
+  <select id="queryOrderPurchase" resultType="com.zking.erp.market.model.Orders"
+          parameterType="com.zking.erp.market.model.Orders">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from orders where 1=1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from orders
     where UUID = #{uuid,jdbcType=VARCHAR}

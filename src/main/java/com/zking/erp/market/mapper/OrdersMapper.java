@@ -27,4 +27,11 @@ public interface OrdersMapper {
      * @return
      */
     List<Orders> queryOrdersPage(OrderVo orders);
+
+    /**
+     * 查询采购订单
+     * @param orders
+     * @return
+     */
+    List<Orders> queryOrderPurchase(Orders orders);
 }
