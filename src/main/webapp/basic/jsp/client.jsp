@@ -13,7 +13,6 @@
     <script src="${ctx}/basic/js/client.js"></script>
 </head>
 <body>
-<input type="hidden" id="path" value="${ctx}"/>
 <div>
     <div class="layui-inline">
         <label class="layui-form-label">名称：</label>

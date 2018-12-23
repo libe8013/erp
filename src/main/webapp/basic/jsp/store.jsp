@@ -13,7 +13,6 @@
     <script src="${ctx}/basic/js/store.js"></script>
 </head>
 <body>
-<input type="hidden" id="path" value="${ctx}"/>
 <div>
     <form class="layui-form" method="post" autocomplete="off">
     <div class="layui-inline">

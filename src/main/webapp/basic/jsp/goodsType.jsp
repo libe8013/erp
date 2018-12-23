@@ -13,7 +13,6 @@
     <script src="/erp/basic/js/goodsType.js"></script>
 </head>
 <body>
-<input type="hidden" id="path" value="${ctx}"/>
 <div>
     <label class="layui-form-label">类型名称：</label>
     <div class="layui-input-inline">

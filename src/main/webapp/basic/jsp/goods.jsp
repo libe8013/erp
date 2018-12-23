@@ -13,7 +13,6 @@
     <script src="${ctx}/basic/js/goods.js"></script>
 </head>
 <body>
-<input type="hidden" id="path" value="${ctx}"/>
 <div>
     <div class="layui-inline">
         <label class="layui-form-label">商品名称：</label>

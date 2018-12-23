@@ -4,7 +4,6 @@
     <%@include file="/common/head.jsp"%>
 </head>
 <body>
-<input id="path" value="${ctx}" type="hidden"/>
 <div style="margin-top: 5%;margin-left: 6%;">
     <form id="ff" method="post" autocomplete="off">
         <div>

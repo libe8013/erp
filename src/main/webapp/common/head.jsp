@@ -12,4 +12,4 @@
 <link rel="stylesheet" href="${ctx}/common/base.css">
 <script src="${ctx}/base/js/common/jquery.min.js"></script>
 <script src="${ctx}/base/js/layui/layui.js"></script>
-
+<input type="hidden" id="path" value="${ctx}"/>
