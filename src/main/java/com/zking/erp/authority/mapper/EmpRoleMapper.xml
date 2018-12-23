@@ -39,4 +39,9 @@
     delete FROM t_emp_role
     where userid = #{userid}
   </delete>
+    <select id="queryEmpRolePager" resultType="map" parameterType="com.zking.erp.authority.Vo.EmpRoleVo">
+        SELECT e.`UUID`,e.`USERNAME`,e.`NAME`,e.`GENDER`,e.`EMAIL`,e.`TELE`,e.`ADDRESS`,e.`BIRTHDAY`,d.`NAME` AS dname
+        FROM emp e,t_role r,t_emp_role er,dep d
+        WHERE e.`UUID`=er.`userid` AND r.`id`=er.`roleid` AND e.`DEPUUID`=d.`UUID`
+    </select>
 </mapper>

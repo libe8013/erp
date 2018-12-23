@@ -18,6 +18,12 @@
     from storedetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryStoreLikePager" resultType="map" parameterType="com.zking.erp.stock.vo.StoredetailVo">
+    SELECT g.name AS gname,s.name AS sname,g.uuid AS gid,st.num FROM goods g,store s,storedetail st
+    where g.uuid=st.goodsuuid and s.uuid = st.storeuuid
+    <if test="null!=goods.name and ''!=goods.name"> and g.name like concat(concat('%',#{goods.name},'%')) </if>
+    <if test="null!=store.name and ''!=store.name"> and s.name LIKE concat(concat('%',#{store.name},'%')) </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from storedetail
     where UUID = #{uuid,jdbcType=VARCHAR}

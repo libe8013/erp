@@ -15,6 +15,12 @@
     delete from t_role
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  <select id="queryRoleLike" resultType="map" parameterType="com.zking.erp.authority.model.Role">
+    SELECT * FROM t_role WHERE 1=1
+    <if test="null!=rolename and ''!=rolename">
+         rolename = concat(concat(concat('%',#{rolename},'%')))
+    </if>
+  </select>
   <insert id="insert" parameterType="com.zking.erp.authority.model.Role" >
     insert into t_role (id, rolename, remark
       )

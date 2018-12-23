@@ -99,4 +99,12 @@
       </if>
     </trim>
   </insert>
+    <select id="queryInventoryPager" resultType="map" parameterType="com.zking.erp.stock.vo.InventoryVo">
+      SELECT iv.`UUID`,s.`NAME` AS sname,g.`NAME` AS gname,st.`NUM` AS stNum,iv.`type`,iv.`createtime`,iv.`checktime`,e.`NAME` as ename,iv.state
+      FROM inventory iv,goods g,store s,storedetail st,emp e
+      WHERE iv.`GOODSUUID`=g.`UUID` AND iv.`STOREUUID`=s.`UUID` AND iv.`CREATER`=e.`UUID`
+      <if test="null!=type and ''!=type">
+        and type = #{type}
+      </if>
+    </select>
 </mapper>
