@@ -36,6 +36,9 @@
       and r.id=#{id}
     </if>
   </select>
+  <select id="Login" resultType="map" parameterType="com.zking.erp.personnel.model.Emp">
+    SELECT * from emp where username=#{username} and pwd=#{pwd}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -162,5 +165,9 @@
       BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
       DEPUUID = #{depuuid,jdbcType=VARCHAR}
     where UUID = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updatePwd" parameterType="com.zking.erp.personnel.model.Emp">
+    UPDATE emp SET PWD = #{pwd}
+    WHERE UUID = #{uuid}
   </update>
 </mapper>

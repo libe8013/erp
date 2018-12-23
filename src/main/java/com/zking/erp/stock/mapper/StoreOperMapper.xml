@@ -21,6 +21,25 @@
     from storeoper
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryRecordsPager" resultType="map" parameterType="com.zking.erp.stock.vo.StoreOperVo">
+    SELECT sp.uuid,e.name AS empName,sp.opertime,s.`NAME` AS sname ,g.`NAME` as gname,sd.num,sp.type FROM
+    storeoper sp,emp e,goods g, store s,storedetail sd
+    WHERE sp.empuuid=e.uuid AND sp.storeuuid=s.`UUID` AND sp.goodsuuid=g.`UUID`
+    <if test="null!=emp.name and ''!=emp.name">
+      and empName = #{emp.name}
+    </if>
+    <!--<if test=""></if>-->
+    <if test="null!=store.name and ''!=store.name">
+      and sname = #{store.name}
+    </if>
+    <if test="null!=goods.name and ''!=goods.name">
+      and gname = #{goods.name}
+    </if>
+    <if test="null!=type and ''!=type">
+      and sp.type = #{type}
+    </if>
+
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from storeoper
     where UUID = #{uuid,jdbcType=VARCHAR}

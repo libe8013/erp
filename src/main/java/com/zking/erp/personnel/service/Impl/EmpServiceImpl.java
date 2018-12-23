@@ -51,4 +51,14 @@ public class EmpServiceImpl implements IEmpService {
     public List<Map<String,Object>> queryEmpStoreRole(Role role) {
         return empMapper.queryEmpStoreRole(role);
     }
+
+    @Override
+    public int updatePwd(Emp emp) {
+        return empMapper.updatePwd(emp);
+    }
+
+    @Override
+    public List<Map<String, Object>> Login(Emp emp) {
+        return empMapper.Login(emp);
+    }
 }

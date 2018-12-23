@@ -6,29 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/login.css"/>
 
-<script>
-//登陆
-function login(){	
-	var formdata=$('#loginform').serializeJSON();	
-	$.ajax({
-		url:'',
-		dataType:'json',
-		type:'post',
-		data:formdata,
-		success:function(value){
-			
-			if(value.success){//如果成功
-				location.href="index.html";//跳转到主界面 
-			}else
-			{
-				$.messager.alert('提示信息',value.message);
-			}			
-		}		
-	});	
-}
-
-
-</script>
+<script src="authority/js/userPage.js"></script>
 
 </head>
 <body>
@@ -57,7 +35,7 @@ function login(){
     
     
 
-    <div class="login-btn-set"><div class='rem'>记住我</div> <a href='javascript:login()' class='login-btn'></a></div>
+    <div class="login-btn-set"><div class='rem'>记住我</div> <a href='javascript:void(0)' id="login" class='login-btn'></a></div>
 </div>
 
 </body>

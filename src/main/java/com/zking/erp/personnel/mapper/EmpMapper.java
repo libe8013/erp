@@ -24,4 +24,13 @@ public interface EmpMapper {
     List<Emp> queryEmpLikePager(Emp emp);
 
     List<Map<String,Object>> queryEmpStoreRole(Role role);
+
+    /**
+     * 修改密码
+     * @param emp
+     * @return
+     */
+    int updatePwd(Emp emp);
+
+    List<Map<String,Object>> Login(Emp emp);
 }
