@@ -9,8 +9,7 @@
 <html>
 <head>
     <%@include file="/common/head.jsp"%>
-    <script src="${ctx}/purchase/js/orderPurchase.js"></script>
-    <script src="${ctx}/purchase/js/orderDetail.js"></script>
+    <script src="${ctx}/purchase/js/orderDetailAudit.js"></script>
 </head>
 <body>
 <form class="layui-form layui-form-pane" action="">
@@ -103,8 +102,11 @@
     </div>
 </form>
 <div>
-    <table class="layui-table" id="orderDetailTable" lay-filter="orderDetailTable">
+    <table class="layui-table" id="orderDetailTable" lay-filter="orderDetailAuditFilter">
     </table>
 </div>
+<script type="text/html" id="Audit">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" id="OrdersAudit" lay-event="OrderDetailAudit">审核</button>
+</script>
 </body>
 </html>

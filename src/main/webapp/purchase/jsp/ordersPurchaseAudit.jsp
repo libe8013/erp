@@ -9,7 +9,7 @@
 <html>
 <head>
     <%@include file="/common/head.jsp"%>
-    <script src="${ctx}/purchase/js/orderPurchase.js"></script>
+    <script src="${ctx}/purchase/js/orderPurchaseAudit.js"></script>
 </head>
 <body>
 <div>
@@ -35,7 +35,7 @@
     </table>
 </div>
 <script type="text/html" id="crud">
-    <a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetail" lay-event="queryOrderDetail">订单详情</a>
+    <a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryOrderDetailAudit">订单审核</a>
 </script>
 </body>
 </html>

@@ -26,4 +26,11 @@ public interface IOrderDetailService {
      * @return
      */
     List<OrderDetail> OrderDetailquery(OrderDetail orderDetail);
+
+    /**
+     * 根据订单id查询对应的订单详情
+     * @param orderDetail
+     * @return
+     */
+    List<OrderDetail> queryOrderDetail(OrderDetail orderDetail);
 }

@@ -35,4 +35,6 @@ public interface OrderDetailMapper {
      * @return
      */
     List<OrderDetail> orderDetailquery(OrderDetail orderDetail);
+
+    List<OrderDetail> queryOrderDetail(OrderDetail orderDetail);
 }

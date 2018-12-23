@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.model.Goods;
+import com.zking.erp.market.model.OrderDetail;
 import com.zking.erp.market.model.Orders;
 import com.zking.erp.market.service.IOrdersService;
 import com.zking.erp.market.vo.OrdersVo;
@@ -106,7 +107,7 @@ public class OrdersController {
         Emp emp = (Emp) session.getAttribute("emp");
 
         //下单人改成当前登录用户
-        ordersVo.setCreater("03805c98ff7e11e887f000e04c824916");
+        ordersVo.setCreater(emp.getUuid());
 
         ordersService.addOrders(ordersVo,maps);
 
@@ -114,6 +115,31 @@ public class OrdersController {
 
         map.put("message",message);
         map.put("code",1);
+
+        return map;
+    }
+
+    @RequestMapping("/Audit")
+    @ResponseBody
+    public Map<String,Object> Audit(Orders orders,HttpServletRequest req){
+        Map<String,Object> map = new HashMap<>();
+        String message = "审核成功";
+
+        HttpSession session = req.getSession();
+
+        Emp emp = (Emp) session.getAttribute("emp");
+
+        orders.setChecktime(new Date());
+
+        orders.setChecker(emp.getUuid());
+
+        try {
+            ordersService.updateByPrimaryKeySelective(orders);
+        } catch (Exception e) {
+            message = "审核失败";
+        }
+
+        map.put("message",message);
 
         return map;
     }
