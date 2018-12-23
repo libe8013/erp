@@ -10,7 +10,7 @@
 <head>
     <%@include file="/common/head.jsp"%>
     <%--<script src="basic/js/goodsType.js"></script>--%>
-    <script src="${ctx}/market/js/order.js"></script>
+    <script src="${ctx}/purchase/js/orderPurchase.js"></script>
 </head>
 <body>
 <input type="hidden" id="path" value="${ctx}"/>

@@ -2,7 +2,7 @@ package com.zking.erp.market.service;
 
 import com.zking.erp.base.util.PageBean;
 import com.zking.erp.market.model.Orders;
-import com.zking.erp.market.vo.OrderVo;
+import com.zking.erp.market.vo.OrdersVo;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,7 @@ public interface IOrdersService {
      * @param orders
      * @return
      */
-    List<Orders> queryOrdersPager(OrderVo orders, PageBean pageBean);
+    List<Orders> queryOrdersPager(OrdersVo orders, PageBean pageBean);
 
     /**
      * 查询采购订单
@@ -33,4 +33,11 @@ public interface IOrdersService {
      * @return
      */
     List<Orders> queryOrderPurchasePager(Orders orders,PageBean pageBean);
+
+    /**
+     * 添加订单
+     * @param ordersVo
+     * @return
+     */
+    int addOrders(OrdersVo ordersVo,List<Map<String,Object>> mpas);
 }

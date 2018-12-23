@@ -174,48 +174,6 @@ function initSelect(id,htmlid){
     });
 }
 
-function initOrderDetailTable(){
-    var table = layui.table;
-    table.render({
-        elem : '#ordersTable',
-        id : 'ordersTable',
-        toolbar : '#toolbarTop',
-        height: 600,
-        data : [],
-        page: true, //开启分页
-        cols: [[ //表头
-            {type:'checkbox',width:'3%'},
-            // {field:'uuid', width:'18%', title: '编号',align:'center'},
-            {field:'createtime', width:'10%', title: '生成日期',align:'center'},
-            {field:'checktime', width:'10%', title: '检查日期',align:'center'},
-            {field:'starttime', width:'10%', title: '开始日期',align:'center'},
-            {field:'endtime', width:'10%', title: '结束日期',align:'center'},
-            {field:'creater', width:'8%', title: '下单员',align:'center'},
-            {field:'checker', width:'8%', title: '审查员',align:'center'},
-            {field:'starter', width:'8%', title: '采购员',align:'center'},
-            {field:'ender', width:'8%', title: '库管员',align:'center'},
-            {field:'supplieruuid', width:'8%', title: '供应商',align:'center'},
-            {field:'totalmoney', width:'8%', title: '总金额',align:'center'},
-            {field:'state', width:'9%', title: '订单状态',align:'center'},
-            // {field:'操作', width:'15%', title: '操作',align:'center',toolbar:'#crud'}
-        ]],
-    });
-}
-
-// function add(){
-//     var addDiv = $('#addDiv').html();
-//     //弹出一个页面层
-//     layer.open({
-//         skin : 'layer-ext-Select',
-//         type: 1,
-//         area: ['700px', '260px'],
-//         shadeClose: true, //点击遮罩关闭
-//         content: addDiv,
-//         title : '新增仓库'
-//     });
-//     initSelect(null,'supplieruuid');
-// }
-
 function add(){
     layer.open({
         type: 2,

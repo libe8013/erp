@@ -27,7 +27,7 @@
       <arg column="STOREUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ORDERSUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="GOODSUUID" jdbcType="VARBINARY" javaType="_byte[]" />
+      <arg column="GOODSUUID" jdbcType="VARBINARY" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -136,6 +136,13 @@
         #{goodsuuid,jdbcType=VARBINARY},
       </if>
     </trim>
+  </insert>
+  <insert id="addOrdersDetail">
+    insert into orderdetail(uuid,goodsuuid,goodsname,price,num,money,state,ordersuuid)
+    VALUE
+    <foreach collection="collection" item="maps" separator=",">
+        (#{maps.uuid},#{maps.goodsuuid},#{maps.goodsname},#{maps.price},#{maps.num},#{maps.money},#{maps.state},#{maps.ordersuuid})
+    </foreach>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.market.model.OrderDetail" >
     update orderdetail

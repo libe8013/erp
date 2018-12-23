@@ -27,9 +27,9 @@ public class OrderDetail implements Serializable{
 
     private String ordersuuid;
 
-    private byte[] goodsuuid;
+    private String goodsuuid;
 
-    public OrderDetail(String uuid, String goodsname, Float price, Integer num, Float money, Date endtime, String ender, String storeuuid, String state, String ordersuuid, byte[] goodsuuid) {
+    public OrderDetail(String uuid, String goodsname, Float price, Integer num, Float money, Date endtime, String ender, String storeuuid, String state, String ordersuuid, String goodsuuid) {
         this.uuid = uuid;
         this.goodsname = goodsname;
         this.price = price;
@@ -127,11 +127,11 @@ public class OrderDetail implements Serializable{
         this.ordersuuid = ordersuuid;
     }
 
-    public byte[] getGoodsuuid() {
+    public String getGoodsuuid() {
         return goodsuuid;
     }
 
-    public void setGoodsuuid(byte[] goodsuuid) {
+    public void setGoodsuuid(String goodsuuid) {
         this.goodsuuid = goodsuuid;
     }
 }

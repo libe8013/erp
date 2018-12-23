@@ -151,6 +151,97 @@
       </if>
     </trim>
   </insert>
+  <insert id="addOrders" parameterType="com.zking.erp.market.vo.OrdersVo">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="checktime != null" >
+        CHECKTIME,
+      </if>
+      <if test="starttime != null" >
+        STARTTIME,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="checker != null" >
+        CHECKER,
+      </if>
+      <if test="starter != null" >
+        STARTER,
+      </if>
+      <if test="ender != null" >
+        ENDER,
+      </if>
+      <if test="supplieruuid != null" >
+        SUPPLIERUUID,
+      </if>
+      <if test="totalmoney != null" >
+        TOTALMONEY,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="waybillsn != null" >
+        WAYBILLSN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checktime != null" >
+        #{checktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null" >
+        #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="starter != null" >
+        #{starter,jdbcType=VARCHAR},
+      </if>
+      <if test="ender != null" >
+        #{ender,jdbcType=VARCHAR},
+      </if>
+      <if test="supplieruuid != null" >
+        #{supplieruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalmoney != null" >
+        #{totalmoney,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillsn != null" >
+        #{waybillsn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.market.model.Orders" >
     update orders
     <set >

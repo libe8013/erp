@@ -1,11 +1,10 @@
 package com.zking.erp.market.mapper;
 
 import com.zking.erp.market.model.Orders;
-import com.zking.erp.market.vo.OrderVo;
+import com.zking.erp.market.vo.OrdersVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface OrdersMapper {
@@ -26,7 +25,7 @@ public interface OrdersMapper {
      * @param orders
      * @return
      */
-    List<Orders> queryOrdersPage(OrderVo orders);
+    List<Orders> queryOrdersPage(OrdersVo orders);
 
     /**
      * 查询采购订单
@@ -34,4 +33,11 @@ public interface OrdersMapper {
      * @return
      */
     List<Orders> queryOrderPurchase(Orders orders);
+
+    /**
+     * 添加订单
+     * @param ordersVo
+     * @return
+     */
+    int addOrders(OrdersVo ordersVo);
 }

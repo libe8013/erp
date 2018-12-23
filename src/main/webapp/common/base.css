@@ -15,4 +15,5 @@ body .layer-ext-Select .layui-layer-content {
 .table-overlay .layui-table-view,
 .table-overlay .layui-table-box,
 .table-overlay .layui-table-body{overflow: visible;}
-.table-overlay .layui-table-cell{height: auto; overflow: visible;}
+.table-overlay .layui-table-cell{height: 50%; overflow: visible;}
+.table-overlay dd{text-align: left}

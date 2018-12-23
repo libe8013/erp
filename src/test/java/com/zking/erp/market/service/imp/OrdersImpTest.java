@@ -1,23 +1,15 @@
 package com.zking.erp.market.service.imp;
 
 import com.zking.erp.base.util.BaseTestCase;
-import com.zking.erp.base.util.PageBean;
-import com.zking.erp.market.model.Orders;
 import com.zking.erp.market.service.IOrdersService;
-import com.zking.erp.market.vo.OrderVo;
-import com.zking.erp.personnel.model.Emp;
+import com.zking.erp.market.vo.OrdersVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class OrdersImpTest extends BaseTestCase{
     @Autowired
     private IOrdersService ordersService;
-    private OrderVo orderVo;
+    private OrdersVo orderVo;
 
     @Test
     public void queryOrdersPage() {

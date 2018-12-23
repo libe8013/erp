@@ -17,37 +17,37 @@ public class OrderDetailImp implements IOrderDetailService{
 
     @Override
     public int deleteByPrimaryKey(String uuid) {
-        return 0;
+        return orderDetailMapper.deleteByPrimaryKey(uuid);
     }
 
     @Override
     public int insert(OrderDetail record) {
-        return 0;
+        return orderDetailMapper.insert(record);
     }
 
     @Override
     public int insertSelective(OrderDetail record) {
-        return 0;
+        return orderDetailMapper.insertSelective(record);
     }
 
     @Override
     public OrderDetail selectByPrimaryKey(String uuid) {
-        return null;
+        return orderDetailMapper.selectByPrimaryKey(uuid);
     }
 
     @Override
     public int updateByPrimaryKeySelective(OrderDetail record) {
-        return 0;
+        return orderDetailMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKeyWithBLOBs(OrderDetail record) {
-        return 0;
+        return orderDetailMapper.updateByPrimaryKeyWithBLOBs(record);
     }
 
     @Override
     public int updateByPrimaryKey(OrderDetail record) {
-        return 0;
+        return orderDetailMapper.updateByPrimaryKey(record);
     }
 
     @Override

@@ -74,7 +74,7 @@
             var valueField = settings.valueField || 'value',
                 textField = settings.textField || 'text',
                 selectedValue = settings.selectedValue || "";
-            alert("settins");
+            // alert("settins");
 
             var html = [];
             for(var i=0, item; i < data.length; i++){
@@ -136,7 +136,7 @@
         //定义事件集合
         var active = {
             addRow: function(){	//添加一行
-                alert("Addrows");
+                // alert("Addrows");
                 var oldData = table.cache[layTableId];
                 console.log(oldData);
                 var newRow = {tempId: new Date().valueOf(), type: null, name: '请填写名称', state: 0};
@@ -148,7 +148,8 @@
             },
             updateRow: function(obj){
                 var oldData = table.cache[layTableId];
-                // console.log(oldData);
+                console.log(oldData);
+                console.log(oldData[0]);
                 for(var i=0, row; i < oldData.length; i++){
                     row = oldData[i];
                     if(row.tempId == obj.tempId){
@@ -209,24 +210,26 @@
             // console.log(elem);
             var oldData = table.cache[layTableId];
             // console.log(oldData);
-alert(0);
+            // console.log("=====");
+            // alert(0);
+// alert(0);
             $(elem).prev("a[lay-event='type']").trigger("click");
-            alert(2);
-            console.log("==============");
+            // alert(2);
+            // console.log("==============");
         });
 
         //监听工具条
         table.on('tool(dataTable)', function (obj) {
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-            alert(1);
+            // alert(1);
             // console.log(data);
             switch(event){
                 case "type":
                     //console.log(data);
                     var select = tr.find("select[name='type']");
-                    alert(1111);
+                    // alert(1111);
                     var oldData = table.cache[layTableId];
-                    console.log(oldData);
+                    // console.log(oldData);
                     if(select){
 
                         var selectedVal = select.val();

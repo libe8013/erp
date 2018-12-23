@@ -1,7 +1,6 @@
 var path;
 var index;
 var GoodsResult;
-var endUUID = '';
 layui.use(['jquery','form','layer','table'],function () {
     var $ = layui.$,table=layui.table,form=layui.form;
     path = $('#path').val();
@@ -40,11 +39,9 @@ layui.use(['jquery','form','layer','table'],function () {
     //定义事件集合
     var active = {
         addRow : function () {//添加行方法
-            // var uuid = createUUID();
+            var uuid = createUUID();
             var oldData = table.cache[tableId];
-            alert("ADDROW");
-            console.log(oldData);
-            var newData = {uuid:null,name:null,outprice:null,num:null,money:121221};
+            var newData = {id:uuid,uuid:null,outprice:null,num:null,money:null};
             oldData.push(newData);
             orderDetailTable.reload({
                 data : oldData
@@ -54,14 +51,25 @@ layui.use(['jquery','form','layer','table'],function () {
             var oldData = table.cache[tableId];
             for(var i=0, row; i < oldData.length; i++){
                 row = oldData[i];
-                if(row.goods == obj.goods){
+                if(row.id == obj.id){
                     $.extend(oldData[i], obj);
-                    return;
+
+                    for(var j=0;j<GoodsResult.length;j++){
+                        if(obj.uuid==GoodsResult[j].uuid){
+                            var outprice = {outprice:GoodsResult[j].outprice}
+                            $.extend(oldData[i],outprice);
+                            break;
+                        }
+                    }
+                    break;
                 }
             }
+
             orderDetailTable.reload({
                 data : oldData
             });
+
+
         },
         removeEmptyTableCache : function () {
             var oldData = table.cache[tableId];
@@ -75,15 +83,75 @@ layui.use(['jquery','form','layer','table'],function () {
             orderDetailTable.reload({
                 data : oldData
             });
+        },
+        removeAll : function () {
+            var oldData = table.cache[tableId];
+            for(var i=0, row; i < oldData.length; i++){
+                oldData.splice(i, 1);    //删除所有
+            }
+            orderDetailTable.reload({
+                data : oldData
+            });
+        },
+        saveOrders: function(){
+            var oldData = table.cache[tableId];
+            var supplieruuid = $('#supplieruuid option:selected').val();
+
+            if(supplieruuid==0 || supplieruuid==null){
+                layer.msg("请选择供应商！", { icon: 5 }); //提示
+                return;
+            }
+            if(oldData.length==0){
+                layer.msg("请添加订单！", { icon: 5 }); //提示
+                return;
+            }
+
+            for(var i=0, row; i < oldData.length; i++){
+                row = oldData[i];
+                if(!row.uuid){
+                    layer.msg("检查每一行，请选择商品！", { icon: 5 }); //提示
+                    return;
+                }
+                if(row.num==0 || row.num==null){
+                    layer.msg("检查每一行，请输入数量！", { icon: 2 }); //提示
+                    return;
+                }
+            }
+
+            var totalmoney = 0;
+            var json = [];
+            for(var i=0;i<oldData.length;i++){
+                totalmoney+=oldData[i].money;
+                var ordersDeatildata = {
+                    uuid : oldData[i].uuid,
+                    num : oldData[i].num,
+                    money : oldData[i].money
+                };
+                json.push(queryGoods(ordersDeatildata));
+            }
+
+
+            var Goodsjson = JSON.stringify(json);	//使用JSON.stringify() 格式化输出JSON字符串
+            $.ajax({
+                url : path+'/orders/addOrders',
+                data : {type:"采购",state:'未审核',supplieruuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
+                dataType : 'json',
+                type : 'post',
+                async : false,
+                success : function (data) {
+                    layer.msg(data.message, { icon: 1 }); //提示
+                    activeByType("removeAll");
+                    $('#ff')[0].reset();
+                }
+            });
         }
     };
 
     //激活事件
     var activeByType = function (type, arg) {//第一个参数是定义的事件名
-        alert(type+"__"+arg+"_____"+arguments.length);
-        console.log(arg);
         if(arguments.length === 2){//判断有几个参数值(为undefined不算一个)
-            active[type] ? active[type].call(this, arg) : '';
+            //使用call()来实现继承：写一个方法，然后让另外一个新的对象来继承它（而不是在新对象中再写一次这个方法）。当前例子:当前function继承active方法(不需要在创建active方法)
+            active[type] ? active[type].call(this, arg) : '';//可以让call()中的对象调用当前对象所拥有的function,当前例子:在activeByType中调用active方法
         }else{
             active[type] ? active[type].call(this) : '';
         }
@@ -92,36 +160,72 @@ layui.use(['jquery','form','layer','table'],function () {
     //注册按钮事件
     $(document).on('click','#addRow', function () {
         var type = $(this).data('type');//获取当前点击按钮的data-type属性值
-        activeByType(type);
+        activeByType(type);//调用activeByType方法
     });
+
+    $(document).on('click','#saveOrders', function () {
+        var type = $(this).data('type');//获取当前点击按钮的data-type属性值
+        activeByType(type);//调用activeByType方法
+    });
+
+    table.on('edit(orderDetailTab)',function (obj) {
+        var value = obj.value, //得到所在行所有键值
+                data=obj.data,//得到修改后的值
+                field=obj.field;//得到字段
+
+        if(!data.uuid){
+            layer.msg('请选择商品');
+            return;
+        }
+
+        var num = data.num;
+        var reg = /^[-]{0,1}[0-9]{1,}$/;
+
+        if(!reg.test(num)){
+            layer.msg('请输入数字');
+            return;
+        }
+
+        var oldData = table.cache[tableId];
+
+        for(var i=0,row;i<oldData.length;i++){
+            row = oldData[i];
+            if(row.id==data.id){
+                if(row.outprice!=null){
+                    var money = {money:(data.outprice*data.num)};
+                    $.extend(oldData[i],money);
+                }
+                break;
+            }
+        }
+        orderDetailTable.reload({
+            data : oldData
+        });
+
+    })
 
     //监听select下拉选中事件
     form.on('select(goods)', function(data){
         var elem = data.elem; //得到select原始DOM对象
-        $(elem).prev("a[lay-event='goods']").trigger("click");
-        alert("select监听");
-        var oldData = table.cache[tableId];
-        console.log(oldData);
+
+        $(elem).prev("a[lay-event='goods']").trigger("click");//触发(点击)有lay-event='goods'的a标签[进入到监听工具条中]
+
     });
 
     //监听工具条
     table.on('tool(orderDetailTab)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
+        // console.log(event);
+
         switch(event){
             case "goods":
-                //console.log(data);
                 var select = tr.find("select[name='uuid']");
                 if(select){
-                    alert(1111);
-                    var oldData = table.cache[tableId];
-                    console.log(oldData);
                     var selectedVal = select.val();
                     if(!selectedVal){//js中的!是取反,即把真变假
                         layer.tips("请选择一个分类", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
                     }
-                    console.log(selectedVal);
-                    console.log($.extend(obj.data, {'uuid': selectedVal}));
-                    console.log("==================");
+                    $.extend(obj.data, {'uuid': selectedVal});//将{'uuid': selectedVal}合并到obj.data里中
 
                     activeByType('updateRow', obj.data);	//更新行记录对象
                 }
@@ -147,48 +251,37 @@ function initTable(tableId){
         page: true, //开启分页
         cols: [[ //表头
             {type:'checkbox',width:'4%'},
-            {field:'uuid', width:'25%', title: '商品编号',align:'center',templet:function(obj){
-                    alert("goodsGOODS");
-                    console.log(obj);
+            {field:'uuid', width:'20%', title: '商品',align:'center',templet:function(obj){
                     var options = GoodsObj.renderSelectOptions(GoodsResult, {valueField: "uuid", textField: "name", selectedValue: obj.uuid});
-                    return '<a lay-event="goods"></a><select name="uuid" id="goods'+obj.LAY_INDEX+'" lay-filter="goods"><option value=""></option>' + options + '</select>';
+                    return '<a lay-event="goods"></a><select name="uuid" id="goods'+obj.LAY_INDEX+'" class="name" lay-filter="goods"><option value=""></option>' + options + '</select>';
                 }},
-            {field:'name', width:'20%', title: '商品名称',align:'center'
-                // templet:function (obj) {
-                // alert("goodsGOODS");
-                // console.log(obj);
-                //     var options = GoodsObj.renderSelectOptions(GoodsResult, {valueField: "uuid", textField: "name", selectedValue: obj.uuid});
-                //     return '<a lay-event="goods"></a><select name="uuid" id="goods'+obj.LAY_INDEX+'" lay-filter="goods"><option value=""></option>' + options + '</select>';
-                // }
-             },
-            {field:'outprice', width:'12%', title: '价格',align:'center', edit: 'text'},
-            {field:'num', width:'12%', title: '数量',align:'center', edit: 'text'},
-            {field:'money', width:'12%', title: '金额',align:'center', edit: 'text'},
+            {field:'outprice', width:'12%', title: '价格',align:'center',templet : function (row) {
+                    if(row.uuid!=null){
+                        return row.outprice+'$';
+                    }else{
+                        return '';
+                    }}
+                },
+            {field:'num', width:'12%', title: '数量',align:'center', edit: 'text',templet:function (row) {
+                if(row.uuid!=null){
+                    var num = row.num!=null ? parseInt(row.num) : 0;
+                    return '<div lay-event="editNum">'+num+'</div>';
+                }else{
+                    return '<div lay-event="editNum"></div>';
+                }
+             }},
+            {field:'money', width:'12%', title: '金额',align:'center',templet : function (row) {
+                if(row.uuid!=null){
+                    var num = row.num!=null ? parseInt(row.num)*row.outprice : 0;
+                    return num+'$';
+                }else {
+                    return '';
+                }
+                }},
             {field:'操作', width:'15%', title: '操作',align:'center',templet:function (row) {
                     return '<a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="del" lay-id="'+row.uuid+'"><i class="layui-icon"></i></a>';
              }}
         ]],
-    });
-}
-
-function queryStore() {
-    var name = $('#name').val();
-    var address = $('#address').val();
-    var empuuid = $('#empuuid option:selected').val();
-    var url = path+'/store/queryStoreLikePager?1=1';
-
-    if(null!=name && ''!=name){
-        url+='&name='+name;
-    }
-    if(null!=address && ''!=address){
-        url+='&address='+address;
-    }
-    if(null!=empuuid && ''!=empuuid && 0!=empuuid){
-        url+='&empuuid='+empuuid;
-    }
-
-    layui.table.reload("storeTable", { //此处是上文提到的 初始化标识id
-        url: url
     });
 }
 
@@ -256,6 +349,15 @@ function getGoods(){
     return result;
 }
 
-function editSelect(index){
-    alert(index);
+function queryGoods(data){
+    var result = {};
+    for (var i=0;i<GoodsResult.length;i++){
+        if(data.uuid==GoodsResult[i].uuid){
+            result = GoodsResult[i];
+            result.num=data.num;
+            result.money=data.money;
+            break;
+        }
+    }
+    return result;
 }
