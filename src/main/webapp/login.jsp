@@ -20,11 +20,11 @@
                         <form class="signup_form_form" id="loginform" method="post" >
                                 <div class="form_row first_row">
                                     <label for="signup_email">请输入用户名</label>
-                                    <input type="text" name="username" placeholder="请输入用户名" id="signup_name" >
+                                    <input type="text" name="username" autocomplete="off" placeholder="请输入用户名" id="signup_name" >
                                 </div>
                                 <div class="form_row">
                                     <label for="signup_password">请输入密码</label>
-                                    <input type="password" name="pwd" placeholder="请输入密码" id="signup_password" >
+                                    <input type="password" autocomplete="off" name="pwd" placeholder="请输入密码" id="signup_password" >
                                 </div>
                        </form>
             </div> 

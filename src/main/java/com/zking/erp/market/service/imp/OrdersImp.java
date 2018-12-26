@@ -70,8 +70,8 @@ public class OrdersImp implements IOrdersService{
     }
 
     @Override
-    public int addOrders(OrdersVo ordersVo, List<Map<String,Object>> maps) {
-        ordersMapper.addOrders(ordersVo);
+    public int addOrders(OrdersVo goods, List<Map<String,Object>> maps) {
+        ordersMapper.addOrders(goods);
         return orderDetailMapper.addOrdersDetail(maps);
     }
 

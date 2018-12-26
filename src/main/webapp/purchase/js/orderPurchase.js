@@ -128,7 +128,7 @@ function initTable(){
 
 function queryOrders() {
     var state = $('#state option:selected').val();
-    var url = path+'/orders/queryPurchasePager?1=1';
+    var url = path+'/orders/queryPurchasePager?1=1&type=采购';
 
     if(null!=state && ''!=state && 0!=state){
         url+='&state='+state;

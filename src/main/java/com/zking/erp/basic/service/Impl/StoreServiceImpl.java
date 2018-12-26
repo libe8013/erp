@@ -2,12 +2,16 @@ package com.zking.erp.basic.service.Impl;
 
 import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.mapper.StoreMapper;
+import com.zking.erp.basic.model.Goods;
 import com.zking.erp.basic.model.Store;
 import com.zking.erp.basic.service.IStoreService;
+import com.zking.erp.basic.vo.StoreVo;
+import com.zking.erp.stock.model.StoreDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StoreServiceImpl implements IStoreService {
@@ -48,5 +52,15 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public List<Store> queryStoreLikePager(Store store, PageBean pageBean) {
         return storeMapper.queryStoreLikePager(store);
+    }
+
+    @Override
+    public Map<String, Object> queryGoodsStore(StoreVo storeVo) {
+        return storeMapper.queryGoodsStore(storeVo);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryStoreGoodsSupplier(StoreVo storeVo) {
+        return storeMapper.queryStoreGoodsSupplier(storeVo);
     }
 }

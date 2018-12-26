@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.basic.mapper.SupplierGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.basic.model.SupplierGoods" >
+    <constructor >
+      <arg column="goodsuuid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="supplieruuid" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.erp.basic.model.SupplierGoods" >
+    insert into supplier_goods (goodsuuid, supplieruuid)
+    values (#{goodsuuid,jdbcType=VARCHAR}, #{supplieruuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.erp.basic.model.SupplierGoods" >
+    insert into supplier_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsuuid != null" >
+        goodsuuid,
+      </if>
+      <if test="supplieruuid != null" >
+        supplieruuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsuuid != null" >
+        #{goodsuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="supplieruuid != null" >
+        #{supplieruuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="editSupplierGoods" parameterType="com.zking.erp.basic.model.SupplierGoods">
+    UPDATE supplier_goods set supplieruuid=#{supplieruuid} where goodsuuid=#{goodsuuid}
+  </update>
+  <delete id="delSupplierGoods" parameterType="com.zking.erp.basic.model.SupplierGoods">
+    delete from supplier_goods where goodsuuid=#{goodsuuid} and supplieruuid=#{supplieruuid}
+  </delete>
+  <select id="querySupplierGoods" resultType="map"
+          parameterType="com.zking.erp.basic.vo.SupplierGoodsVo">
+    SELECT sg.*,g.name,g.uuid,g.origin,g.producer,g.unit,g.inprice,g.outprice,g.goodstypeuuid,g.sort,
+    s.name as suppliername FROM goods g,supplier_goods sg,supplier s WHERE g.uuid=sg.goodsuuid AND sg.supplieruuid=s.uuid
+    <if test="null!=goodsuuid and ''!=goodsuuid">
+      AND sg.goodsuuid=#{goodsuuid}
+    </if>
+    <if test="null!=supplieruuid and ''!=supplieruuid">
+      AND sg.supplieruuid=#{supplieruuid}
+    </if>
+    <if test="null!=goods.name and ''!=goods.name">
+      and name like concat(concat('%',#{goods.name}),'%')
+    </if>
+    <if test="null!=goods.origin and ''!=goods.origin">
+      and origin like concat(concat('%',#{goods.origin}),'%')
+    </if>
+    <if test="null!=goods.producer and ''!=goods.producer">
+      and producer like concat(concat('%',#{goods.producer}),'%')
+    </if>
+    <if test="null!=goods.goodstypeuuid and ''!=goods.goodstypeuuid">
+      and goodstypeuuid=#{goods.goodstypeuuid}
+    </if>
+    order by sort desc
+  </select>
+</mapper>

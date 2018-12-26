@@ -68,7 +68,7 @@ public class EmpController {
         emp.setUsername(username);
         emp.setPwd(pwd);
 
-        List<Map<String, Object>> list = empService.Login(emp);
+        List<Emp> list = empService.Login(emp);
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("success",true);
 
@@ -76,7 +76,7 @@ public class EmpController {
             map.put("message", "账号或密码错误");
             map.put("success",false);
         }else {
-            session.setAttribute("emp",emp);
+            session.setAttribute("emp",list.get(0));
         }
         return map;
     }

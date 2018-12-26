@@ -26,6 +26,15 @@
     from returnorderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryReeturnOrderDetail" resultType="com.zking.erp.personnel.model.ReturnOrderDetail"
+          parameterType="com.zking.erp.personnel.model.ReturnOrderDetail">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from returnorderdetail where 1=1
+    <if test="null!=ordersuuid and ''!=ordersuuid">
+      and ordersuuid=#{ordersuuid}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from returnorderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -113,7 +122,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.ReturnOrderDetail" >
+    <insert id="addReturnOrdersDetail">
+        insert into returnorderdetail(uuid,goodsuuid,goodsname,price,num,money,state,ordersuuid)
+        VALUES
+        <foreach collection="collection" item="maps" separator=",">
+          (#{maps.uuid},#{maps.goodsuuid},#{maps.goodsname},#{maps.price},#{maps.num},#{maps.money},#{maps.state},#{maps.ordersuuid})
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.ReturnOrderDetail" >
     update returnorderdetail
     <set >
       <if test="goodsuuid != null" >

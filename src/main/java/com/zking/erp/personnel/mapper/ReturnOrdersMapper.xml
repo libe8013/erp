@@ -28,6 +28,22 @@
     from returnorders
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
+  <select id="queryReturnOrdersPager" resultType="com.zking.erp.personnel.model.ReturnOrders"
+          parameterType="com.zking.erp.personnel.model.ReturnOrders">
+    select
+    <include refid="Base_Column_List"/>
+    from returnorders where 1=1
+    <if test="null!=type and ''!=type">
+      and type = #{type}
+    </if>
+    <if test="null!=state and ''!=state">
+      and state=#{state}
+    </if>
+    <if test="createtime!=null">
+      and ( DATEDIFF ( createtime , #{createtime} ) = 0 )
+    </if>
+    order by sort desc
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from returnorders
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -126,6 +142,85 @@
       </if>
       <if test="ordersuuid != null" >
         #{ordersuuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="addReturnOrders" parameterType="com.zking.erp.personnel.vo.ReturnOrdersVo">
+    insert into returnorders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="checktime != null" >
+        CHECKTIME,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="checker != null" >
+        CHECKER,
+      </if>
+      <if test="ender != null" >
+        ENDER,
+      </if>
+      <if test="supplieruuid != null" >
+        SUPPLIERUUID,
+      </if>
+      <if test="totalmoney != null" >
+        TOTALMONEY,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="waybillsn != null" >
+        WAYBILLSN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checktime != null" >
+        #{checktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null" >
+        #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="ender != null" >
+        #{ender,jdbcType=VARCHAR},
+      </if>
+      <if test="supplieruuid != null" >
+        #{supplieruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalmoney != null" >
+        #{totalmoney,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillsn != null" >
+        #{waybillsn,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

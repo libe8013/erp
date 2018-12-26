@@ -22,7 +22,7 @@ layui.use(['jquery','form','layer','table'],function () {
     layui.table.on('tool(goodsTab)',function (obj) {
         var data = obj.data;
         if(obj.event=="del"){
-            del(data.uuid);
+            del(data.uuid,data.supplieruuid);
         }else if(obj.event=="edit"){
             edit(data);
         }
@@ -43,11 +43,11 @@ function initTable(){
             // {field:'uuid', width:'18%', title: 'ID',align:'center'},
             {field:'name', width:'10%', title: '商品名称',align:'center'},
             {field:'origin', width:'10%', title: '产地',align:'center'},
-            {field:'producer', width:'13%', title: '厂家',align:'center'},
+            {field:'producer', width:'10%', title: '厂家',align:'center'},
             {field:'unit', width:'10%', title: '计量单位',align:'center'},
             {field:'inprice', width:'10%', title: '进货价格',align:'center'},
             {field:'outprice', width:'10%', title: '销售价格',align:'center'},
-            {field:'goodstypeuuid', width:'15%', title: '商品类型',align:'center',templet: function(row){//一行中的数据
+            {field:'goodstypeuuid', width:'12%', title: '商品类型',align:'center',templet: function(row){//一行中的数据
                     var result='';
                     $.ajax({
                         url : path+'/goodsType/queryGoodsTypeSingle',
@@ -61,12 +61,15 @@ function initTable(){
                     });
                     return result;
                 }},
+            {field:'supplieruuid',width:'9%',title:'供应商',align:'center',templet:function (row) {
+                    return row.suppliername;
+                }},
             {field:'操作', width:'15%', title: '操作',align:'center',toolbar:'#crud'}
         ]],
     });
 }
 
-function queryGoodsType() {
+function queryGoodsType(page) {
     var name = $('#name').val();
     var origin = $('#origin').val();
     var PRODUCER = $('#PRODUCER').val();
@@ -82,15 +85,25 @@ function queryGoodsType() {
     if(null!=PRODUCER && ''!=PRODUCER){
         url+='&producer='+PRODUCER;
     }
-    if(0!=goodsTypeId){
+    if(0!=goodsTypeId && ''!=goodsTypeId){
         url+="&goodstypeuuid="+goodsTypeId;
     }
-    layui.table.reload("goodsTable", { //此处是上文提到的 初始化标识id
-        url: url,
-        page : {
-            curr : 1
-        }
-    });
+    if(page!=''||page!=null){
+        layui.table.reload("goodsTable", { //此处是上文提到的 初始化标识id
+            url: url,
+            page : {
+                curr : page
+            }
+        });
+    }else{
+        layui.table.reload("goodsTable", { //此处是上文提到的 初始化标识id
+            url: url,
+            page : {
+                curr : 1
+            }
+        });
+    }
+
 }
 
 function initSelect(id,htmlid){
@@ -119,18 +132,45 @@ function initSelect(id,htmlid){
     });
 }
 
+function initSelectSupplier(id,htmlid){
+    var form = layui.form;
+    // alert();
+    $.get(path + '/supplier/querySupplierLikePager', {}, function (data) {
+        var goodsType = "";
+        if (data.data != null) {
+            $.each(data.data, function (index, item) {
+                if (item.uuid){
+                    if(id!=null && id!=0 && item.uuid==id){
+                        goodsType += "<option class='generate' selected='selected' value='" + item.uuid + "'>" + item.name + "</option>";
+                    }else{
+                        goodsType += "<option class='generate' value='" + item.uuid + "'>" + item.name + "</option>";
+                    }
+                }else{
+                    goodsType += "<option value='" + item.uuid + "'>" + item.name + "</option>";
+                }
+            });
+            $("select[name='"+htmlid+"']").append(goodsType);
+            //反选
+            // $("select[name='???']").val($("#???").val());
+            //append后必须从新渲染
+            form.render('select');
+        }
+    });
+}
+
 function add(){
     var addDiv = $('#addDiv').html();
     //弹出一个页面层
     layer.open({
         skin : 'layer-ext-Select',
         type: 1,
-        area: ['700px', '440px'],
+        area: ['740px', '440px'],
         shadeClose: true, //点击遮罩关闭
         content: addDiv,
         title : '新增商品分类'
     });
     initSelect(null,'goodstypeuuid');
+    initSelectSupplier(null,'supplieruuid');
 }
 
 function addForm() {
@@ -153,15 +193,16 @@ function addForm() {
     var inprice = $('#inprice').val();
     var outprice = $('#outprice').val();
     var goodstypeuuid = $('#goodstypeuuid1 option:selected').val();
+    var supplieruuid = $('#supplier option:selected').val();
     for(var i=0;i<result.length;i++){
-        if(result[i].name==name){
-            layer.msg('已有该商品名称');
+        if(result[i].name==name && result[i].supplieruuid==supplieruuid){
+            layer.msg('该供应商已有该商品名称');
             return;
         }
     }
     $.ajax({
         url : path+'/goods/addGoods',
-        data : {name:name,origin1:origin,producer:producerl,unit:unit,inprice:inprice,outprice:outprice,goodstypeuuid:goodstypeuuid},
+        data : {name:name,origin1:origin,producer:producerl,unit:unit,inprice:inprice,outprice:outprice,goodstypeuuid:goodstypeuuid,supplieruuid:supplieruuid},
         dataType : 'json',
         type : 'post',
         async : false,
@@ -201,15 +242,20 @@ function custom_rule(){
             if(value==0){
                return "请选择商品类型";
             }
+        },
+        supplier : function (value) {
+            if(value==0){
+                return "请选择供应商";
+            }
         }
     });
 }
 
-function del(uuid) {
+function del(uuid,supplieruuid) {
     layer.confirm('确定执行删除操作嘛?', function(index){
         $.ajax({
             url : path+'/goods/delGoods',
-            data : {uuid:uuid},
+            data : {uuid:uuid,supplieruuid:supplieruuid},
             dataType : 'json',
             type : 'post',
             async : false,
@@ -231,12 +277,13 @@ function edit(obj){
     index = layer.open({
         skin : 'layer-ext-Select',
         type: 1,
-        area: ['700px' , '470px'],
+        area: ['720px' , '470px'],
         shadeClose: true, //点击遮罩关闭
         content: editDiv,
-        title : '编辑商品信息'
+        title : '编辑商品信息',
     });
     initSelect(obj.goodstypeuuid,'goodstypeuuid');
+    initSelectSupplier(obj.supplieruuid,'supplieruuid');
     $("#goodstypeuuid2").find("option[value='"+obj.goodstypeuuid+"']").prop("selected",true);
     $('#uuid').val(obj.uuid);
     $('#name2').val(obj.name);
@@ -245,7 +292,7 @@ function edit(obj){
     $('#unit2').val(obj.unit);
     $('#inprice2').val(obj.inprice);
     $('#outprice2').val(obj.outprice);
-
+    // layui.form.val('goodsEdit',obj);
 }
 
 
@@ -288,7 +335,8 @@ function editForm(obj) {
         async : false,
         success : function (data) {
             layer.msg(data.message);
-            queryGoodsType();
+            var page = $(".layui-laypage-skip").find("input").val();
+            queryGoodsType(page);
             layer.close(index);
             // $('#ff1')[0].reset();
         }

@@ -36,8 +36,8 @@ public interface IOrdersService {
 
     /**
      * 添加订单
-     * @param ordersVo
+     * @param goods
      * @return
      */
-    int addOrders(OrdersVo ordersVo,List<Map<String,Object>> mpas);
+    int addOrders(OrdersVo goods, List<Map<String,Object>> mpas);
 }

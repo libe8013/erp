@@ -121,14 +121,20 @@ function initTable(){
                     return obj.totalmoney+"$";
              }},
             {field:'state', width:'6%', title: '订单状态',align:'center'},
-            {field:'操作', width:'11%', title: '操作',align:'center',toolbar:'#crud'}
+            {field:'操作', width:'11%', title: '操作',align:'center',templet:function(obj){
+                if(obj.state=="未审核"){
+                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryOrderDetailAudit">订单审核</a>';
+                }else {
+                    return '';
+                }
+            }}
         ]],
     });
 }
 
 function queryOrders() {
     var state = $('#state option:selected').val();
-    var url = path+'/orders/queryPurchasePager?1=1';
+    var url = path+'/orders/queryPurchasePager?1=1&type=采购';
 
     if(null!=state && ''!=state && 0!=state){
         url+='&state='+state;
@@ -157,6 +163,7 @@ function querySingleOrderDetail(data,tr){
             var checker = $(''+tr.selector+' td[data-content='+data.checker+']').text();
             var ender = $(''+tr.selector+' td[data-content='+data.ender+']').text();
             data["supplieruuid"] = supplier;
+            data["createrUUID"] = data.creater;
             data["creater"] = creater;
             data["checker"] = checker;
             data["ender"] = ender;

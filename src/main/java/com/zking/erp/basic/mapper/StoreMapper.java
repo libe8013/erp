@@ -1,9 +1,14 @@
 package com.zking.erp.basic.mapper;
 
+import com.zking.erp.basic.model.Goods;
 import com.zking.erp.basic.model.Store;
+import com.zking.erp.basic.vo.StoreVo;
+import com.zking.erp.stock.model.StoreDetail;
+import com.zking.erp.stock.vo.StoredetailVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface StoreMapper {
@@ -20,4 +25,8 @@ public interface StoreMapper {
     int updateByPrimaryKey(Store record);
 
     List<Store> queryStoreLikePager(Store store);
+
+    Map<String,Object> queryGoodsStore(StoreVo storeVo);
+
+    List<Map<String,Object>> queryStoreGoodsSupplier(StoreVo storeVo);
 }

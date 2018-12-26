@@ -68,7 +68,7 @@
     </filter-mapping>-->
 
     <!--欢迎页-->
-    <!--<welcome-file-list>
-        <welcome-file>/home/index.shtml</welcome-file>
-    </welcome-file-list>-->
+    <welcome-file-list>
+        <welcome-file>/login.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

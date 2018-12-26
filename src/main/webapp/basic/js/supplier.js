@@ -120,7 +120,7 @@ function addForm() {
     }
     $.ajax({
         url : path+'/supplier/addSupplier',
-        data : {name:name,address:address,contact:contact,tele:tele,email:email},
+        data : {name:name,address:address,contact:contact,tele:tele,email:email,type:'0'},
         dataType : 'json',
         type : 'post',
         async : false,
@@ -211,7 +211,7 @@ function editForm() {
     if(arr.name!=data.name){
         for(var i=0;i<result.length;i++){
             if(result[i].name==data.name){
-                layer.msg('已有该商品名称');
+                layer.msg('已有该供应商名称');
                 return;
             }
         }

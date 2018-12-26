@@ -4,11 +4,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zking.erp.base.util.PageBean;
 import com.zking.erp.basic.model.Goods;
+import com.zking.erp.basic.model.Store;
+import com.zking.erp.basic.service.IStoreService;
 import com.zking.erp.market.model.OrderDetail;
 import com.zking.erp.market.model.Orders;
+import com.zking.erp.market.service.IOrderDetailService;
 import com.zking.erp.market.service.IOrdersService;
 import com.zking.erp.market.vo.OrdersVo;
 import com.zking.erp.personnel.model.Emp;
+import com.zking.erp.stock.model.StoreDetail;
+import com.zking.erp.stock.service.IStoreDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -24,6 +31,15 @@ import java.util.*;
 public class OrdersController {
     @Autowired
     private IOrdersService ordersService;
+
+    @Autowired
+    private IOrderDetailService orderDetailService;
+
+    @Autowired
+    private IStoreService storeService;
+
+    @Autowired
+    private IStoreDetailService storeDetailService;
 
     @RequestMapping("/queryOrdersPage")
     @ResponseBody
@@ -54,8 +70,9 @@ public class OrdersController {
      */
     @RequestMapping("/queryPurchasePager")
     @ResponseBody
-    public Map<String,Object> queryPurchasePager(Orders orders,HttpServletRequest req){
+    public Map<String,Object> queryPurchasePager(Orders orders,HttpServletRequest req) throws ParseException {
         Map<String,Object> map = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         PageBean pageBean = new PageBean();
         pageBean.setRequest(req);
@@ -72,7 +89,7 @@ public class OrdersController {
 
     @RequestMapping("/addOrders")
     @ResponseBody
-    public Map<String,Object> addOrders(OrdersVo ordersVo,HttpServletRequest req,String goodsJson) throws IOException {
+    public Map<String,Object> addOrders(OrdersVo goods, HttpServletRequest req, String goodsJson) throws IOException {
         Map<String,Object> map = new HashMap<String,Object>();
 
         HttpSession session = req.getSession();
@@ -100,16 +117,16 @@ public class OrdersController {
             maps.add(orderDetail);
         }
 
-        ordersVo.setUuid(ordersuuid);
+        goods.setUuid(ordersuuid);
         //createtime
-        ordersVo.setCreatetime(new Date());
+        goods.setCreatetime(new Date());
         //creater
         Emp emp = (Emp) session.getAttribute("emp");
 
         //下单人改成当前登录用户
-        ordersVo.setCreater(emp.getUuid());
+        goods.setCreater(emp.getUuid());
 
-        ordersService.addOrders(ordersVo,maps);
+        ordersService.addOrders(goods,maps);
 
         String message = "添加成功";
 
@@ -133,14 +150,118 @@ public class OrdersController {
 
         orders.setChecker(emp.getUuid());
 
-        try {
-            ordersService.updateByPrimaryKeySelective(orders);
-        } catch (Exception e) {
-            message = "审核失败";
-        }
+//        if(!orders.getCreater().equals(emp.getUuid())){
+//            orders.setCreater(null);
+            try {
+                ordersService.updateByPrimaryKeySelective(orders);
+            } catch (Exception e) {
+                message = "审核失败";
+            }
+//        }else{
+//            message = "不能审核自己的订单";
+//        }
+
+
 
         map.put("message",message);
 
         return map;
     }
+
+    @RequestMapping("/Affirm")
+    @ResponseBody
+    public Map<String,Object> Affirm(Orders orders,HttpServletRequest req){
+        Map<String,Object> map = new HashMap<>();
+        String message = "确定订单成功";
+
+        HttpSession session = req.getSession();
+
+        Emp emp = (Emp) session.getAttribute("emp");
+
+        orders.setStarttime(new Date());
+
+        orders.setStarter(emp.getUuid());
+
+//        if(!orders.getCreater().equals(emp.getUuid())){
+//            orders.setCreater(null);
+            try {
+                ordersService.updateByPrimaryKeySelective(orders);
+            } catch (Exception e) {
+                message = "订单确定失败";
+            }
+//        }else{
+//            message = "不能审核自己的订单";
+//        }
+
+
+
+        map.put("message",message);
+
+        return map;
+    }
+
+    @RequestMapping("/storage")
+    @ResponseBody
+    public Map<String,Object> Storage(OrderDetail orderDetail,HttpServletRequest req){
+        Map<String,Object> map = new HashMap<>();
+        HttpSession session = req.getSession();
+
+        String StoreDetailUUID = UUID.randomUUID().toString().replace("-","");
+
+        Store store = storeService.selectByPrimaryKey(orderDetail.getStoreuuid());
+
+        Emp emp = (Emp) session.getAttribute("emp");
+
+
+        String message = null;
+        try {
+            orderDetail.setEndtime(new Date());
+            orderDetail.setState("已入库");
+            orderDetail.setStoreuuid(store.getEmpuuid());
+            orderDetail.setEnder(emp.getUuid());
+            orderDetailService.updateByPrimaryKeySelective(orderDetail);
+
+            OrderDetail oDetail = new OrderDetail();
+            oDetail.setOrdersuuid(orderDetail.getOrdersuuid());
+            List<OrderDetail> orderDetails = orderDetailService.queryOrderDetail(oDetail);
+            Boolean b = true;
+            for (OrderDetail detail : orderDetails) {
+                if(detail.getState().equals("未入库")){
+                    b = false;
+                    break;
+                }
+            }
+
+            if(b){
+                Orders orders = new Orders();
+                orders.setUuid(orderDetail.getOrdersuuid());
+                orders.setEnder(store.getEmpuuid());
+                orders.setEndtime(new Date());
+                orders.setState("已入库");
+                ordersService.updateByPrimaryKeySelective(orders);
+            }
+
+            com.zking.erp.stock.model.StoreDetail storeDetail = new StoreDetail();
+            storeDetail.setUuid(StoreDetailUUID);
+            storeDetail.setStoreuuid(store.getUuid());
+            storeDetail.setGoodsuuid(orderDetail.getGoodsuuid());
+            storeDetail.setNum(orderDetail.getNum());
+            StoreDetail storeDetail1 = storeDetailService.querySingleStoreDetail(storeDetail);
+            if(null!=storeDetail1){
+                storeDetail1.setNum(storeDetail1.getNum()+storeDetail.getNum());
+                storeDetailService.updateByPrimaryKeySelective(storeDetail1);
+            }else{
+                storeDetailService.insert(storeDetail);
+            }
+            message = "入库成功";
+        } catch (Exception e) {
+            message = "入库失败";
+        }
+
+
+        map.put("message",message);
+
+        return map;
+    }
+
 }

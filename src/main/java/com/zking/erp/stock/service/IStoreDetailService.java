@@ -15,4 +15,17 @@ public interface IStoreDetailService {
      * @return
      */
     List<Map<String,Object>> queryStoreLikePager(StoredetailVo storedetailVo, PageBean pageBean);
+
+    int insert(StoreDetail record);
+
+    StoreDetail selectByPrimaryKey(String uuid);
+
+    /**
+     * 根据商品id 仓库id查询
+     * @param storeDetail
+     * @return
+     */
+    StoreDetail querySingleStoreDetail(StoreDetail storeDetail);
+
+    int updateByPrimaryKeySelective(StoreDetail record);
 }

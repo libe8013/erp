@@ -25,4 +25,11 @@ public interface StoreDetailMapper {
      * @return
      */
     List<Map<String,Object>> queryStoreLikePager(StoredetailVo storedetailVo);
+
+    /**
+     * 根据商品id 仓库id查询
+     * @param storeDetail
+     * @return
+     */
+    StoreDetail querySingleStoreDetail(StoreDetail storeDetail);
 }

@@ -1,8 +1,11 @@
 package com.zking.erp.basic.contoller;
 
 import com.zking.erp.base.util.PageBean;
+import com.zking.erp.basic.model.Goods;
 import com.zking.erp.basic.model.Store;
 import com.zking.erp.basic.service.IStoreService;
+import com.zking.erp.basic.vo.StoreVo;
+import com.zking.erp.stock.model.StoreDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,6 +95,24 @@ public class StoreController {
         map.put("message",message);
 
         return map;
+    }
+
+//    @RequestMapping("/queryGoodsStore")
+//    @ResponseBody
+//    public Map<String,Object> queryGoodsStore(StoreVo storeVo){
+//
+//        Map<String, Object> map = storeService.queryGoodsStore(storeVo);
+//
+//        return map;
+//    }
+
+    @RequestMapping("/queryStoreGoodsSupplier")
+    @ResponseBody
+    public List<Map<String, Object>> queryStoreGoodsSupplier(StoreVo storeVo){
+
+        List<Map<String, Object>> maps = storeService.queryStoreGoodsSupplier(storeVo);
+
+        return maps;
     }
 
 }

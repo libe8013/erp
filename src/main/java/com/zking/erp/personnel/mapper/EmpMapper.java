@@ -32,5 +32,5 @@ public interface EmpMapper {
      */
     int updatePwd(Emp emp);
 
-    List<Map<String,Object>> Login(Emp emp);
+    List<Emp> Login(Emp emp);
 }

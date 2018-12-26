@@ -33,6 +33,18 @@
       and empuuid like concat(concat('%',#{empuuid}),'%')
     </if>
   </select>
+    <select id="queryGoodsStore" resultType="map" parameterType="com.zking.erp.basic.vo.StoreVo">
+      SELECT g.*,sd.`STOREUUID`,sd.num,sg.supplieruuid FROM storedetail sd,goods g,store s,supplier_goods sg WHERE
+      s.uuid=sd.storeuuid AND sg.goodsuuid=g.uuid AND sg.supplieruuid=#{supplierid} and g.uuid=#{goodsuuid}
+      GROUP BY g.uuid
+    </select>
+  <select id="queryStoreGoodsSupplier" resultType="map">
+    SELECT g.uuid,g.name,g.outprice,sd.num as inventory,sg.`supplieruuid` FROM supplier_goods sg,goods g,storedetail sd WHERE
+    sg.`goodsuuid`=g.uuid AND sd.goodsuuid=g.uuid AND sg.`supplieruuid`=#{supplierid}
+    <if test="goodsuuid!=null and ''!=goodsuuid">
+      and g.uuid=#{goodsuuid}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from store
     where UUID = #{uuid,jdbcType=VARCHAR}

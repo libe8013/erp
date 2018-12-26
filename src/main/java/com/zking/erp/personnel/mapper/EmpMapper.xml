@@ -36,7 +36,7 @@
       and r.id=#{id}
     </if>
   </select>
-  <select id="Login" resultType="map" parameterType="com.zking.erp.personnel.model.Emp">
+  <select id="Login" resultType="com.zking.erp.personnel.model.Emp" parameterType="com.zking.erp.personnel.model.Emp">
     SELECT * from emp where username=#{username} and pwd=#{pwd}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

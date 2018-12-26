@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/authorityemp")
-public class EmpRoleContoller {
+public class EmpRoleController {
 
     @Autowired
     private IEmpRoleService empRoleService;

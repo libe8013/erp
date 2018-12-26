@@ -58,7 +58,7 @@ public class EmpServiceImpl implements IEmpService {
     }
 
     @Override
-    public List<Map<String, Object>> Login(Emp emp) {
+    public List<Emp> Login(Emp emp) {
         return empMapper.Login(emp);
     }
 }

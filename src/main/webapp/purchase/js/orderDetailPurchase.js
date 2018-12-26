@@ -1,12 +1,12 @@
 var path;
 var index;
 var GoodsResult;
+var supplierUUID;
 layui.use(['jquery','form','layer','table'],function () {
     var $ = layui.$,table=layui.table,form=layui.form;
     path = $('#path').val();
     var tableId = 'orderDetailTable';
     custom_rule();
-    GoodsResult = getGoods();
 
     window.GoodsObj = {
         renderSelectOptions : function (data,settings) {
@@ -18,16 +18,18 @@ layui.use(['jquery','form','layer','table'],function () {
                 selectedValue = settings.selectedValue;
             var html = [];
             for(var i=0, item; i < data.length; i++){
-                item = data[i];
-                html.push('<option value="');
-                html.push(item[valueField]);
-                html.push('"');
-                if(selectedValue && item[valueField] == selectedValue){
-                    html.push(' selected="selected"');
+                if(data[i].supplieruuid==supplierUUID){
+                    item = data[i];
+                    html.push('<option value="');
+                    html.push(item[valueField]);
+                    html.push('"');
+                    if(selectedValue && item[valueField] == selectedValue){
+                        html.push(' selected="selected"');
+                    }
+                    html.push('>');
+                    html.push(item[textField]);
+                    html.push('</option>');
                 }
-                html.push('>');
-                html.push(item[textField]);
-                html.push('</option>');
             }
             return html.join('');
         }
@@ -35,6 +37,7 @@ layui.use(['jquery','form','layer','table'],function () {
 
     var orderDetailTable = initTable(tableId);
 
+    //初始化下拉框
     initSelect(null,'supplieruuid');
     //定义事件集合
     var active = {
@@ -49,6 +52,20 @@ layui.use(['jquery','form','layer','table'],function () {
         },
         updateRow: function(obj){
             var oldData = table.cache[tableId];
+            if(obj.uuid==null||obj.uuid==0||obj.uuid==''){
+                for(var j=0;j<oldData.length;j++){
+                    if(oldData[j].id==obj.id){
+                        delete oldData[j]['money'];
+                        delete oldData[j]['num'];
+                        delete oldData[j]['outprice'];
+                        delete oldData[j]['uuid'];
+                        orderDetailTable.reload({
+                            data : oldData
+                        });
+                        return;
+                    }
+                }
+            }
             for(var i=0, row; i < oldData.length; i++){
                 row = oldData[i];
                 if(row.id == obj.id){
@@ -85,12 +102,8 @@ layui.use(['jquery','form','layer','table'],function () {
             });
         },
         removeAll : function () {
-            var oldData = table.cache[tableId];
-            for(var i=0, row; i < oldData.length; i++){
-                oldData.splice(i, 1);    //删除所有
-            }
             orderDetailTable.reload({
-                data : oldData
+                data : []
             });
         },
         saveOrders: function(){
@@ -159,6 +172,10 @@ layui.use(['jquery','form','layer','table'],function () {
 
     //注册按钮事件
     $(document).on('click','#addRow', function () {
+        if(supplierUUID==''||supplierUUID==null){
+            layer.msg('请选择供应商');
+            return;
+        }
         var type = $(this).data('type');//获取当前点击按钮的data-type属性值
         activeByType(type);//调用activeByType方法
     });
@@ -208,8 +225,24 @@ layui.use(['jquery','form','layer','table'],function () {
     form.on('select(goods)', function(data){
         var elem = data.elem; //得到select原始DOM对象
 
+        // supplierUUID=d
         $(elem).prev("a[lay-event='goods']").trigger("click");//触发(点击)有lay-event='goods'的a标签[进入到监听工具条中]
 
+    });
+
+    form.on('select(supplier)', function(data){
+        supplierUUID=data.value;
+        GoodsResult = getGoods(supplierUUID);
+        var oldData = table.cache[tableId];
+        for (var i=0;i<oldData.length;i++){
+            delete oldData[i]['money'];
+            delete oldData[i]['num'];
+            delete oldData[i]['outprice'];
+            delete oldData[i]['uuid'];
+        }
+        orderDetailTable.reload({
+            data : oldData
+        });
     });
 
     //监听工具条
@@ -331,11 +364,11 @@ var createUUID = (function (uuidRegEx, uuidReplacer) {
     return v.toString(16);
 });
 
-function getGoods(){
+function getGoods(supplierUUID){
     var result = [];
     $.ajax({
         url : path+'/goods/queryGoodsLikePager',
-        data : {},
+        data : {supplieruuid:supplierUUID},
         dataType : 'json',
         type : 'post',
         async : false,

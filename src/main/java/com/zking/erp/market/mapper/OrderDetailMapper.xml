@@ -148,7 +148,7 @@
   </insert>
   <insert id="addOrdersDetail">
     insert into orderdetail(uuid,goodsuuid,goodsname,price,num,money,state,ordersuuid)
-    VALUE
+    VALUES
     <foreach collection="collection" item="maps" separator=",">
         (#{maps.uuid},#{maps.goodsuuid},#{maps.goodsname},#{maps.price},#{maps.num},#{maps.money},#{maps.state},#{maps.ordersuuid})
     </foreach>

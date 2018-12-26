@@ -18,7 +18,7 @@
         <div class="layui-inline" style="padding-left: 10px;padding-top: 10px;">
             <label class="layui-form-label">供应商：</label>
             <div class="layui-input-inline">
-                <select name="supplieruuid" lay-verify="supplieruuid" id="supplieruuid" lay-search="">
+                <select name="supplieruuid" lay-verify="supplieruuid" lay-filter="supplier" id="supplieruuid" lay-search="">
                     <option value="0">请选择供应商</option>
                 </select>
             </div>

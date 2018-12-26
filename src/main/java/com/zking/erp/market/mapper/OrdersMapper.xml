@@ -43,6 +43,19 @@
     SELECT
     <include refid="Base_Column_List"/>
     from orders where 1=1
+    <if test="null!=type and ''!=type">
+      and type = #{type}
+    </if>
+    <if test="null!=state and ''!=state">
+      and state=#{state}
+    </if>
+    <if test="starttime!=null">
+      and ( DATEDIFF ( starttime , #{starttime} ) = 0 )
+    </if>
+    <if test="createtime!=null">
+      and ( DATEDIFF ( createtime , #{createtime} ) = 0 )
+    </if>
+    order by sort desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from orders

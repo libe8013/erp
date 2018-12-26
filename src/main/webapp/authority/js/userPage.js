@@ -94,9 +94,7 @@ function updPWD() {
  */
 function Login() {
     var username = $('#signup_name').val();
-    alert(username);
     var pwd = $('#signup_password').val();
-    alert(pwd);
     $.ajax({
         url: path+'/emp/Login',
         data:{username:username,pwd:pwd},//前端的id，接收的参数

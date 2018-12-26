@@ -36,8 +36,8 @@ public interface OrdersMapper {
 
     /**
      * 添加订单
-     * @param ordersVo
+     * @param goods
      * @return
      */
-    int addOrders(OrdersVo ordersVo);
+    int addOrders(OrdersVo goods);
 }
