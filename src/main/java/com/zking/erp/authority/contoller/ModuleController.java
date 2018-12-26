@@ -45,18 +45,35 @@ public class ModuleController {
         for (int i=0;i<list.size();i++){
             List<Map<String,Object>> maps = new ArrayList<>();
             Map<String, Object> map = list.get(i);
-            for (int j=0;j<list.size();j++){//遍历所有节点
-                Map<String, Object> map2 = list.get(j);
-                if(map.get("id").equals(map2.get("VALUE"))){//比较map与map2
-                    maps.add(map2);
-                }
-            }
-            if(maps.size()!=0){
-                map.put("data",maps);
+            if(map.get("VALUE").equals("-1") && maps.size()==0){
                 lmap.add(map);
             }
         }
 
+        List<Map<String,Object>> node = new ArrayList<>();
+        for (Map<String, Object> stringObjectMap : lmap) {
+            getNode(stringObjectMap,list,true);
+        }
+
         return lmap;
     }
+
+    public Map<String,Object> getNode(Map<String,Object> map,List<Map<String,Object>> list,boolean b){
+        List<Map<String,Object>> maps = new ArrayList<>();
+        for (Map<String, Object> m : list) {
+            if(map.get("id").equals(m.get("VALUE")) && b){
+                Map<String, Object> node = getNode(m, list, b);
+                maps.add(node);
+            }
+        }
+
+        if(maps.size()==0){
+            b = false;
+        }else{
+            map.put("data",maps);
+        }
+
+        return map;
+    }
+
 }
