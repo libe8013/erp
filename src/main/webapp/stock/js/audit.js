@@ -5,16 +5,24 @@ layui.use(['table','layer','jquery','form','laydate'],function () {
     path = $('#path').val();
     var table = layui.table;
     intiTable(table);
-    initdata();
 
     $(document).on('click','#queryInvrecord',function () {
         queryRegister();
     });
+
+    table.on('tool(InverecordEdit)',function (obj) {
+        var data = obj.data;
+        layer.confirm('确定执行修改操作嘛?', function(index){
+            editRole(data.UUID,index);
+        });
+    })
+
 });
 
+//时间控件
 function initdata() {
     layui.laydate.render({
-        elem: '#djbeg'
+        elem: '#createtime'
     });
     layui.laydate.render({
         elem: '#djend'
@@ -27,15 +35,14 @@ function initdata() {
     });
 }
 
-
-//初始化表格
 function intiTable(table) {
     table.render({
         elem:'#InverecordTab',
-        height:312,
+        height:450,
         id:'InverecordTab',
-        page:true,
         toolbar : '#toolbarTop',
+        url : '',
+        page:true,
         cols:[[
             {type:'checkbox',fixed:'left',width:'4%'},
             {field:'sname', width:'10%', title: '仓库',align:'center'},
@@ -46,26 +53,19 @@ function intiTable(table) {
             {field:'checktime', width:'10%', title: '审核日期',align:'center'},
             {field:'ename', width:'10%', title: '登记人',align:'center'},
             {field:'ename', width:'10%', title: '审核人',align:'center'},
-            {field:'state', width:'10%', title: '状态',align:'center',},
+            {field:'state', width:'10%', title: '状态',align:'center'},
+            {field:'操作', width:'10%', title: '操作',align:'center',toolbar:'#crud'}
         ]],
-    });
+    })
 }
+
+
 
 //遍历表格数据
 function queryRegister() {
     // 登记时间
-    var djbeg = $('#djbeg').val();
+    var djbeg = $('#createtime').val();
     var djend = $('#djend').val();
-    console.log(djbeg);
-    if (null!=createtime && ''!=createtime || null!=djend && ''!=djend){
-        djbeg=djbeg
-        djend=djend
-    }
-    if (null!=shbeg && ''!=shbeg || null!=shend && ''!=shend){
-        shbeg=shbeg
-        shend=shend
-
-    }
     // 审核时间
     var shbeg = $('#shbeg').val();
     var shend = $('#shend').val();
@@ -78,7 +78,7 @@ function queryRegister() {
     }
 
 
-    var url=path+'/stock/queryInventoryPager?1=1';
+    var url=path+'/stock/queryInvWtypePager?1=1';
     if(null!=type && ''!=type && 0!=type){
         url+='&type='+type;
     }
@@ -87,30 +87,22 @@ function queryRegister() {
     });
 }
 
-//点击添加按钮弹出页面
-function add() {
-    var addDiv = $('#addDiv').html();
-    //弹出一个页面
-    layer.open({
-        type:1,
-        area: ['440px', '400px'],
-        shadeClose: true, //点击遮罩关闭
-        content: addDiv,
-        title : '盘盈盘亏登记'
+
+
+function editRole(uuid,index) {
+    $.ajax({
+        url: path+'/stock/updAudit',
+        data:{uuid:uuid,state:'已审核'},//前端的id，接收的参数
+        dataType : 'json',
+        type : 'post',
+        async : false,
+        success : function (message) {//   这里面的data是后天穿过来的返回值
+            layui.layer.msg(message.message);
+            layer.close(index);
+            queryRegister();
+        },
     });
 }
 
-/*
-function addRegist() {
-    var result = [];
-    $.ajax({
-        url:'',
-        data:{},
-        dataType:'json',
-        type:'post',
-        async:false,
-        success : function (data) {
-            result = data.data;
-        }
-    });
-}*/
+
+

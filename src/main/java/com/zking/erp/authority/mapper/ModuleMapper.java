@@ -1,9 +1,12 @@
 package com.zking.erp.authority.mapper;
 
+import com.zking.erp.authority.Vo.RoleModuleVo;
 import com.zking.erp.authority.model.Module;
+import com.zking.erp.authority.model.RoleModule;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ModuleMapper {
@@ -19,5 +22,20 @@ public interface ModuleMapper {
 
     int updateByPrimaryKey(Module record);
 
+    /**
+     * 查询所有模块
+     * @param module
+     * @return
+     */
     List<Module> queryModuleLike(Module module);
+
+    /**
+     * 绑ZTree查询所有模块
+     * @param module
+     * @return
+     */
+    List<Map<String,Object>> queryModuleAll(Module module);
+
+
+
 }

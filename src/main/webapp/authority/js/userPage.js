@@ -80,7 +80,7 @@ function updPWD() {
         dataType : 'json',
         type : 'post',
         async : false,
-        success : function (data) {//   这里面的data是后天穿过来的返回值
+        success : function (data) {//   这里面的data是后台穿过来的返回值
             layer.msg(data.message);
             layer.close(index);
         }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ModuleServiceImpl implements IModuleService {
@@ -47,5 +48,10 @@ public class ModuleServiceImpl implements IModuleService {
     @Override
     public List<Module> queryModuleLike(Module module) {
         return moduleMapper.queryModuleLike(module);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryModuleAll(Module module) {
+        return moduleMapper.queryModuleAll(module);
     }
 }

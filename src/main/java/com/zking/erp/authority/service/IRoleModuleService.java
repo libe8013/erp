@@ -1,4 +1,4 @@
-package com.zking.erp.authority.mapper;
+package com.zking.erp.authority.service;
 
 import com.zking.erp.authority.Vo.RoleModuleVo;
 import com.zking.erp.authority.model.RoleModule;
@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
-@Repository
-public interface RoleModuleMapper {
+public interface IRoleModuleService {
     int insert(RoleModule record);
 
     int insertSelective(RoleModule record);
@@ -19,5 +18,4 @@ public interface RoleModuleMapper {
      * @return
      */
     List<Map<String,Object>> queryRoleModule(RoleModuleVo roleModuleVo);
-
 }

@@ -23,6 +23,15 @@ public class EmpRoleController {
     @Autowired
     private IEmpRoleService empRoleService;
 
+    /**
+     * 查询用户对应的角色
+     * @param empRoleVo
+     * @param emp
+     * @param dept
+     * @param role
+     * @param req
+     * @return
+     */
     @RequestMapping("/queryEmpRole")
     @ResponseBody
     public Map<String,Object> queryEmpRole(EmpRoleVo empRoleVo, Emp emp, Dept dept, Role role, HttpServletRequest req){

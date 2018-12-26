@@ -21,6 +21,7 @@
 </div>
 <script type="text/html" id="updPwd">
         <div class="layui-form-item" style="padding:20px;">
+            <input type="hidden" class="layui-input" id="uuid" name="uuid" />
             <label class="layui-form-label">新密码：</label>
                 <div class="layui-input-inline">
                     <input type="text" id="pwd" name="pwd" lay-verify="required" placeholder="请输入您要修改的新密码" class="layui-input"/>

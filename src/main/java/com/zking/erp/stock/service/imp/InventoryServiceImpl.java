@@ -31,4 +31,15 @@ public class InventoryServiceImpl implements IInventoryService {
     public List<Map<String, Object>> queryInventoryPager(InventoryVo inventoryVo, PageBean pageBean) {
         return inventoryMapper.queryInventoryPager(inventoryVo);
     }
+
+    @Override
+    public int updAudit(Inventory inventory) {
+        return inventoryMapper.updAudit(inventory);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryInvWtypePager(InventoryVo inventoryVo, PageBean pageBean) {
+        return inventoryMapper.queryInvWtypePager(inventoryVo);
+    }
+
 }

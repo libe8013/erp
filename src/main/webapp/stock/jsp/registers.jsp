@@ -20,7 +20,7 @@
     <div class="layui-inline">
         <label class="layui-form-label">登记日期：</label>
         <div class="layui-input-inline">
-            <input type="text"  id="djbeg" name="djbeg" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            <input type="text"  id="createtime" name="djbeg" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
         </div>
         <div class="layui-input-inline">
             <input type="text"  id="djend" name="djend" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
@@ -51,8 +51,21 @@
         <table class="layui-table" id="InverecordTab">
         </table>
     </div>
-<script type="text/html" id="crud">
-    <a class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon"></i></a>
+<script type="text/html" id="toolbarTop">
+    <a class="layui-btn layui-btn-sm" href="javascript:add();" id="add"><i class="layui-icon"><font size="2">增加</font></i></a>
+</script>
+<%--添加界面--%>
+<script type="text/html" id="addDiv">
+    <div class="layui-form-item" style="padding:20px;">
+        <form class="layui-form" action="" method="post">
+            <label class="layui-form-label">员工：</label>
+            <div class="layui-input-inline">
+                <select name="empName" id="empName" lay-verify="required" lay-search="">
+                    <option value="0">请选择您要查询的员工</option>
+                </select>
+            </div>
+        </form>
+    </div>
 </script>
 </body>
 </html>

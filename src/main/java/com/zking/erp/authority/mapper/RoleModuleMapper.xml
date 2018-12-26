@@ -30,4 +30,9 @@
       </if>
     </trim>
   </insert>
+  <select id="queryRoleModule" resultType="map" parameterType="com.zking.erp.authority.Vo.RoleModuleVo">
+  SELECT m.id AS moduleid,r.`id` AS roleid,m.pid ,m.text
+  FROM t_role r,t_role_module rm,t_module m WHERE r.`id`=rm.roleid GROUP BY m.id
+  </select>
+
 </mapper>

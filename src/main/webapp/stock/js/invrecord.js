@@ -1,5 +1,5 @@
 var path;
-layui.use(['table','layer','jquery','form'],function () {
+layui.use(['table','layer','jquery','form','laydate'],function () {
     $ = layui.jquery;
     path = $('#path').val();
     var table = layui.table;
@@ -57,12 +57,14 @@ function queryRecord(table) {
 
 
 //时间控件
-/*function initDate() {
-    laydate.render({
+function initdata() {
+    layui.laydate.render({
         elem: '#czbeg'
-        ,format: 'yyyy年MM月dd日'
     });
-}*/
+    layui.laydate.render({
+        elem: '#czend'
+    });
+}
 
 
 //下拉列表
