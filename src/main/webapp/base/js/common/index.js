@@ -48,6 +48,7 @@ function initTree(){
     });
     tree = tree.substring(0,tree.length-2);
     tree+=']';
+    console.log(tree);
     var treeJSON = JSON.parse(tree);
     layui.tree({
         elem : '#tree',

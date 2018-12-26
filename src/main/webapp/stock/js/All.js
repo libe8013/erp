@@ -28,6 +28,7 @@ function initdata() {
 }
 
 
+
 //初始化表格
 function intiTable(table) {
     table.render({
@@ -56,7 +57,6 @@ function queryRegister() {
     // 登记时间
     var djbeg = $('#djbeg').val();
     var djend = $('#djend').val();
-    console.log(djbeg);
     if (null!=createtime && ''!=createtime || null!=djend && ''!=djend){
         djbeg=djbeg
         djend=djend
@@ -86,31 +86,3 @@ function queryRegister() {
         url:url
     });
 }
-
-//点击添加按钮弹出页面
-function add() {
-    var addDiv = $('#addDiv').html();
-    //弹出一个页面
-    layer.open({
-        type:1,
-        area: ['440px', '400px'],
-        shadeClose: true, //点击遮罩关闭
-        content: addDiv,
-        title : '盘盈盘亏登记'
-    });
-}
-
-/*
-function addRegist() {
-    var result = [];
-    $.ajax({
-        url:'',
-        data:{},
-        dataType:'json',
-        type:'post',
-        async:false,
-        success : function (data) {
-            result = data.data;
-        }
-    });
-}*/

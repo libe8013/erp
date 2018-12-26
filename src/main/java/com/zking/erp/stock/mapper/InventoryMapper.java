@@ -19,4 +19,24 @@ public interface InventoryMapper {
      * @return
      */
     List<Map<String,Object>> queryInventoryPager(InventoryVo inventoryVo);
+
+    /**
+     * 修改审核状态
+     * @param inventory
+     * @return
+     */
+    int updAudit(Inventory inventory);
+
+
+
+    /**
+     * 查询未审核状态
+     * @param inventoryVo
+     * @return
+     */
+    List<Map<String,Object>> queryInvWtypePager(InventoryVo inventoryVo);
+
+
+
+
 }

@@ -18,19 +18,19 @@
   <select id="queryRoleLike" resultType="map" parameterType="com.zking.erp.authority.model.Role">
     SELECT * FROM t_role WHERE 1=1
     <if test="null!=rolename and ''!=rolename">
-         rolename = concat(concat(concat('%',#{rolename},'%')))
+        and rolename LIKE concat(concat('%',#{rolename},'%'))
     </if>
+    ORDER BY a ASC
   </select>
   <insert id="insert" parameterType="com.zking.erp.authority.model.Role" >
-    insert into t_role (id, rolename, remark
+    insert into t_role (id, rolename
       )
-    values (#{id,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zking.erp.authority.model.Role" >
     update t_role
-    set rolename = #{rolename,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+    set rolename = #{rolename,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -1,5 +1,7 @@
 package com.zking.erp.stock.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,6 +10,7 @@ public class StoreOper implements Serializable {
 
     private String empuuid;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date opertime;
 
     private String storeuuid;

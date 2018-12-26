@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
     <%@include file="/common/head.jsp"%>
 </head>
 <body>
@@ -29,7 +28,33 @@
     <table class="layui-table" id="roleTab" lay-filter="StoreTypeTab">
     </table>
 </div>
-
-
+<script type="text/html" id="toolbarTop">
+    <a class="layui-btn layui-btn-sm" href="javascript:add();" id="add"><i class="layui-icon"><font size="2">增加</font></i></a>
+</script>
+<script type="text/html" id="crud">
+    <a class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon"></i></a>
+    <a class="layui-btn layui-btn-normal layui-btn-sm" id="delButton" lay-event="del"><i class="layui-icon"></i></a>
+</script>
+<%--添加界面--%>
+<script type="text/html" id="addDiv">
+    <div class="layui-form-item" style="padding:20px;">
+        <label class="layui-form-label">角色名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" id="rname" name="rname" lay-verify="required" placeholder="请输入您要添加的角色名称" class="layui-input"/>
+        </div>
+        <button class="layui-btn" id="addRole">添加角色</button>
+    </div>
+</script>
+<%--修改界面--%>
+<script type="text/html" id="upd">
+    <div class="layui-form-item" style="padding:20px;">
+        <input type="hidden" class="layui-input" id="id" name="id" />
+        <label class="layui-form-label">角色名称：</label>
+        <div class="layui-input-inline">
+            <input type="text" id="name" name="name" lay-verify="required" placeholder="请输入您要修改的角色" class="layui-input"/>
+        </div>
+        <button class="layui-btn" id="edit">确认修改</button>
+    </div>
+</script>
 </body>
 </html>
