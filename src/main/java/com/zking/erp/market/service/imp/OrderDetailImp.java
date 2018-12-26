@@ -54,4 +54,9 @@ public class OrderDetailImp implements IOrderDetailService{
     public List<OrderDetail> OrderDetailquery(OrderDetail orderDetail) {
         return orderDetailMapper.orderDetailquery(orderDetail);
     }
+
+    @Override
+    public List<OrderDetail> queryOrderDetail(OrderDetail orderDetail) {
+        return orderDetailMapper.queryOrderDetail(orderDetail);
+    }
 }

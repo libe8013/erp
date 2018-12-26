@@ -20,7 +20,7 @@ layui.use(['jquery','form','layer','table'],function () {
     table.on('tool(ordersTab)',function (obj) {
         var data = obj.data;
         var tr = obj.tr;
-        if(obj.event=='queryOrderDetail'){
+        if(obj.event=='queryOrderDetailAudit'){
             querySingleOrderDetail(data,tr);
         }
     })
@@ -42,7 +42,7 @@ function initTable(){
             {field:'checktime', width:'10%', title: '检查日期',align:'center'},
             {field:'starttime', width:'10%', title: '开始日期',align:'center'},
             {field:'endtime', width:'10%', title: '结束日期',align:'center'},
-            {field:'creater', width:'8%', title: '下单员',align:'center',
+            {field:'creater', width:'7%', title: '下单员',align:'center',
                 templet : function(row){
                     var result='';
                     $.ajax({
@@ -57,7 +57,7 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'checker', width:'8%', title: '审查员',align:'center',
+            {field:'checker', width:'7%', title: '审查员',align:'center',
                 templet : function(row){
                     var result='';
                     $.ajax({
@@ -72,7 +72,7 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'starter', width:'8%', title: '采购员',align:'center',
+            {field:'starter', width:'7%', title: '采购员',align:'center',
                 templet : function(row){
                     var result='';
                     $.ajax({
@@ -87,7 +87,7 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'ender', width:'8%', title: '库管员',align:'center',
+            {field:'ender', width:'7%', title: '库管员',align:'center',
                 templet : function(row){
                     var result='';
                     $.ajax({
@@ -121,7 +121,7 @@ function initTable(){
                     return obj.totalmoney+"$";
              }},
             {field:'state', width:'6%', title: '订单状态',align:'center'},
-            {field:'操作', width:'6%', title: '操作',align:'center',toolbar:'#crud'}
+            {field:'操作', width:'11%', title: '操作',align:'center',toolbar:'#crud'}
         ]],
     });
 }
@@ -148,7 +148,7 @@ function querySingleOrderDetail(data,tr){
         toolbar : '',
         shadeClose: true, //点击遮罩关闭层
         area : ['1030px' , '600px'],
-        content: path+"/purchase/jsp/orderDetail.jsp?uuid="+data.uuid,
+        content: path+"/purchase/jsp/orderDetailAudit.jsp?uuid="+data.uuid,
         success : function (layero,index) {
             var body = layer.getChildFrame('body',index);
             var inputBody = body.find('input');

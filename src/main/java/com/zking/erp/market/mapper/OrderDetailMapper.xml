@@ -27,11 +27,11 @@
       <arg column="STOREUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ORDERSUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="GOODSUUID" jdbcType="VARBINARY" javaType="java.lang.String" />
+      <arg column="GOODSUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    UUID, GOODSNAME, PRICE, NUM, MONEY, ENDTIME, ENDER, STOREUUID, STATE, ORDERSUUID
+    UUID, GOODSNAME, PRICE, NUM, MONEY, ENDTIME, ENDER, STOREUUID, STATE, ORDERSUUID,GOODSUUID
   </sql>
   <sql id="Blob_Column_List" >
     GOODSUUID
@@ -50,7 +50,16 @@
       <include refid="Base_Column_List"/>
       from orderdetail where 1=1
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <select id="queryOrderDetail" resultType="com.zking.erp.market.model.OrderDetail"
+          parameterType="com.zking.erp.market.model.OrderDetail">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from orderdetail where 1=1
+    <if test="null!=ordersuuid and ''!=ordersuuid">
+      and ordersuuid=#{ordersuuid}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from orderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
