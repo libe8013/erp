@@ -8,7 +8,11 @@ layui.use(['table','layer','jquery','tree','form'],function () {
     XTree();
 });
 
-
+//监听行单击事件
+layui.table.on('row(AuthTab)', function(obj){
+    console.log(obj.tr) //得到当前行元素对象
+    console.log(obj.data) //得到当前行数据
+});
 
 
 
