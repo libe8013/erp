@@ -1,8 +1,11 @@
 package com.zking.erp.personnel.contoller;
 
 import com.zking.erp.authority.model.Role;
+import com.zking.erp.base.util.PageBean;
+import com.zking.erp.personnel.model.Dept;
 import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.personnel.service.IEmpService;
+import com.zking.erp.personnel.vo.EmpVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/emp")
@@ -20,6 +24,7 @@ public class EmpController {
 
     @Autowired
     private IEmpService empService;
+    private EmpVo empVo=new EmpVo();
 
     @RequestMapping("/queryEmpStoreRole")
     @ResponseBody
@@ -80,5 +85,74 @@ public class EmpController {
         }
         return map;
     }
+    @RequestMapping("/queryDeptList")
+    @ResponseBody
+    public Map<String, Object> queryDeptList(Dept dept) {
 
+        List<Dept> list = empService.queryDeptList(dept);
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("data", list);
+        return map;
+    }
+
+    @RequestMapping("/queryEmpListPager")
+    @ResponseBody
+    public Map<String, Object> queryEmpListPager(HttpServletRequest req, EmpVo empVo) {
+        PageBean pagebean = new PageBean();
+        pagebean.setRequest(req);
+        List<Map<String,Object>> list = empService.queryEmpListPager(empVo,pagebean);
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", pagebean.getTotal());
+        map.put("data", list);
+        return map;
+    }
+
+    @RequestMapping("/addEmp")
+    @ResponseBody
+    public Map<String, Object> addEmp(EmpVo empVo) {
+        String message = "员工新增成功";
+        empVo.setUuid(UUID.randomUUID().toString().replace("-", ""));
+        Map<String, Object> map = new HashMap<>();
+        try {
+            empService.insert(empVo);
+        } catch (Exception e) {
+            message = "员工新增失败";
+        }
+        map.put("msg", message);
+        return map;
+
+    }
+
+    @RequestMapping("/editEmp")
+    @ResponseBody
+    public  Map<String,Object> editEmp(EmpVo empVo){
+        String message = "保存成功";
+        Map<String,Object> map  = new HashMap<>();
+        try {
+            empService.updateByPrimaryKey(empVo);
+        } catch (Exception e) {
+            message = "保存失败";
+        }
+        map.put("msg", message);
+        return map;
+    }
+
+
+    @RequestMapping("/delEmp")
+    @ResponseBody
+    public Map<String,Object> delEmp(EmpVo empVo){
+        String message = "删除成功";
+        Map<String,Object> map  = new HashMap<>();
+        try {
+            empService.deleteByPrimaryKey(empVo.getUuid());
+        } catch (Exception e) {
+            message = "删除失败";
+        }
+        map.put("msg",message);
+        return map;
+    }
 }

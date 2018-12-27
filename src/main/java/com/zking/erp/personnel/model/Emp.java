@@ -1,8 +1,13 @@
 package com.zking.erp.personnel.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@ToString
 public class Emp  implements Serializable {
     private String uuid;
 
@@ -20,6 +25,9 @@ public class Emp  implements Serializable {
 
     private String address;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd" )
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date birthday;
 
     private String depuuid;

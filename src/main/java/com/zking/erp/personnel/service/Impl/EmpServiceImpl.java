@@ -1,7 +1,9 @@
 package com.zking.erp.personnel.service.Impl;
 
 import com.zking.erp.authority.model.Role;
+import com.zking.erp.base.util.PageBean;
 import com.zking.erp.personnel.mapper.EmpMapper;
+import com.zking.erp.personnel.model.Dept;
 import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.personnel.service.IEmpService;
 import com.zking.erp.personnel.vo.EmpVo;
@@ -18,18 +20,32 @@ public class EmpServiceImpl implements IEmpService {
     private EmpMapper empMapper;
 
     @Override
-    public int deleteByPrimaryKey(EmpVo empVo) {
-        return 0;
+    public List<Map<String, Object>> queryEmpListPager(EmpVo empVo, PageBean pageBean) {
+        if (empVo.getEndtime() != null) {
+            return empMapper.queryEmpListPager(empVo);
+        }else{
+            return empMapper.queryEmp2ListPager(empVo);
+
+        }
+    }
+    @Override
+    public List<Dept> queryDeptList(Dept dept) {
+        return empMapper.queryDeptList(dept);
     }
 
     @Override
-    public int insert(EmpVo empVo) {
-        return 0;
+    public int insert(Emp record) {
+        return empMapper.insert(record);
     }
 
     @Override
-    public int updateByPrimaryKey(EmpVo empVo) {
-        return 0;
+    public int updateByPrimaryKey(Emp record) {
+        return empMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String uuid) {
+        return empMapper.deleteByPrimaryKey(uuid);
     }
 
     @Override
