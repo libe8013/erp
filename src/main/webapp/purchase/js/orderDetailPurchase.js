@@ -315,6 +315,19 @@ function initTable(tableId){
                     return '<a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="del" lay-id="'+row.uuid+'"><i class="layui-icon"></i></a>';
              }}
         ]],
+        done:function(res){
+        var data = res.data;
+        if(res.count!=0){
+            var money = 0;
+            for(var i=0;i<data.length;i++){
+                if(data[i].money!=null&&data[i].money!=''&&data[i].money!=undefined){
+                    money+=data[i].money;
+                }
+            }
+            var tr = "<tr><td class='layui-table-click' align=\"center\" height='40px;'>合计</td><td align=\"center\">"+money+"$</td></tr>";
+            $('tbody').append(tr)
+        }
+    }
     });
 }
 

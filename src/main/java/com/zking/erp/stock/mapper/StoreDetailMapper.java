@@ -32,4 +32,6 @@ public interface StoreDetailMapper {
      * @return
      */
     StoreDetail querySingleStoreDetail(StoreDetail storeDetail);
+
+    List<StoreDetail> queryStoreDetail(StoreDetail storeDetail);
 }

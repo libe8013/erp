@@ -7,6 +7,7 @@ layui.use(['jquery','form','layer','table'],function () {
     path = $('#path').val();
     var tableId = 'orderDetailTable';
     custom_rule();
+    GoodsResult = getGoods(supplierUUID);
 
     window.GoodsObj = {
         renderSelectOptions : function (data,settings) {
@@ -18,7 +19,6 @@ layui.use(['jquery','form','layer','table'],function () {
                 selectedValue = settings.selectedValue;
             var html = [];
             for(var i=0, item; i < data.length; i++){
-                if(data[i].supplieruuid==supplierUUID){
                     item = data[i];
                     html.push('<option value="');
                     html.push(item[valueField]);
@@ -29,7 +29,6 @@ layui.use(['jquery','form','layer','table'],function () {
                     html.push('>');
                     html.push(item[textField]);
                     html.push('</option>');
-                }
             }
             return html.join('');
         }
@@ -97,7 +96,7 @@ layui.use(['jquery','form','layer','table'],function () {
             var supplieruuid = $('#supplieruuid option:selected').val();
 
             if(supplieruuid==0 || supplieruuid==null){
-                layer.msg("请选择供应商！", { icon: 5 }); //提示
+                layer.msg("请选择客户！", { icon: 5 }); //提示
                 return;
             }
             if(oldData.length==0){
@@ -133,7 +132,7 @@ layui.use(['jquery','form','layer','table'],function () {
             var Goodsjson = JSON.stringify(json);	//使用JSON.stringify() 格式化输出JSON字符串
             $.ajax({
                 url : path+'/orders/addOrders',
-                data : {type:"采购",state:'未审核',supplieruuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
+                data : {type:"销售",state:'未出库',supplieruuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
                 dataType : 'json',
                 type : 'post',
                 async : false,
@@ -159,7 +158,7 @@ layui.use(['jquery','form','layer','table'],function () {
     //注册按钮事件
     $(document).on('click','#addRow', function () {
         if(supplierUUID==''||supplierUUID==null){
-            layer.msg('请选择供应商');
+            layer.msg('请选择客户');
             return;
         }
         var type = $(this).data('type');//获取当前点击按钮的data-type属性值
@@ -218,7 +217,6 @@ layui.use(['jquery','form','layer','table'],function () {
 
     form.on('select(supplier)', function(data){
         supplierUUID=data.value;
-        GoodsResult = getGoods(supplierUUID);
         var oldData = table.cache[tableId];
         for (var i=0;i<oldData.length;i++){
             oldData[i]['money']=0;
@@ -301,12 +299,25 @@ function initTable(tableId){
                     return '<a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="del" lay-id="'+row.uuid+'"><i class="layui-icon"></i></a>';
                 }}
         ]],
+        done:function(res){
+            var data = res.data;
+            if(res.count!=0){
+                var money = 0;
+                for(var i=0;i<data.length;i++){
+                    if(data[i].money!=null&&data[i].money!=''&&data[i].money!=undefined){
+                        money+=data[i].money;
+                    }
+                }
+                var tr = "<tr><td class='layui-table-click' align=\"center\" height='40px;'>合计</td><td align=\"center\">"+money+"$</td></tr>";
+                $('tbody').append(tr)
+            }
+        }
     });
 }
 
 function initSelect(id,htmlid){
     var form = layui.form;
-    $.get(path + '/supplier/querySupplierLikePager', {type:'0'}, function (data) {
+    $.get(path + '/supplier/querySupplierLikePager', {type:'1'}, function (data) {
         var goodsType = "";
         if (data.data != null) {
             $.each(data.data, function (index, item) {
@@ -334,7 +345,7 @@ function custom_rule(){
     layui.form.verify({
         supplieruuid: function (value) {
             if(value==0){
-                return "请选择供应商";
+                return "请选择客户";
             }
         }
     });
@@ -354,7 +365,7 @@ function getGoods(supplierUUID){
     var result = [];
     $.ajax({
         url : path+'/goods/queryGoodsLikePager',
-        data : {supplieruuid:supplierUUID},
+        data : {},
         dataType : 'json',
         type : 'post',
         async : false,

@@ -29,7 +29,7 @@ public class ReturnOrders implements Serializable {
 
     private String ender;
 
-    private String supplieruuid;
+    private String storeuuid;
 
     private Float totalmoney;
 
@@ -39,7 +39,7 @@ public class ReturnOrders implements Serializable {
 
     private String ordersuuid;
 
-    public ReturnOrders(String uuid, Date createtime, Date checktime, Date endtime, String type, String creater, String checker, String ender, String supplieruuid, Float totalmoney, String state, String waybillsn, String ordersuuid) {
+    public ReturnOrders(String uuid, Date createtime, Date checktime, Date endtime, String type, String creater, String checker, String ender, String storeuuid, Float totalmoney, String state, String waybillsn, String ordersuuid) {
         this.uuid = uuid;
         this.createtime = createtime;
         this.checktime = checktime;
@@ -48,7 +48,7 @@ public class ReturnOrders implements Serializable {
         this.creater = creater;
         this.checker = checker;
         this.ender = ender;
-        this.supplieruuid = supplieruuid;
+        this.storeuuid = storeuuid;
         this.totalmoney = totalmoney;
         this.state = state;
         this.waybillsn = waybillsn;
@@ -123,14 +123,6 @@ public class ReturnOrders implements Serializable {
         this.ender = ender;
     }
 
-    public String getSupplieruuid() {
-        return supplieruuid;
-    }
-
-    public void setSupplieruuid(String supplieruuid) {
-        this.supplieruuid = supplieruuid;
-    }
-
     public Float getTotalmoney() {
         return totalmoney;
     }
@@ -161,5 +153,13 @@ public class ReturnOrders implements Serializable {
 
     public void setOrdersuuid(String ordersuuid) {
         this.ordersuuid = ordersuuid;
+    }
+
+    public String getStoreuuid() {
+        return storeuuid;
+    }
+
+    public void setStoreuuid(String storeuuid) {
+        this.storeuuid = storeuuid;
     }
 }

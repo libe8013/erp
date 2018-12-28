@@ -101,17 +101,17 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'supplieruuid', width:'8%', title: '供应商',align:'center',
+            {field:'storeuuid', width:'8%', title: '仓库',align:'center',
                 templet : function(row){
                     var result='';
                     $.ajax({
-                        url : path+'/supplier/querySupplierLikePager',
-                        data : {uuid:row.supplieruuid},
+                        url : path+'/store/querySingleStore',
+                        data : {uuid:row.storeuuid},
                         dataType : 'json',
                         type : 'post',
                         async : false,
                         success : function (data) {
-                            result=data.data[0].name;
+                            result=data.name;
                         }
                     });
                     return result;
@@ -121,8 +121,8 @@ function initTable(){
              }},
             {field:'state', width:'6%', title: '订单状态',align:'center'},
             {field:'操作', width:'11%', title: '操作',align:'center',templet:function(obj){
-                if(obj.state=="已确认"){
-                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryordersStorageTab">订单审核</a>';
+                if(obj.state=="已审核"){
+                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryordersStorageTab">订单出库</a>';
                 }else {
                     return '';
                 }
@@ -153,20 +153,18 @@ function querySingleOrderDetail(data,tr){
         toolbar : '',
         shadeClose: true, //点击遮罩关闭层
         area : ['1030px' , '660px'],
-        content: path+"/personnel/jsp/returnorderDetailAudit.jsp?uuid="+data.uuid,
+        content: path+"/personnel/jsp/returnorderDetailStorage.jsp?uuid="+data.uuid,
         success : function (layero,index) {
             var body = layer.getChildFrame('body',index);
             var inputBody = body.find('input');
-            var supplier = $(''+tr.selector+' td[data-field=supplieruuid]').text();
             var creater = $(''+tr.selector+' td[data-field=creater]').text();
             var checker = $(''+tr.selector+' td[data-field=checker]').text();
-            var starter = $(''+tr.selector+' td[data-field=starter]').text();
+            var storeuuid = $(''+tr.selector+' td[data-field=storeuuid]').text();
             // var ender = $(''+tr.selector+' td[data-content='+data.ender+']').text();
-            data["supplieruuid"] = supplier;
             data["createrUUID"] = data.creater;
             data["creater"] = creater;
             data["checker"] = checker;
-            data["starter"] = starter;
+            data["storename"] = storeuuid;
             // data["ender"] = ender;
             $.each(data,function (dataKey) {
                 for (var i=0;i<inputBody.length;i++){

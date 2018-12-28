@@ -23,9 +23,10 @@
             </div>
 
             <div class="layui-inline">
-                <label class="layui-form-label">供应商</label>
+                <label class="layui-form-label">仓库</label>
                 <div class="layui-input-block">
-                    <input type="text" id="supplieruuid" id="date1" readonly autocomplete="off" class="layui-input">
+                    <input type="text" id="storename" readonly autocomplete="off" class="layui-input">
+                    <input type="hidden" id="storeuuid" readonly autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">

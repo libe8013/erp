@@ -28,4 +28,11 @@ public interface IStoreDetailService {
     StoreDetail querySingleStoreDetail(StoreDetail storeDetail);
 
     int updateByPrimaryKeySelective(StoreDetail record);
+
+    /**
+     * 查询所有仓库明细
+     * @param storeDetail
+     * @return
+     */
+    List<StoreDetail> queryStoreDetail(StoreDetail storeDetail);
 }

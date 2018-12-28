@@ -16,10 +16,10 @@
 <div>
 <form class="layui-form" method="post" id="ff" autocomplete="off">
         <div class="layui-inline" style="padding-left: 10px;padding-top: 10px;">
-            <label class="layui-form-label">供应商：</label>
+            <label class="layui-form-label">客户：</label>
             <div class="layui-input-inline">
-                <select name="supplieruuid" lay-verify="supplieruuid" id="supplieruuid" lay-search="">
-                    <option value="0">请选择供应商</option>
+                <select name="supplieruuid" lay-verify="supplieruuid" lay-filter="supplier"  id="supplieruuid" lay-search="">
+                    <option value="0">请选择客户</option>
                 </select>
             </div>
         </div>

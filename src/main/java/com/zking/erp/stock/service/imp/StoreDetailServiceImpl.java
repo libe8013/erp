@@ -41,5 +41,10 @@ public class StoreDetailServiceImpl implements IStoreDetailService {
         return storeDetailMapper.updateByPrimaryKeySelective(record);
     }
 
+    @Override
+    public List<StoreDetail> queryStoreDetail(StoreDetail storeDetail) {
+        return storeDetailMapper.queryStoreDetail(storeDetail);
+    }
+
 
 }

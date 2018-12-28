@@ -21,13 +21,36 @@ public class ModuleController {
     @Autowired
     private IModuleService moduleService;
 
+    /**
+     * 绑定导航栏tree (查询pid,在找子节点)
+     * @param module
+     * @return
+     */
     @RequestMapping("/queryModuleLike")
     @ResponseBody
-    public List<Module> queryModuleLike(Module module){
+    public List<Map<String,Object>> queryModuleLike(Module module){
 
         List<Module> lst = moduleService.queryModuleLike(module);
 
-        return lst;
+        List<Map<String,Object>> listPid = new ArrayList<>();
+
+        for (Module m : lst) {
+            if(m.getPid().equals("-1")){
+                Map<String,Object> map = new HashMap<>();
+                map.put("name",m.getText());
+                map.put("id",m.getId());
+                if(m.getUrl()!=null && !m.getUrl().equals("")){
+                    map.put("href","javascript:initTab(&quot;"+m.getText()+"&quot;,&quot;"+m.getUrl()+"&quot;,&quot;"+m.getId()+"&quot;)");
+                }
+                listPid.add(map);
+            }
+        }
+
+        for (Map<String, Object> stringObjectMap : listPid) {
+            getModuleNode(stringObjectMap,lst,true);
+        }
+
+        return listPid;
     }
 
     /**
@@ -51,7 +74,6 @@ public class ModuleController {
             }
         }
 
-        List<Map<String,Object>> node = new ArrayList<>();
         for (Map<String, Object> stringObjectMap : lmap) {
             getNode(stringObjectMap,list,true);
         }
@@ -72,6 +94,33 @@ public class ModuleController {
             b = false;
         }else{
             map.put("data",maps);
+        }
+
+        return map;
+    }
+
+    /**
+     * 绑定到导航栏tree
+     * @param map
+     * @param list
+     * @param b
+     * @return
+     */
+    public Map<String,Object> getModuleNode(Map<String,Object> map,List<Module> list,boolean b){
+        List<Map<String,Object>> maps = new ArrayList<>();
+        for (Module m : list) {
+            if(map.get("id").equals(m.getPid()) && b){
+                Map<String,Object> map2 = new HashMap<>();
+                map2.put("name",m.getText());
+                map2.put("href","javascript:initTab(&quot;"+m.getText()+"&quot;,&quot;"+m.getUrl()+"&quot;,&quot;"+m.getId()+"&quot;)");
+                maps.add(map2);
+            }
+        }
+
+        if(maps.size()==0){
+            b = false;
+        }else{
+            map.put("children",maps);
         }
 
         return map;

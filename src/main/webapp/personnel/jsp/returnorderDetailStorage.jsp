@@ -9,10 +9,12 @@
 <html>
 <head>
     <%@include file="/common/head.jsp"%>
-    <script src="${ctx}/purchase/js/orderDetailStorage.js"></script>
+    <script src="${ctx}/personnel/js/returnorderDetailStorage.js"></script>
 </head>
 <body>
 <form class="layui-form layui-form-pane" action="">
+    <input class="layui-input" type="hidden" name="storeuuid" id="storeuuid" readonly/>
+
     <div style="padding-left: 3%;">
         <div>
             <div class="layui-inline">
@@ -23,9 +25,9 @@
             </div>
 
             <div class="layui-inline">
-                <label class="layui-form-label">供应商</label>
+                <label class="layui-form-label">仓库</label>
                 <div class="layui-input-block">
-                    <input type="text" id="supplieruuid" id="date1" readonly autocomplete="off" class="layui-input">
+                    <input type="text" id="storename" readonly autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -74,31 +76,20 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">确认日期</label>
-                <div class="layui-input-inline">
-                    <input type="text" readonly id="starttime" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="layui-inline">
-                <label class="layui-form-label">确认人</label>
-                <div class="layui-input-inline" style="width: 260px;">
-                    <input type="text" readonly id="starter" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">入库日期</label>
-                <div class="layui-input-inline">
-                    <input type="text" readonly id="endtime" lay-verify="required" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
                 <label class="layui-form-label">总金额</label>
                 <div class="layui-input-inline">
                     <input type="text" readonly id="totalmoney" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
+        </div>
+        <div>
+            <div class="layui-inline">
+                <label class="layui-form-label">出库日期</label>
+                <div class="layui-input-inline" style="width: 260px;">
+                    <input type="text" readonly id="endtime" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
         </div>
     </div>
 </form>
@@ -111,7 +102,8 @@
 </script>
 <script type="text/html" id="storageDiv">
     <form class="layui-form layui-form-pane"lay-filter="goodsStorage" id="goodsStorage" style="padding-left: 2%;">
-    <input type="hidden" name="ordersuuid"/>
+        <input class="layui-input" name="storeuuid" type="hidden"/>
+        <input type="hidden" name="ordersuuid"/>
     <input type="hidden" name="uuid"/>
     <div style="padding-top: 10px;">
         <div class="layui-inline">
@@ -135,13 +127,14 @@
         <div class="layui-inline" style="margin-top: 10px;">
                 <label class="layui-form-label">仓库：</label>
                 <div class="layui-input-inline">
-                    <select name="storeuuid" id="store" lay-verify="storeuuid" lay-search="">
-                        <option value="0">请选择仓库</option>
-                    </select>
+                    <input class="layui-input" name="storename" readonly/>
+                    <%--<select name="storeuuid" id="store" disabled="disabled" lay-verify="storeuuid" lay-search="">--%>
+                        <%--<option value="0">请选择仓库</option>--%>
+                    <%--</select>--%>
                 </div>
         </div>
         <div class="layui-inline" style="margin-top: 15px;margin-left: 40%;">
-            <a class="layui-btn" lay-submit lay-filter="Storage" id="addStorage">入库</a>
+            <a class="layui-btn" lay-submit lay-filter="Storage" id="delStorage">出库</a>
         </div>
     </div>
     </form>

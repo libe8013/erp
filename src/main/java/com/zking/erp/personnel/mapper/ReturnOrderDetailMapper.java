@@ -10,6 +10,8 @@ import java.util.Map;
 public interface ReturnOrderDetailMapper {
     int deleteByPrimaryKey(String uuid);
 
+    int delReturnOrderdetail(String ordersuuid);
+
     int insert(ReturnOrderDetail record);
 
     int insertSelective(ReturnOrderDetail record);
@@ -22,5 +24,6 @@ public interface ReturnOrderDetailMapper {
 
     int addReturnOrdersDetail(List<Map<String,Object>> maps);
 
-    List<ReturnOrderDetail> queryReeturnOrderDetail(ReturnOrderDetail returnOrderDetail);
+    List<ReturnOrderDetail> queryReturnOrderDetail(ReturnOrderDetail returnOrderDetail);
+
 }

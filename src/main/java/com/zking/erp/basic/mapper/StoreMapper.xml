@@ -39,8 +39,8 @@
       GROUP BY g.uuid
     </select>
   <select id="queryStoreGoodsSupplier" resultType="map">
-    SELECT g.uuid,g.name,g.outprice,sd.num as inventory,sg.`supplieruuid` FROM supplier_goods sg,goods g,storedetail sd WHERE
-    sg.`goodsuuid`=g.uuid AND sd.goodsuuid=g.uuid AND sg.`supplieruuid`=#{supplierid}
+    SELECT s.uuid AS storeuuid,s.name AS storename,g.uuid,g.name,g.outprice,sd.num as inventory FROM store s,storedetail sd,goods g WHERE
+    s.uuid=sd.storeuuid AND sd.goodsuuid=g.uuid AND s.uuid=#{supplierid}
     <if test="goodsuuid!=null and ''!=goodsuuid">
       and g.uuid=#{goodsuuid}
     </if>

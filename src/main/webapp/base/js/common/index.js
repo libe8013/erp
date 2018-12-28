@@ -6,62 +6,21 @@ layui.use(['tree','element','jquery'],function () {
 })
 
 function initTree(){
-    var tree='[{';
+    var treeJson=[];
     $.ajax({
         url : '/erp/authority/queryModuleLike',
-        data : {pid:-1},
+        data : {},
         dataType : 'json',
         type : 'post',
         async : false,
         success : function (data){
-            for (var i=0;i<data.length;i++) {
-                tree+='"name": "'+data[i].text+'",';
-                tree+='"children": [';
-                var b = true;
-                $.ajax({
-                    url : '/erp/authority/queryModuleLike',
-                    data : {pid:data[i].id},
-                    dataType : 'json',
-                    type : 'post',
-                    async : false,
-                    success : function (data1){
-                        var arr  = data1.length;
-                        if(arr==0){
-                            b = false;
-                        }
-                        var j = 0;
-                        if(b){
-                            while (true){
-                                tree+="{";
-                                if(j>=arr){
-                                    // tree+="]";
-                                    break
-                                };
-                                tree+='"name":"'+data1[j].text+'",';
-                                // tree+='"href":"'+data1[j].url+'",';
-                                tree+='"href":"javascript:initTab(&quot;'+data1[j].text+'&quot;,&quot;'+data1[j].url+'&quot;,&quot;'+data1[j].id+'&quot;)"';
-                                tree+="},";
-                                j+=1;
-                            }
-                        }
-
-                    }
-                });
-                if(b){
-                    tree = tree.substring(0,tree.length-2);
-                }
-                tree+="]},";
-                tree+="{";
-            }
+            treeJson=data;
         }
     });
-    tree = tree.substring(0,tree.length-2);
-    tree+=']';
-    var treeJSON = JSON.parse(tree);
     layui.tree({
         elem : '#tree',
         skin : 'sidebar',
-        nodes : treeJSON
+        nodes : treeJson
     });
 }
 

@@ -9,13 +9,20 @@ layui.use(['jquery','form','layer','table'],function () {
     $(document).on('click','#goodsQuery',function () {
         queryOrdersStorage();
     });
-    table.on('tool(ordersStorageTab)',function (obj) {
+    // table.on('tool(ordersStorageTab)',function (obj) {
+    //     var data = obj.data;
+    //     var tr = obj.tr;
+    //     if(obj.event=='queryordersStorageTab'){
+    //         querySingleOrderDetail(data,tr);
+    //     }
+    // })
+
+    //监听行单击事件（单击事件为：rowDouble）
+    table.on('row(ordersStorageTab)', function(obj){
         var data = obj.data;
         var tr = obj.tr;
-        if(obj.event=='queryordersStorageTab'){
-            querySingleOrderDetail(data,tr);
-        }
-    })
+        querySingleOrderDetail(data,tr);
+    });
 
 });
 
@@ -64,21 +71,6 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'starter', width:'7%', title: '采购员',align:'center',
-                templet : function(row){
-                    var result='';
-                    $.ajax({
-                        url : path+'/emp/querySingleEmp',
-                        data : {uuid:row.starter},
-                        dataType : 'json',
-                        type : 'post',
-                        async : false,
-                        success : function (data) {
-                            result=data.name;
-                        }
-                    });
-                    return result;
-                }},
             {field:'ender', width:'7%', title: '库管员',align:'center',
                 templet : function(row){
                     var result='';
@@ -94,7 +86,7 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'supplieruuid', width:'8%', title: '供应商',align:'center',
+            {field:'supplieruuid', width:'8%', title: '客户',align:'center',
                 templet : function(row){
                     var result='';
                     $.ajax({
@@ -114,8 +106,8 @@ function initTable(){
              }},
             {field:'state', width:'6%', title: '订单状态',align:'center'},
             {field:'操作', width:'11%', title: '操作',align:'center',templet:function(obj){
-                if(obj.state=="已确认"){
-                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryordersStorageTab">订单审核</a>';
+                if(obj.state=="未出库"){
+                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryordersStorageTab">订单出库</a>';
                 }else {
                     return '';
                 }
@@ -125,7 +117,7 @@ function initTable(){
 }
 
 function queryOrdersStorage() {
-    var url = path+'/orders/queryPurchasePager?1=1&state=已确认';
+    var url = path+'/orders/queryPurchasePager?1=1&type=销售';
 
     var starttime = $('#starttime').val();
 
@@ -147,7 +139,7 @@ function querySingleOrderDetail(data,tr){
         toolbar : '',
         shadeClose: true, //点击遮罩关闭层
         area : ['1030px' , '660px'],
-        content: path+"/purchase/jsp/orderDetailStorage.jsp?uuid="+data.uuid,
+        content: path+"/market/jsp/orderDetailStorage.jsp?uuid="+data.uuid,
         success : function (layero,index) {
             var body = layer.getChildFrame('body',index);
             var inputBody = body.find('input');

@@ -2,12 +2,13 @@ var path;
 layui.use(['jquery','table','layer'],function () {
     var table = layui.table;
 
+    $ = layui.jquery;
+
     path = $('#path').val();
 
     var uuid = $('#uuid').val();
 
-    var data = getOrderDetail(uuid);
-
+    var data = getReturnOrderDetail(uuid);
     initTable(data);
 
     custom_rule();
@@ -19,8 +20,7 @@ layui.use(['jquery','table','layer'],function () {
 
     layui.form.on('submit(Storage)',function (obj) {
         var data = obj.field;
-
-        Storage(data)
+        returnStorage(data)
         parent.queryOrdersStorage();
         return false;
     })
@@ -36,10 +36,10 @@ layui.use(['jquery','table','layer'],function () {
 
 
 
-function getOrderDetail(uuid){
+function getReturnOrderDetail(uuid){
     var result = [];
     $.ajax({
-        url : path+'/orderDetail/queryOrderDetail',
+        url : path+'/returnorderdetail/queryReturnOrderDetail',
         data : {ordersuuid:uuid},
         dataType : 'json',
         type : 'post',
@@ -51,9 +51,10 @@ function getOrderDetail(uuid){
     return result;
 }
 
-function Storage(data){
+function returnStorage(data){
+
     $.ajax({
-        url : path+'/orders/storage',
+        url : path+'/returnedorders/returnStorage',
         data : data,
         dataType : 'json',
         type : 'post',
@@ -84,7 +85,7 @@ function initTable(data){
             {field:'money', width:'12%', title: '金额',align:'center'},
             {field:'state', width:'12%', title: '状态',align:'center'},
             {field:'button', width:'12%', title: '操作',align:'center',templet:function (row) {
-                if(row.state=='未入库'){
+                if(row.state=='未出库'){
                     return '<button class="layui-btn layui-btn-normal layui-btn-sm" id="OrdersAffirm" lay-event="OrderDetailAffirm">订单出库</button>';
                 }else{
                     return '';
@@ -133,6 +134,8 @@ function custom_rule(){
 
 function store(obj) {
     var data = obj.data;
+    data["storeuuid"]=$('#storeuuid').val();
+    data["storename"]=$('#storename').val();
     // if(obj.event=='OrderDetailAffirm'){
         var storage = $('#storageDiv').html();
         layer.open({
@@ -142,7 +145,7 @@ function store(obj) {
             shadeClose: true, //点击遮罩关闭
             content: storage
         });
-        initSelect(null,'store');
+        // initSelect(data.storeuuid,'store');
 
         layui.form.val('goodsStorage',data);
     // }

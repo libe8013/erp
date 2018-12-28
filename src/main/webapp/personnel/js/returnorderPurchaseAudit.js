@@ -15,6 +15,8 @@ layui.use(['jquery','form','layer','table'],function () {
         var tr = obj.tr;
         if(obj.event=='queryOrderDetailAudit'){
             querySingleOrderDetail(data,tr);
+        }else if(obj.event=='delDetail'){
+            del(data);
         }
     })
 
@@ -64,21 +66,6 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'starter', width:'7%', title: '采购员',align:'center',
-                templet : function(row){
-                    var result='';
-                    $.ajax({
-                        url : path+'/emp/querySingleEmp',
-                        data : {uuid:row.starter},
-                        dataType : 'json',
-                        type : 'post',
-                        async : false,
-                        success : function (data) {
-                            result=data.name;
-                        }
-                    });
-                    return result;
-                }},
             {field:'ender', width:'7%', title: '库管员',align:'center',
                 templet : function(row){
                     var result='';
@@ -94,17 +81,17 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'supplieruuid', width:'8%', title: '供应商',align:'center',
+            {field:'storeuuid', width:'8%', title: '仓库',align:'center',
                 templet : function(row){
                     var result='';
                     $.ajax({
-                        url : path+'/supplier/querySupplierLikePager',
-                        data : {uuid:row.supplieruuid},
+                        url : path+'/store/querySingleStore',
+                        data : {uuid:row.storeuuid},
                         dataType : 'json',
                         type : 'post',
                         async : false,
                         success : function (data) {
-                            result=data.data[0].name;
+                            result=data.name;
                         }
                     });
                     return result;
@@ -113,9 +100,10 @@ function initTable(){
                     return obj.totalmoney+"$";
              }},
             {field:'state', width:'6%', title: '订单状态',align:'center'},
-            {field:'操作', width:'11%', title: '操作',align:'center',templet:function(obj){
+            {field:'操作', width:'12%', title: '操作',align:'center',templet:function(obj){
                 if(obj.state=="未审核"){
-                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryOrderDetailAudit">退货订单审核</a>';
+                    var del = "<button type='button' class='layui-btn layui-btn-normal layui-btn-sm' lay-event='delDetail'><i class=\"layui-icon\"></i></button>";
+                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryOrderDetailAudit">退货订单审核</a>&nbsp;'+del;
                 }else {
                     return '';
                 }
@@ -150,11 +138,11 @@ function querySingleOrderDetail(data,tr){
         success : function (layero,index) {
             var body = layer.getChildFrame('body',index);
             var inputBody = body.find('input');
-            var supplier = $(''+tr.selector+' td[data-content='+data.supplieruuid+']').text();
+            var storeuuid = $(''+tr.selector+' td[data-content='+data.storeuuid+']').text();
             var creater = $(''+tr.selector+' td[data-content='+data.creater+']').text();
             var checker = $(''+tr.selector+' td[data-content='+data.checker+']').text();
             var ender = $(''+tr.selector+' td[data-content='+data.ender+']').text();
-            data["supplieruuid"] = supplier;
+            data["storename"] = storeuuid;
             data["createrUUID"] = data.creater;
             data["creater"] = creater;
             data["checker"] = checker;
@@ -183,5 +171,25 @@ function custom_rule(){
                 return "请选择供应商";
             }
         }
+    });
+}
+
+function del(data){
+    layer.confirm('确定执行删除操作嘛?', function(index){
+        $.ajax({
+            url : path+'/returnedorders/delReturnOrders',
+            data : {returnOrdersUUID:data.uuid},
+            dataType : 'json',
+            type : 'post',
+            async : false,
+            success : function (data) {
+                layer.close(index);
+                layer.msg(data.message);
+                queryOrders();
+            },
+            error:function(result) {
+
+            }
+        });
     });
 }
