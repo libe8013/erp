@@ -115,4 +115,12 @@ public class StoreController {
         return maps;
     }
 
+    @RequestMapping("/querySingleStore")
+    @ResponseBody
+    public Store querySingleStore(Store store){
+        Store store1 = storeService.selectByPrimaryKey(store.getUuid());
+
+        return store1;
+    }
+
 }

@@ -9,7 +9,7 @@
 <html>
 <head>
     <%@include file="/common/head.jsp"%>
-    <script src="${ctx}/purchase/js/orderPurchaseStorage.js"></script>
+    <script src="${ctx}/market/js/orderMarketStorage.js"></script>
 </head>
 <body>
 <div>

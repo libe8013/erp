@@ -19,32 +19,32 @@ public class IStoreOperServiceImpl implements IStoreOperService {
 
     @Override
     public int deleteByPrimaryKey(String uuid) {
-        return 0;
+        return storeOperMapper.deleteByPrimaryKey(uuid);
     }
 
     @Override
     public int insert(StoreOper record) {
-        return 0;
+        return storeOperMapper.insert(record);
     }
 
     @Override
     public int insertSelective(StoreOper record) {
-        return 0;
+        return storeOperMapper.insertSelective(record);
     }
 
     @Override
     public StoreOper selectByPrimaryKey(String uuid) {
-        return null;
+        return storeOperMapper.selectByPrimaryKey(uuid);
     }
 
     @Override
     public int updateByPrimaryKeySelective(StoreOper record) {
-        return 0;
+        return storeOperMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKey(StoreOper record) {
-        return 0;
+        return storeOperMapper.updateByPrimaryKey(record);
     }
 
     @Override

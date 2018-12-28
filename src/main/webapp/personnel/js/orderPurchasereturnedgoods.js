@@ -18,7 +18,7 @@ layui.use(['jquery','form','layer','table'],function () {
                 selectedValue = settings.selectedValue;
             var html = [];
             for(var i=0, item; i < data.length; i++){
-                if(data[i].supplieruuid==supplierUUID){
+                if(data[i].storeuuid==supplierUUID && data[i].inventory>0){
                     item = data[i];
                     html.push('<option value="');
                     html.push(item[valueField]);
@@ -40,7 +40,7 @@ layui.use(['jquery','form','layer','table'],function () {
     var orderDetailTable = initTable(tableId);
 
     //初始化下拉框
-    initSelect(null,'supplieruuid');
+    initSelect(null,'storeuuid');
     //定义事件集合
     var active = {
         addRow : function () {//添加行方法
@@ -127,10 +127,10 @@ layui.use(['jquery','form','layer','table'],function () {
         },
         saveOrders: function(){
             var oldData = table.cache[tableId];
-            var supplieruuid = $('#supplieruuid option:selected').val();
+            var supplieruuid = $('#storeuuid option:selected').val();
 
             if(supplieruuid==0 || supplieruuid==null){
-                layer.msg("请选择供应商！", { icon: 5 }); //提示
+                layer.msg("请选择仓库！", { icon: 5 }); //提示
                 return;
             }
             if(oldData.length==0){
@@ -166,7 +166,7 @@ layui.use(['jquery','form','layer','table'],function () {
             var Goodsjson = JSON.stringify(json);	//使用JSON.stringify() 格式化输出JSON字符串
             $.ajax({
                 url : path+'/returnedorders/addReturnedGoods',
-                data : {type:"采购",state:'未审核',supplieruuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
+                data : {type:"采购",state:'未审核',storeuuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
                 dataType : 'json',
                 type : 'post',
                 async : false,
@@ -192,7 +192,7 @@ layui.use(['jquery','form','layer','table'],function () {
     //注册按钮事件
     $(document).on('click','#addRow', function () {
         if(supplierUUID==''||supplierUUID==null){
-            layer.msg('请选择供应商');
+            layer.msg('请选择仓库');
             return;
         }
         var type = $(this).data('type');//获取当前点击按钮的data-type属性值
@@ -247,7 +247,7 @@ layui.use(['jquery','form','layer','table'],function () {
                     var money = {money:(data.outprice*data.num)};
                     if(b){
                         $.extend(oldData[i],{num:value});
-                        layer.msg('只有'+value+"库存哦");
+                        layer.msg("库存只有"+value+"哦");
                     }
                     $.extend(oldData[i],money);
                 }
@@ -321,13 +321,14 @@ function initTable(tableId){
         toolbar : '#toolbarTop',
         height: 524,
         data : [],
+        // totalRow: true,
         page: true, //开启分页
         cols: [[ //表头
             {type:'checkbox',width:'4%'},
             {field:'uuid', width:'20%', title: '商品',align:'center',templet:function(obj){
                     var options = GoodsObj.renderSelectOptions(GoodsResult, {valueField: "uuid", textField: "name", selectedValue: obj.uuid});
                     if(GoodsResult.length==0){
-                        return '<a lay-event="goods"></a><select name="uuid" id="goods'+obj.LAY_INDEX+'" class="name" lay-filter="goods"><option value="">该供应商暂无可退货的商品</option></select>';
+                        return '<a lay-event="goods"></a><select name="uuid" id="goods'+obj.LAY_INDEX+'" class="name" lay-filter="goods"><option value="">该仓库暂无可退货的商品</option></select>';
 
                     }else{
                         return '<a lay-event="goods"></a><select name="uuid" id="goods'+obj.LAY_INDEX+'" class="name" lay-filter="goods"><option value=""></option>' + options + '</select>';
@@ -372,12 +373,26 @@ function initTable(tableId){
                     return '<a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="del" lay-id="'+row.uuid+'"><i class="layui-icon"></i></a>';
                 }}
         ]],
+        done:function(res){
+            var data = res.data;
+            if(res.count!=0){
+                var money = 0;
+                for(var i=0;i<data.length;i++){
+                    if(data[i].money!=null&&data[i].money!=''&&data[i].money!=undefined){
+                        money+=data[i].money;
+                    }
+                }
+                var tr = "<tr><td class='layui-table-click' align=\"center\" height='40px;'>合计</td><td align=\"center\">"+money+"$</td></tr>";
+                $('tbody').append(tr)
+            }
+        }
+
     });
 }
 
 function initSelect(id,htmlid){
     var form = layui.form;
-    $.get(path + '/supplier/querySupplierLikePager', {type:'0'}, function (data) {
+    $.get(path + '/store/queryStoreLikePager', {}, function (data) {
         var goodsType = "";
         if (data.data != null) {
             $.each(data.data, function (index, item) {
@@ -403,9 +418,9 @@ function initSelect(id,htmlid){
 function custom_rule(){
     //自定义验证规则
     layui.form.verify({
-        supplieruuid: function (value) {
+        storeruuid: function (value) {
             if(value==0){
-                return "请选择供应商";
+                return "请选择仓库";
             }
         }
     });

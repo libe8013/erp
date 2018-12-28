@@ -52,6 +52,11 @@ public class ReturnOrderDetailServiceImpl implements IReturnOrderDetailService {
 
     @Override
     public List<ReturnOrderDetail> queryOrderDetail(ReturnOrderDetail returnOrderDetail) {
-        return returnOrderDetailMapper.queryReeturnOrderDetail(returnOrderDetail);
+        return returnOrderDetailMapper.queryReturnOrderDetail(returnOrderDetail);
+    }
+
+    @Override
+    public int delReturnOrderdetail(String ordersuuid) {
+        return returnOrderDetailMapper.delReturnOrderdetail(ordersuuid);
     }
 }

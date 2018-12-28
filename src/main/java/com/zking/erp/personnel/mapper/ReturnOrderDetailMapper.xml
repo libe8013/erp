@@ -26,7 +26,7 @@
     from returnorderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
-  <select id="queryReeturnOrderDetail" resultType="com.zking.erp.personnel.model.ReturnOrderDetail"
+  <select id="queryReturnOrderDetail" resultType="com.zking.erp.personnel.model.ReturnOrderDetail"
           parameterType="com.zking.erp.personnel.model.ReturnOrderDetail">
     SELECT
     <include refid="Base_Column_List"/>
@@ -38,6 +38,9 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from returnorderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="delReturnOrderdetail">
+    DELETE from returnorderdetail where ordersuuid=#{ordersuuid}
   </delete>
   <insert id="insert" parameterType="com.zking.erp.personnel.model.ReturnOrderDetail" >
     insert into returnorderdetail (UUID, GOODSUUID, GOODSNAME, 

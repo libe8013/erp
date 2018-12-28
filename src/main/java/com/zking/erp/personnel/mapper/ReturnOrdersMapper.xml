@@ -11,7 +11,7 @@
       <arg column="CREATER" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CHECKER" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ENDER" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="SUPPLIERUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STOREUUID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="TOTALMONEY" jdbcType="REAL" javaType="java.lang.Float" />
       <arg column="STATE" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="WAYBILLSN" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -19,7 +19,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    UUID, CREATETIME, CHECKTIME, ENDTIME, TYPE, CREATER, CHECKER, ENDER, SUPPLIERUUID, 
+    UUID, CREATETIME, CHECKTIME, ENDTIME, TYPE, CREATER, CHECKER, ENDER, STOREUUID,
     TOTALMONEY, STATE, WAYBILLSN, ORDERSUUID
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -51,12 +51,12 @@
   <insert id="insert" parameterType="com.zking.erp.personnel.model.ReturnOrders" >
     insert into returnorders (UUID, CREATETIME, CHECKTIME, 
       ENDTIME, TYPE, CREATER, 
-      CHECKER, ENDER, SUPPLIERUUID, 
+      CHECKER, ENDER, STOREUUID,
       TOTALMONEY, STATE, WAYBILLSN, 
       ORDERSUUID)
     values (#{uuid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{checktime,jdbcType=TIMESTAMP}, 
       #{endtime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
-      #{checker,jdbcType=VARCHAR}, #{ender,jdbcType=VARCHAR}, #{supplieruuid,jdbcType=VARCHAR}, 
+      #{checker,jdbcType=VARCHAR}, #{ender,jdbcType=VARCHAR}, #{storeuuid,jdbcType=VARCHAR},
       #{totalmoney,jdbcType=REAL}, #{state,jdbcType=VARCHAR}, #{waybillsn,jdbcType=VARCHAR}, 
       #{ordersuuid,jdbcType=VARCHAR})
   </insert>
@@ -87,8 +87,8 @@
       <if test="ender != null" >
         ENDER,
       </if>
-      <if test="supplieruuid != null" >
-        SUPPLIERUUID,
+      <if test="storeuuid != null" >
+        STOREUUID,
       </if>
       <if test="totalmoney != null" >
         TOTALMONEY,
@@ -128,8 +128,8 @@
       <if test="ender != null" >
         #{ender,jdbcType=VARCHAR},
       </if>
-      <if test="supplieruuid != null" >
-        #{supplieruuid,jdbcType=VARCHAR},
+      <if test="storeuuid != null" >
+        #{storeuuid,jdbcType=VARCHAR},
       </if>
       <if test="totalmoney != null" >
         #{totalmoney,jdbcType=REAL},
@@ -172,8 +172,8 @@
       <if test="ender != null" >
         ENDER,
       </if>
-      <if test="supplieruuid != null" >
-        SUPPLIERUUID,
+      <if test="storeuuid != null" >
+        STOREUUID,
       </if>
       <if test="totalmoney != null" >
         TOTALMONEY,
@@ -210,8 +210,8 @@
       <if test="ender != null" >
         #{ender,jdbcType=VARCHAR},
       </if>
-      <if test="supplieruuid != null" >
-        #{supplieruuid,jdbcType=VARCHAR},
+      <if test="storeuuid != null" >
+        #{storeuuid,jdbcType=VARCHAR},
       </if>
       <if test="totalmoney != null" >
         #{totalmoney,jdbcType=REAL},
@@ -248,8 +248,8 @@
       <if test="ender != null" >
         ENDER = #{ender,jdbcType=VARCHAR},
       </if>
-      <if test="supplieruuid != null" >
-        SUPPLIERUUID = #{supplieruuid,jdbcType=VARCHAR},
+      <if test="storeuuid != null" >
+        STOREUUID = #{storeuuid,jdbcType=VARCHAR},
       </if>
       <if test="totalmoney != null" >
         TOTALMONEY = #{totalmoney,jdbcType=REAL},
@@ -275,7 +275,7 @@
       CREATER = #{creater,jdbcType=VARCHAR},
       CHECKER = #{checker,jdbcType=VARCHAR},
       ENDER = #{ender,jdbcType=VARCHAR},
-      SUPPLIERUUID = #{supplieruuid,jdbcType=VARCHAR},
+      STOREUUID = #{storeuuid,jdbcType=VARCHAR},
       TOTALMONEY = #{totalmoney,jdbcType=REAL},
       STATE = #{state,jdbcType=VARCHAR},
       WAYBILLSN = #{waybillsn,jdbcType=VARCHAR},

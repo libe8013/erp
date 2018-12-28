@@ -10,15 +10,22 @@ layui.use(['jquery','table','layer'],function () {
 
     initTable(data);
 
-
-
-    $('#OrdersAudit').click(function () {
+    table.on('toolbar(orderDetailAuditFilter)',function (obj) {
         layer.confirm('确定执行审核操作嘛?', function (index) {
-            var uuid = $('#uuid').val();
-            var creater = $('#createrUUID').val();
-            Audit(uuid, creater);
+            var data = obj.config.data;
+            Audit(data);
         });
     });
+
+
+
+    // $('#OrdersAudit').click(function () {
+    //     layer.confirm('确定执行审核操作嘛?', function (index) {
+    //         var uuid = $('#uuid').val();
+    //         var creater = $('#createrUUID').val();
+    //         Audit(uuid, creater);
+    //     });
+    // });
 
 });
 
@@ -39,10 +46,15 @@ function getOrderDetail(uuid){
     return result;
 }
 
-function Audit(uuid,creater){
+function Audit(data){
+    var uuid = $('#uuid').val();
+    var creater = $('#createrUUID').val();
+    var state = '已审核';
+    var storeuuid = $('#storeuuid').val();
+    var json = JSON.stringify(data);
     $.ajax({
         url : path+'/returnedorders/Audit',
-        data : {uuid:uuid,state:'已审核',creater:creater},
+        data : {uuid:uuid,creater:creater,state:state,storeuuid:storeuuid,json:json},
         dataType : 'json',
         type : 'post',
         async : false,
@@ -54,6 +66,7 @@ function Audit(uuid,creater){
         }
     });
 }
+
 
 function initTable(data){
     layui.table.render({

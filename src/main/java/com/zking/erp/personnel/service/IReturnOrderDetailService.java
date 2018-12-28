@@ -23,4 +23,11 @@ public interface IReturnOrderDetailService {
     int addReturnOrders(List<Map<String,Object>> maps);
 
     List<ReturnOrderDetail> queryOrderDetail(ReturnOrderDetail returnOrderDetail);
+
+    /**
+     * 根据订单id删除
+     * @param ordersuuid
+     * @return
+     */
+    int delReturnOrderdetail(String ordersuuid);
 }

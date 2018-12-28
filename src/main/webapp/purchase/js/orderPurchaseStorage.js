@@ -9,11 +9,11 @@ layui.use(['jquery','form','layer','table'],function () {
     $(document).on('click','#goodsQuery',function () {
         queryOrdersStorage();
     });
-    table.on('tool(ordersStorageTab)',function (obj) {
-        var data = obj.data;
-        var tr = obj.tr;
-        querySingleOrderDetail(data,tr);
-    })
+    // table.on('tool(ordersStorageTab)',function (obj) {
+    //     var data = obj.data;
+    //     var tr = obj.tr;
+    //     querySingleOrderDetail(data,tr);
+    // })
 
     //监听行单击事件（单击事件为：rowDouble）
     table.on('row(ordersStorageTab)', function(obj){

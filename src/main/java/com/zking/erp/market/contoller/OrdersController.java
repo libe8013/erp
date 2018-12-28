@@ -13,7 +13,9 @@ import com.zking.erp.market.service.IOrdersService;
 import com.zking.erp.market.vo.OrdersVo;
 import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.stock.model.StoreDetail;
+import com.zking.erp.stock.model.StoreOper;
 import com.zking.erp.stock.service.IStoreDetailService;
+import com.zking.erp.stock.service.IStoreOperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,9 @@ public class OrdersController {
 
     @Autowired
     private IStoreDetailService storeDetailService;
+
+    @Autowired
+    private IStoreOperService storeOperService;
 
     @RequestMapping("/queryOrdersPage")
     @ResponseBody
@@ -253,6 +258,16 @@ public class OrdersController {
             }else{
                 storeDetailService.insert(storeDetail);
             }
+
+            StoreOper storeOper = new StoreOper();
+            storeOper.setUuid(UUID.randomUUID().toString().replace("-",""));
+            storeOper.setEmpuuid(emp.getUuid());
+            storeOper.setStoreuuid(store.getUuid());
+            storeOper.setGoodsuuid(orderDetail.getGoodsuuid());
+            storeOper.setNum(storeDetail.getNum());
+            storeOper.setOpertime(new Date());
+            storeOper.setType("入库");
+            storeOperService.insert(storeOper);
             message = "入库成功";
         } catch (Exception e) {
             message = "入库失败";

@@ -23,9 +23,9 @@
             </div>
 
             <div class="layui-inline">
-                <label class="layui-form-label">供应商</label>
+                <label class="layui-form-label">客户</label>
                 <div class="layui-input-block">
-                    <input type="text" id="supplieruuid" id="date1" readonly autocomplete="off" class="layui-input">
+                    <input type="text" id="supplieruuid" readonly autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -46,57 +46,26 @@
             </div>
 
             <div class="layui-inline">
-                <label class="layui-form-label">审核人</label>
-                <div class="layui-input-block">
-                    <input type="text" id="checker" readonly autocomplete="off" class="layui-input"/>
-                </div>
-            </div>
-            <div class="layui-inline">
                 <label class="layui-form-label">库管员</label>
                 <div class="layui-input-inline">
                     <input type="text" id="ender" readonly autocomplete="off" class="layui-input">
                 </div>
             </div>
-        </div>
 
-        <div>
             <div class="layui-inline">
                 <label class="layui-form-label">下单日期</label>
-                <div class="layui-input-inline" style="width: 260px;">
+                <div class="layui-input-inline">
                     <input type="text" readonly id="createtime" lay-verify="required"  autocomplete="off" class="layui-input">
                 </div>
             </div>
+        </div>
+
+        <div>
 
             <div class="layui-inline">
-                <label class="layui-form-label">审核日期</label>
-                <div class="layui-input-block">
-                    <input type="text" readonly id="checktime" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">确认日期</label>
-                <div class="layui-input-inline">
-                    <input type="text" readonly id="starttime" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="layui-inline">
-                <label class="layui-form-label">确认人</label>
-                <div class="layui-input-inline" style="width: 260px;">
-                    <input type="text" readonly id="starter" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
                 <label class="layui-form-label">入库日期</label>
-                <div class="layui-input-inline">
+                <div class="layui-input-inline" style="width: 260px;">
                     <input type="text" readonly id="endtime" lay-verify="required" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">总金额</label>
-                <div class="layui-input-inline">
-                    <input type="text" readonly id="totalmoney" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>

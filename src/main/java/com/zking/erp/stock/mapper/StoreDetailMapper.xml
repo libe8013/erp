@@ -36,7 +36,19 @@
         and goodsuuid = #{goodsuuid}
       </if>
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <select id="queryStoreDetail" resultType="com.zking.erp.stock.model.StoreDetail"
+          parameterType="com.zking.erp.stock.model.StoreDetail">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from storedetail where 1=1
+    <if test="null!=storeuuid and ''!=storeuuid">
+      and storeuuid=#{storeuuid}
+    </if>
+    <if test="null!=goodsuuid and ''!=goodsuuid">
+      and goodsuuid=#{goodsuuid}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from storedetail
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>
