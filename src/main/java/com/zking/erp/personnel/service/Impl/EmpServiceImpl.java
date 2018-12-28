@@ -39,9 +39,10 @@ public class EmpServiceImpl implements IEmpService {
     }
 
     @Override
-    public int updateByPrimaryKey(Emp record) {
-        return empMapper.updateByPrimaryKey(record);
+    public int updateByPrimaryKeySelective(Emp record) {
+        return empMapper.updateByPrimaryKeySelective(record);
     }
+
 
     @Override
     public int deleteByPrimaryKey(String uuid) {
@@ -53,10 +54,6 @@ public class EmpServiceImpl implements IEmpService {
         return empMapper.selectByPrimaryKey(uuid);
     }
 
-    @Override
-    public int updateByPrimaryKeySelective(EmpVo empVo) {
-        return 0;
-    }
 
     @Override
     public List<Map<String, Object>> queryEmpPage(EmpVo empVo) {

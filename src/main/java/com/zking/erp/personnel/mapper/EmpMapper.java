@@ -27,13 +27,13 @@ public interface EmpMapper {
     int insertSelective(Emp record);
 
     Emp selectByPrimaryKey(String uuid);
-
-    int updateByPrimaryKeySelective(Emp record);
     /**
      * 根据员工编号修改员工信息
      * @param record
      * @return
      */
+    int updateByPrimaryKeySelective(Emp record);
+
     int updateByPrimaryKey(Emp record);
     /**
      * 分页查询所有员工信息

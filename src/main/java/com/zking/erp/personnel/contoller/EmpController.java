@@ -129,11 +129,11 @@ public class EmpController {
 
     @RequestMapping("/editEmp")
     @ResponseBody
-    public  Map<String,Object> editEmp(EmpVo empVo){
+    public  Map<String,Object> editEmp(Emp emp){
         String message = "保存成功";
         Map<String,Object> map  = new HashMap<>();
         try {
-            empService.updateByPrimaryKey(empVo);
+            empService.updateByPrimaryKeySelective(emp);
         } catch (Exception e) {
             message = "保存失败";
         }

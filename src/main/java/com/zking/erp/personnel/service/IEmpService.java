@@ -41,7 +41,8 @@ public interface IEmpService {
      * @param record
      * @return
      */
-    int updateByPrimaryKey(Emp record);
+    int updateByPrimaryKeySelective(Emp record);
+
     /**
      * 根据员工编号删除员工信息
      * @param uuid
@@ -52,7 +53,7 @@ public interface IEmpService {
 
     Emp selectByPrimaryKey(String uuid);
 
-    int updateByPrimaryKeySelective(EmpVo empVo);
+
 
     List<Map<String,Object>> queryEmpPage(EmpVo empVo);
 

@@ -25,7 +25,7 @@
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
 
-  <select id="queryEmpListPager" resultType="map"  parameterType="com.zking.erp.personnel.model.Emp">
+  <select id="queryEmpListPager" resultType="map"  parameterType="com.zking.erp.personnel.vo.EmpVo">
     select  a.uuid,a.username,a.name,a.gender,a.email,a.tele,a.address,a.birthday,b.name as deptname
     from emp a,dep b where a.depuuid=b.uuid
     <if test="null!=username and ''!=username">
@@ -43,8 +43,8 @@
     <if test="null!=email and ''!=email">
       and a.email like concat(concat('%',#{email}),'%')
     </if>
-    <if test="null!=birthday">
-      and (DATEDIFF(birthday,#{birthday})=0)
+    <if test="null!=endtime and null!=birthday">
+      and birthday BETWEEN #{birthday} AND #{endtime}
     </if>
     <if test="null!=depuuid and ''!=depuuid">
       and a.depuuid like concat(concat('%',#{depuuid}),'%')
@@ -52,8 +52,7 @@
     <if test="null!=gender and ''!=gender">
       and a.gender like concat(concat('%',#{gender}),'%')
     </if>
-
-
+    order by a.stort desc
   </select>
   <select id="queryEmp2ListPager" resultType="map" parameterType="com.zking.erp.personnel.vo.EmpVo">
     select  a.uuid,a.username,a.name,a.gender,a.email,a.tele,a.address,a.birthday,b.name as deptname
@@ -82,6 +81,7 @@
     <if test="null!=gender and ''!=gender">
       and a.gender like concat(concat('%',#{gender}),'%')
     </if>
+    order by a.stort desc
   </select>
   <select id="queryDeptList" resultType="com.zking.erp.personnel.model.Dept"
           parameterType="com.zking.erp.personnel.model.Dept">
@@ -187,7 +187,7 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.Emp" >
     update emp
     <set >
-      <if test="username != null" >
+      <if test="username!= null" >
         USERNAME = #{username,jdbcType=VARCHAR},
       </if>
       <if test="pwd != null" >
