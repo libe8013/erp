@@ -103,6 +103,13 @@
   <select id="Login" resultType="com.zking.erp.personnel.model.Emp" parameterType="com.zking.erp.personnel.model.Emp">
     SELECT * from emp where username=#{username} and pwd=#{pwd}
   </select>
+  <select id="queryEmpModule" resultType="com.zking.erp.authority.model.Module"
+          parameterType="com.zking.erp.personnel.vo.EmpVo">
+    SELECT m.id,m.text,m.url,m.icon,m.sort,m.pid FROM emp u,t_emp_role ur,t_role r,t_role_module rm,t_module m
+						 WHERE u.uuid=ur.userid AND ur.roleid=r.id AND
+						r.id=rm.roleid AND rm.moduleid=m.id AND u.username=#{username}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from emp
     where UUID = #{uuid,jdbcType=VARCHAR}

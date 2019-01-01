@@ -1,5 +1,6 @@
 package com.zking.erp.personnel.service.Impl;
 
+import com.zking.erp.authority.model.Module;
 import com.zking.erp.authority.model.Role;
 import com.zking.erp.base.util.PageBean;
 import com.zking.erp.personnel.mapper.EmpMapper;
@@ -73,5 +74,10 @@ public class EmpServiceImpl implements IEmpService {
     @Override
     public List<Emp> Login(Emp emp) {
         return empMapper.Login(emp);
+    }
+
+    @Override
+    public List<Module> queryEmpModule(EmpVo empVo) {
+        return empMapper.queryEmpModule(empVo);
     }
 }

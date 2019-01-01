@@ -105,6 +105,7 @@ function updRole(data) {
         title:'修改角色'
     });
     $('#id').val(data.id);
+    layui.form.val('editForm',data);
 }
 
 function editRole() {
@@ -127,7 +128,6 @@ function editRole() {
 
 /*删除*/
 function delRole(id) {
-    console.log('id值:'+id);
     layer.confirm('确定执行删除操作嘛?', function(index){
         $.ajax({
             url : path+'/authorityrole/delrole',
@@ -135,9 +135,9 @@ function delRole(id) {
             dataType : 'json',
             type : 'post',
             async : false,
-            success : function (messagedata) {
+            success : function (data) {
                 layer.close(index);
-                layer.msg(data);
+                layer.msg(data.message);
                 queRole();
             },
             error:function(result) {

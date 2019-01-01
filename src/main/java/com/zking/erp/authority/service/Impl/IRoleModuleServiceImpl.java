@@ -17,8 +17,13 @@ public class IRoleModuleServiceImpl implements IRoleModuleService {
     private RoleModuleMapper roleModuleMapper;
 
     @Override
-    public int insert(RoleModule record) {
-        return roleModuleMapper.insert(record);
+    public int insert(RoleModuleVo roleModuleVo) {
+        return roleModuleMapper.insert(roleModuleVo);
+    }
+
+    @Override
+    public int DelRoleModule(String roleid) {
+        return roleModuleMapper.DelRoleModule(roleid);
     }
 
     @Override
@@ -27,8 +32,14 @@ public class IRoleModuleServiceImpl implements IRoleModuleService {
     }
 
     @Override
-    public List<Map<String, Object>> queryRoleModule(RoleModuleVo roleModuleVo) {
-        return roleModuleMapper.queryRoleModule(roleModuleVo);
+    public List<Map<String, Object>> queryRoleModule(RoleModule roleModule) {
+        return roleModuleMapper.queryRoleModule(roleModule);
+    }
+
+    @Override
+    public void saveRoleModule(RoleModuleVo roleModuleVo) {
+        roleModuleMapper.DelRoleModule(roleModuleVo.getRoleid());
+        roleModuleMapper.insert(roleModuleVo);
     }
 
 

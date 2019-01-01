@@ -1,5 +1,7 @@
 package com.zking.erp.authority.contoller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zking.erp.authority.Vo.RoleModuleVo;
 import com.zking.erp.authority.model.Module;
 import com.zking.erp.authority.model.Role;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,23 +27,45 @@ public class RoleModuleController {
 
     /**
      * 查询角色对应的模块
-     * @param roleModuleVo
+     * @param
      * @return
      */
     @RequestMapping("/queryRoleModule")
     @ResponseBody
-    public Map<String,Object> queryRoleModule(RoleModuleVo roleModuleVo){
-        Role role = new Role();
-        Module module = new Module();
-        roleModuleVo.setRole(role);
-        roleModuleVo.setModule(module);
-
-        List<Map<String, Object>> list = roleModuleService.queryRoleModule(roleModuleVo);
+    public Map<String,Object> queryRoleModule(String roleid){
+       RoleModule roleModule = new RoleModule();
+       roleModule.setRoleid(roleid);
+        List<Map<String, Object>> list = roleModuleService.queryRoleModule(roleModule);
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("code",0);
         map.put("meg","");
         map.put("data",list);
         return map;
     }
+
+
+    @RequestMapping("/saveRoleMoudle")
+    @ResponseBody
+    public Map<String,Object> saveRoleMoudle(RoleModuleVo roleModuleVo,String arrJson) throws IOException {
+        String message = "保存权限成功";
+        ObjectMapper objectMapper = new ObjectMapper();
+        String[] ids = objectMapper.readValue(arrJson, new TypeReference<String[]>() {
+        });
+
+        try {
+            roleModuleVo.setIds(ids);
+            roleModuleService.DelRoleModule(roleModuleVo.getRoleid());
+            roleModuleService.insert(roleModuleVo);
+        } catch (Exception e) {
+            message="保存权限失败";
+        }
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("message",message);
+
+        return map;
+    }
+
+
 
 }

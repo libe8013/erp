@@ -34,8 +34,13 @@
     </if>
   </select>
   <select id="queryModuleAll" resultType="map" parameterType="com.zking.erp.authority.model.Module">
-    SELECT id,TEXT AS title,pid AS VALUE FROM t_module
+    SELECT id AS value,TEXT AS title,pid FROM t_module
   </select>
+
+  <select id="queryModuleUrl" resultType="com.zking.erp.authority.model.Module">
+    SELECT id,pid,TEXT,icon,url,sort FROM t_module WHERE pid = #{pid}
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_module
