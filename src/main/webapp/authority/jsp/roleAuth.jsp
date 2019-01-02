@@ -29,9 +29,14 @@
         </form>
     </div>
 </div>--%>
-<div style="float: right;" >
+<div style="float: right;" class="layui-inline" >
+
 <form class="layui-form">
+
     <div id="demo1" style="width:430px;border:1px solid black;padding: 10px 0 25px 5px;"></div>
+    <div>
+        <button type="button" class="layui-btn layui-btn-primary" id="save">保存</button>
+    </div>
 </form>
 </div>
 </body>

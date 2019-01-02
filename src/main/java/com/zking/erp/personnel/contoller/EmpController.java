@@ -1,5 +1,6 @@
 package com.zking.erp.personnel.contoller;
 
+import com.zking.erp.authority.model.Module;
 import com.zking.erp.authority.model.Role;
 import com.zking.erp.base.util.PageBean;
 import com.zking.erp.personnel.model.Dept;
@@ -7,6 +8,7 @@ import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.personnel.service.IEmpService;
 import com.zking.erp.personnel.vo.EmpVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -67,7 +69,7 @@ public class EmpController {
 
     @RequestMapping("/Login")
     @ResponseBody
-    public Map<String,Object> Login(String username, String pwd, HttpServletRequest req){
+    public Map<String,Object> Login(EmpVo empVo,String username, String pwd, HttpServletRequest req){
         HttpSession session = req.getSession();
         Emp emp = new Emp();
         emp.setUsername(username);
@@ -81,6 +83,8 @@ public class EmpController {
             map.put("message", "账号或密码错误");
             map.put("success",false);
         }else {
+            List<Module> empmod = empService.queryEmpModule(empVo);
+            list.get(0).setModules(empmod);
             session.setAttribute("emp",list.get(0));
         }
         return map;
@@ -155,4 +159,17 @@ public class EmpController {
         map.put("msg",message);
         return map;
     }
+
+
+    @RequestMapping("/LoginOut")
+    public String LoginOut(HttpServletRequest req){
+
+        //注销所有Session
+        req.removeAttribute("message");
+        req.removeAttribute("logout");
+        req.getSession().invalidate();
+
+        return "/login";
+    }
+
 }

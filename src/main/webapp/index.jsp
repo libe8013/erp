@@ -27,14 +27,10 @@
             <li class="layui-nav-item">
                 <a href="javascript:void(0)">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                    ${sessionScope.emp.name}
                 </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0);" onclick="logout()">退出登录</a></li>
         </ul>
     </div>
 

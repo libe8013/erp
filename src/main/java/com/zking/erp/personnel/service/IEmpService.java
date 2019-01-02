@@ -1,6 +1,7 @@
 package com.zking.erp.personnel.service;
 
 
+import com.zking.erp.authority.model.Module;
 import com.zking.erp.base.util.PageBean;
 import com.zking.erp.personnel.model.Dept;
 import com.zking.erp.authority.model.Role;
@@ -67,5 +68,12 @@ public interface IEmpService {
     int updatePwd(Emp emp);
 
     List<Emp> Login(Emp emp);
+
+    /**
+     * 查询每个用户对应模块
+     * @param empVo
+     * @return
+     */
+    List<Module> queryEmpModule(EmpVo empVo);
 
 }

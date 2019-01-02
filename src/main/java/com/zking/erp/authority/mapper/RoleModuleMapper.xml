@@ -7,10 +7,7 @@
       <arg column="moduleid" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
-  <insert id="insert" parameterType="com.zking.erp.authority.model.RoleModule" >
-    insert into t_role_module (roleid, moduleid)
-    values (#{roleid,jdbcType=VARCHAR}, #{moduleid,jdbcType=VARCHAR})
-  </insert>
+
   <insert id="insertSelective" parameterType="com.zking.erp.authority.model.RoleModule" >
     insert into t_role_module
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -30,9 +27,19 @@
       </if>
     </trim>
   </insert>
-  <select id="queryRoleModule" resultType="map" parameterType="com.zking.erp.authority.Vo.RoleModuleVo">
-  SELECT m.id AS moduleid,r.`id` AS roleid,m.pid ,m.text
-  FROM t_role r,t_role_module rm,t_module m WHERE r.`id`=rm.roleid GROUP BY m.id
+  <insert id="insert" parameterType="com.zking.erp.authority.Vo.RoleModuleVo">
+    insert into t_role_module (roleid, moduleid)
+    values
+    <foreach collection="ids" item="item" separator=",">
+      (#{roleid},#{item})
+    </foreach>
+  </insert>
+  <delete id="DelRoleModule">
+    DELETE from t_role_module where roleid=#{roleid}
+  </delete>
+  <select id="queryRoleModule" resultType="map" parameterType="com.zking.erp.authority.model.RoleModule">
+  SELECT moduleid as value FROM t_role_module WHERE roleid=#{roleid}
   </select>
+
 
 </mapper>

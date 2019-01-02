@@ -1,11 +1,13 @@
 package com.zking.erp.personnel.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.zking.erp.authority.model.Module;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @ToString
 public class Emp  implements Serializable {
@@ -31,6 +33,16 @@ public class Emp  implements Serializable {
     private Date birthday;
 
     private String depuuid;
+
+    private List<Module> modules;
+
+    public List<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
+    }
 
     public Emp(String uuid, String username, String pwd, String name, String gender, String email, String tele, String address, Date birthday, String depuuid) {
         this.uuid = uuid;
