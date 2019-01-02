@@ -47,7 +47,6 @@ public class LogContoller {
     public Map<String,Object> queryLogPage(HttpServletRequest req,Log log){
 
         PageBean pageBean = new PageBean();
-        log = new Log();
         List<Log> list = logService.queryLogPage(log, pageBean);
         pageBean.setRequest(req);
 

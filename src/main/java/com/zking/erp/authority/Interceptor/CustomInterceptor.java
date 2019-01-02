@@ -2,25 +2,32 @@ package com.zking.erp.authority.Interceptor;
 
 import com.zking.erp.authority.model.Module;
 import com.zking.erp.authority.service.IModuleService;
+import com.zking.erp.log.model.Log;
+import com.zking.erp.log.service.ILogService;
 import com.zking.erp.personnel.model.Emp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Controller
 public class CustomInterceptor implements HandlerInterceptor {
 
     @Autowired
     private IModuleService  ModuleService;
+    @Autowired
+    private ILogService logService;
 
     List<String>  passurl=new ArrayList<>();
     /**
@@ -49,13 +56,6 @@ public class CustomInterceptor implements HandlerInterceptor {
         System.out.println("1:"+url);
 
 
-//        if(split[split.length-1].contains("Login")){
-//            return true;
-//        }
-//        if (url.equals("Loginout")){
-//            return true;
-//        }
-
         Emp emp = (Emp) request.getSession().getAttribute("emp");
 
         if (url.lastIndexOf(".jsp")>-1||url.lastIndexOf(".png")>-1||url.lastIndexOf(".jpg")>-1||
@@ -71,6 +71,7 @@ public class CustomInterceptor implements HandlerInterceptor {
                     Emp emp1 = (Emp) request.getSession().getAttribute("emp");
                     System.out.println(emp1.getModules());
                      if(query(emp1,url)){
+
                          return true;
                      }else {
                          Map<String,Object> map = new HashMap<String, Object>();
@@ -83,9 +84,6 @@ public class CustomInterceptor implements HandlerInterceptor {
 
         }
 
-
-        System.out.println("我进来了一");
-        System.out.println(url);
         return true;
     }
 
@@ -116,7 +114,44 @@ public class CustomInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response, Object handler,
                                 Exception ex) throws Exception {
+        HttpSession session = request.getSession();
         System.out.println("我进来了三");
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+
+        String className = handlerMethod.getBean().getClass().toString();//类
+
+        String methodName = handlerMethod.getMethod().getName();//方法名称
+
+        String contextPath = request.getContextPath();
+
+        String requestURI = request.getRequestURI();//获取全路径
+        String[] split = requestURI.split("/erp");
+
+
+
+//        requestURI.substring("");
+
+        Map<String,String[]> pramMap = request.getParameterMap();//获取请求参数
+
+        List<Module> list = ModuleService.queryModuleUrl(requestURI);
+        for (Module module : list) {
+            if (module.getPid().equals("99")){
+
+            }
+        }
+
+
+        String ip = request.getRemoteAddr();
+
+        Emp emp = (Emp) session.getAttribute("emp");
+
+        String content =  className+"."+methodName+":"+pramMap;
+        for (Module module : list) {
+            if (null!=module){
+                Log l = new Log(emp.getUuid(),ip,module.getId(),content);
+                logService.insert(l);
+            }
+        }
     }
 
 
@@ -142,8 +177,6 @@ public class CustomInterceptor implements HandlerInterceptor {
                     b=true;
             }
         }
-
-
 
         return   b;
 

@@ -28,7 +28,7 @@ function initTable(table) {
 function queryStoreTab() {
     var empid = $('#empid').val();
     var ip = $('#ip').val();
-    var url='/erp/stock/queryLogPage?1=1';
+    var url='/erp/log/queryLogPage?1=1';
     if(null!=empid && ''!=empid){
         url+='&empid='+empid;
     }

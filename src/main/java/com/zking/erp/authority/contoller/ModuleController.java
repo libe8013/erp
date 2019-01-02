@@ -130,5 +130,15 @@ public class ModuleController {
         return map;
     }
 
+    @RequestMapping("/queryModuleUrl")
+    @ResponseBody
+    public Map<String,Object> queryModuleUrl(String pid){
+        Module module = new Module();
+        module.setPid(pid);
+        List<Module> list = moduleService.queryModuleUrl(pid);
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("data",list);
+        return map;
+    }
 
 }

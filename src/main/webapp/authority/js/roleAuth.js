@@ -90,8 +90,6 @@ function XTree() {
             asyns:false,
             success:function (data) {
                 var rue = data.data;
-
-
                 for (var a=0;a<tree.length;a++) {
                     for (var i = 0; i < rue.length; i++) {
                         if (tree[a].value == rue[i].value) {

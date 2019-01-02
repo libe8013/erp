@@ -1,7 +1,9 @@
 package com.zking.erp.log.model;
 
-import java.util.Date;
+import lombok.ToString;
 
+import java.util.Date;
+@ToString
 public class Log {
     private String id;
 
@@ -24,7 +26,7 @@ public class Log {
         this.content = content;
     }
 
-    public Log() {
+    public Log(String uuid, String ip, String id, String content) {
         super();
     }
 
