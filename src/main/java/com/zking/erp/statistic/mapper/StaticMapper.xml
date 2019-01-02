@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.statistic.mapper.StaticMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.statistic.vo.StaticVo" >
+    <constructor >
+     <arg column="starttime" jdbcType="DATE" javaType="java.util.Date"/>
+      <arg column="endtime" jdbcType="DATE" javaType="java.util.Date"/>
+      <arg column="typename" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="totalmoney" jdbcType="FLOAT" javaType="java.lang.Float" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    STARTTIME,ENDTIME,TYPENAME,TOTALMONEY
+  </sql>
+  <select id="salesStatPager" resultType="map"
+          parameterType="com.zking.erp.statistic.vo.StaticVo">
+      SELECT gt.name as typename,SUM(od.price*od.num) as totalmoney FROM goodstype gt,goods g,orderdetail od WHERE gt.uuid=g.goodstypeuuid AND od.goodsuuid=g.uuid
+   <if test="null!=starttime and null!=endtime and ''!=starttime and ''!=endtime">
+       and DATE_FORMAT(od.endtime,'%Y-%m-%d')
+ BETWEEN #{starttime} AND #{endtime}
+    </if>
+      GROUP BY gt.uuid
+  </select>
+    <select id="salesStatMonthPager" resultType="map"
+            parameterType="com.zking.erp.statistic.vo.StaticVo">
+        SELECT  MONTH(od.endtime) AS endtime,SUM(od.money) AS money FROM orderdetail od WHERE 1=1
+        <if test="null!=endtime and ''!=endtime">
+           and YEAR (od.endtime) =#{endtime}
+        </if>
+        GROUP BY MONTH(od.endtime)
+    </select>
+
+</mapper>
