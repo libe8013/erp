@@ -30,4 +30,11 @@ public interface IReturnOrderDetailService {
      * @return
      */
     int delReturnOrderdetail(String ordersuuid);
+
+    /**
+     * 退货登记 查询相同仓库的商品 且已审核未出库
+     * @param returnOrderDetail
+     * @return
+     */
+    public List<Map<String,Object>> queryGoodsStore(ReturnOrderDetail returnOrderDetail);
 }

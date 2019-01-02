@@ -81,21 +81,6 @@ function initTable(){
                     });
                     return result;
                 }},
-            {field:'storeuuid', width:'8%', title: '仓库',align:'center',
-                templet : function(row){
-                    var result='';
-                    $.ajax({
-                        url : path+'/store/querySingleStore',
-                        data : {uuid:row.storeuuid},
-                        dataType : 'json',
-                        type : 'post',
-                        async : false,
-                        success : function (data) {
-                            result=data.name;
-                        }
-                    });
-                    return result;
-                }},
             {field:'totalmoney', width:'6%', title: '总金额',align:'center',templet:function (obj) {
                     return obj.totalmoney+"$";
              }},
@@ -103,7 +88,7 @@ function initTable(){
             {field:'操作', width:'12%', title: '操作',align:'center',templet:function(obj){
                 if(obj.state=="未审核"){
                     var del = "<button type='button' class='layui-btn layui-btn-normal layui-btn-sm' lay-event='delDetail'><i class=\"layui-icon\"></i></button>";
-                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryOrderDetailAudit">退货订单审核</a>&nbsp;'+del;
+                    return '<a class="layui-btn layui-btn-normal layui-btn-sm" id="orderdetailAudit" lay-event="queryOrderDetailAudit">退货订单审核</a>';
                 }else {
                     return '';
                 }

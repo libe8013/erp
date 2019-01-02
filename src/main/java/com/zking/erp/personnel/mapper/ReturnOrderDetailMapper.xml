@@ -35,6 +35,11 @@
       and ordersuuid=#{ordersuuid}
     </if>
   </select>
+  <select id="queryGoodsStore" resultType="map"
+          parameterType="com.zking.erp.personnel.model.ReturnOrderDetail">
+    SELECT SUM(rod.num) AS num,sd.num AS storeNum FROM returnorderdetail rod,storedetail sd WHERE rod.state='未出库' AND sd.`GOODSUUID`=rod.goodsuuid AND
+    rod.storeuuid=#{storeuuid} AND rod.goodsuuid=#{goodsuuid} AND sd.`STOREUUID`=#{storeuuid}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from returnorderdetail
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -126,10 +131,10 @@
     </trim>
   </insert>
     <insert id="addReturnOrdersDetail">
-        insert into returnorderdetail(uuid,goodsuuid,goodsname,price,num,money,state,ordersuuid)
+        insert into returnorderdetail(uuid,goodsuuid,goodsname,price,num,money,state,ordersuuid,STOREUUID,endtime,ender)
         VALUES
         <foreach collection="collection" item="maps" separator=",">
-          (#{maps.uuid},#{maps.goodsuuid},#{maps.goodsname},#{maps.price},#{maps.num},#{maps.money},#{maps.state},#{maps.ordersuuid})
+          (#{maps.uuid},#{maps.goodsuuid},#{maps.goodsname},#{maps.price},#{maps.num},#{maps.money},#{maps.state},#{maps.ordersuuid},#{maps.storeuuid},#{maps.endtime},#{maps.ender})
         </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.ReturnOrderDetail" >

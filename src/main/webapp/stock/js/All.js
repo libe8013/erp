@@ -33,7 +33,7 @@ function initdata() {
 function intiTable(table) {
     table.render({
         elem:'#InverecordTab',
-        height:312,
+        height:370,
         id:'InverecordTab',
         page:true,
         toolbar : '#toolbarTop',
@@ -43,13 +43,36 @@ function intiTable(table) {
             {field:'gname', width:'10%', title: '商品',align:'center'},
             {field:'stNum', width:'10%', title: '数量',align:'center'},
             {field:'type', width:'10%', title: '类型',align:'center'},
-            {field:'createtime', width:'10%', title: '登录日期',align:'center'},
-            {field:'checktime', width:'10%', title: '审核日期',align:'center'},
+            {field:'createtime', width:'10%', title: '登录日期',align:'center',templet:function (obj) {
+                    return createTime(obj.createtime);
+                }},
+            {field:'checktime', width:'10%', title: '审核日期',align:'center',templet:function (obj) {
+                    if(obj.checktime!=null && obj.checktime!="" && obj.checktime!=undefined){
+                        return createTime(obj.checktime);
+                    }else{
+                        return "";
+                    }
+                }},
             {field:'ename', width:'10%', title: '登记人',align:'center'},
-            {field:'ename', width:'10%', title: '审核人',align:'center'},
+            {field:'checker', width:'10%', title: '审核人',align:'center'},
             {field:'state', width:'10%', title: '状态',align:'center',},
         ]],
     });
+}
+
+function createTime(v){
+    var date = new Date(v);
+    var y = date.getFullYear();
+    var m = date.getMonth()+1;
+    m = m<10?'0'+m:m;
+    var d = date.getDate();
+    d = d<10?("0"+d):d;
+    var h = date.getHours();
+    h = h<10?("0"+h):h;
+    var M = date.getMinutes();
+    M = M<10?("0"+M):M;
+    var str = y+"-"+m+"-"+d+" "+h+":"+M;
+    return str;
 }
 
 //遍历表格数据

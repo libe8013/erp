@@ -59,4 +59,9 @@ public class ReturnOrderDetailServiceImpl implements IReturnOrderDetailService {
     public int delReturnOrderdetail(String ordersuuid) {
         return returnOrderDetailMapper.delReturnOrderdetail(ordersuuid);
     }
+
+    @Override
+    public List<Map<String,Object>> queryGoodsStore(ReturnOrderDetail returnOrderDetail) {
+        return returnOrderDetailMapper.queryGoodsStore(returnOrderDetail);
+    }
 }

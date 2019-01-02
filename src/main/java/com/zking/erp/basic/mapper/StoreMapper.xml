@@ -39,13 +39,29 @@
       GROUP BY g.uuid
     </select>
   <select id="queryStoreGoodsSupplier" resultType="map">
-    SELECT s.uuid AS storeuuid,s.name AS storename,g.uuid,g.name,g.outprice,sd.num as inventory FROM store s,storedetail sd,goods g WHERE
-    s.uuid=sd.storeuuid AND sd.goodsuuid=g.uuid AND s.uuid=#{supplierid}
+      SELECT s.uuid AS storeuuid,s.name AS storename,g.uuid,g.name,g.inprice,sd.num AS inventory FROM store s,storedetail sd,goods g,supplier_goods sg WHERE
+      s.uuid=sd.storeuuid AND sd.goodsuuid=g.uuid AND sg.goodsuuid=g.uuid AND sg.supplieruuid=#{supplierid}
     <if test="goodsuuid!=null and ''!=goodsuuid">
       and g.uuid=#{goodsuuid}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="queryStoreGoodsUUID" resultType="map" parameterType="com.zking.erp.stock.model.StoreDetail">
+      SELECT s.name,sd.*,g.name AS goodsname FROM store s,storedetail sd,goods g
+      WHERE s.uuid=sd.storeuuid AND sd.goodsuuid=g.uuid
+      <if test="null!=goodsuuid and ''!=goodsuuid">
+        AND g.uuid=#{goodsuuid}
+      </if>
+      <if test="num!=null and ''!=num">
+        and sd.num&gt;=#{num}
+      </if>
+    </select>
+  <select id="queryStoreDetailGoods" resultType="com.zking.erp.basic.model.Goods">
+    SELECT g.* FROM storedetail sd,goods g WHERE sd.goodsuuid=g.uuid GROUP BY g.uuid
+  </select>
+    <select id="queryStoreGoods" resultType="com.zking.erp.basic.model.Store">
+      SELECT s.* FROM storedetail sd,store s WHERE goodsuuid=#{goodsuuid} AND sd.storeuuid=s.uuid
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from store
     where UUID = #{uuid,jdbcType=VARCHAR}
   </delete>

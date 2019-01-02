@@ -1,6 +1,7 @@
 package com.zking.erp.market.service;
 
 import com.zking.erp.market.model.OrderDetail;
+import com.zking.erp.market.vo.OrdersVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,4 +34,12 @@ public interface IOrderDetailService {
      * @return
      */
     List<OrderDetail> queryOrderDetail(OrderDetail orderDetail);
+
+    /**
+     * 查询客户的对应商品
+     * @param orderDetail
+     * @return
+     */
+    List<OrderDetail> queryGoodsOrderdetailMarket(OrderDetail orderDetail);
+
 }

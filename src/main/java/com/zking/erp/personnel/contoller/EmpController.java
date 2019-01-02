@@ -81,4 +81,12 @@ public class EmpController {
         return map;
     }
 
+    @RequestMapping("/queryEmp")
+    @ResponseBody
+    public List<Emp> queryEmp(){
+        List<Emp> emps = empService.queryEmpLikePager(new Emp());
+
+        return emps;
+    }
+
 }

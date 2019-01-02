@@ -22,8 +22,8 @@
                     <option value="未审核">未审核</option>
                     <option value="已审核">已审核</option>
                     <option value="已确定">已确定</option>
-                    <option value="未出库">未出库</option>
-                    <option value="已出库">已出库</option>
+                    <option value="未入库">未入库</option>
+                    <option value="已入库">已入库</option>
                 </select>
             </div>
             <a href="javascript:void(0);" class="layui-btn" id="goodsQuery">查询</a>

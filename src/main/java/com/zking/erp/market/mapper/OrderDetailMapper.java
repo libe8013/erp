@@ -1,6 +1,7 @@
 package com.zking.erp.market.mapper;
 
 import com.zking.erp.market.model.OrderDetail;
+import com.zking.erp.market.vo.OrdersVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,4 +38,6 @@ public interface OrderDetailMapper {
     List<OrderDetail> orderDetailquery(OrderDetail orderDetail);
 
     List<OrderDetail> queryOrderDetail(OrderDetail orderDetail);
+
+    List<OrderDetail> queryGoodsOrderdetailMarket(OrderDetail orderDetail);
 }

@@ -103,19 +103,22 @@
     UPDATE inventory SET state=#{state} where UUID=#{uuid}
   </update>
   <select id="queryInventoryPager" resultType="map" parameterType="com.zking.erp.stock.vo.InventoryVo">
-      SELECT iv.`UUID`,s.`NAME` AS sname,g.`NAME` AS gname,st.`NUM` AS stNum,iv.`type`,iv.`createtime`,iv.`checktime`,e.`NAME` as ename,iv.state
+      SELECT iv.`UUID`,s.`NAME` AS sname,g.`NAME` AS gname,st.`NUM` AS stNum,iv.`type`,iv.`createtime`,iv.`checktime`,e.`NAME` as ename,iv.state,iv.num as num
       FROM inventory iv,goods g,store s,storedetail st,emp e
       WHERE iv.`GOODSUUID`=g.`UUID` AND iv.`STOREUUID`=s.`UUID` AND iv.`CREATER`=e.`UUID`
       <if test="null!=type and ''!=type">
         and type = #{type}
       </if>
+    GROUP BY iv.uuid
     </select>
   <select id="queryInvWtypePager" resultType="map" parameterType="com.zking.erp.stock.vo.InventoryVo">
-    SELECT iv.`UUID`,s.`NAME` AS sname,g.`NAME` AS gname,st.`NUM` AS stNum,iv.`type`,iv.`createtime`,iv.`checktime`,e.`NAME` as ename,iv.state
+    SELECT iv.`UUID`,s.`NAME` AS sname,g.`NAME` AS gname,st.`NUM` AS stNum,iv.`type`,iv.`createtime`,iv.`checktime`,e.`NAME` as ename,iv.state,
+    g.uuid as goodsuuid,s.uuid as storeuuid,iv.num as num
     FROM inventory iv,goods g,store s,storedetail st,emp e
     WHERE iv.`GOODSUUID`=g.`UUID` AND iv.`STOREUUID`=s.`UUID` AND iv.`CREATER`=e.`UUID` and iv.state='未审核'
     <if test="null!=type and ''!=type">
       and type = #{type}
     </if>
+    GROUP BY iv.uuid
   </select>
 </mapper>

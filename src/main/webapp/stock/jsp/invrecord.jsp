@@ -59,17 +59,20 @@
         </form>
     </div>
 
-    <div class="layui-inline">
+    <div class="layui-inline" style="padding-top: 10px;">
         <form class="layui-form" action="">
             <label class="layui-form-label">类型：</label>
             <div class="layui-input-inline">
                 <select name="type" id="type" lay-verify="required" lay-search="">
-                    <option value="0">请选择您要查询的类型</option>
+                    <option value="0">全部</option>
+                    <option value="出库">出库</option>
+                    <option value="入库">入库</option>
                 </select>
             </div>
         </form>
-    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="layui-btn" id="Query">查询</button>
+    </div>&nbsp;&nbsp;&nbsp;
+    <button class="layui-btn" id="Query" style="margin-top: 10px;">查询</button>
+
 
 </div>
 

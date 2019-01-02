@@ -184,6 +184,9 @@
       <if test="waybillsn != null" >
         WAYBILLSN,
       </if>
+      <if test="supplieruuid!=null and supplieruuid!=''">
+        supplieruuid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uuid != null" >
@@ -221,6 +224,9 @@
       </if>
       <if test="waybillsn != null" >
         #{waybillsn,jdbcType=VARCHAR},
+      </if>
+      <if test="supplieruuid!=null and supplieruuid!=''">
+        #{supplieruuid}
       </if>
     </trim>
   </insert>

@@ -57,6 +57,15 @@
     </if>
     order by sort desc
   </select>
+    <select id="queryClientGoods" resultType="map"
+            parameterType="com.zking.erp.market.model.Orders">
+      SELECT g.uuid,g.name,g.outprice,od.num,od.uuid as orderdetailUUID  FROM orders o ,orderdetail od,goods g WHERE o.type="销售" AND g.uuid=od.goodsuuid
+      AND o.uuid=od.ordersuuid AND od.state="已出库" AND o.supplieruuid=#{supplieruuid}
+    </select>
+  <select id="querySupplierGoods" resultType="map" parameterType="com.zking.erp.market.model.Orders">
+    SELECT g.uuid,g.name,g.inprice,od.num,od.uuid AS orderdetailUUID,sd.num AS inventory FROM orders o ,orderdetail od,goods g,storedetail sd WHERE o.type="采购" AND g.uuid=od.goodsuuid
+      AND o.uuid=od.ordersuuid AND od.state="已入库" AND sd.goodsuuid=g.uuid AND o.supplieruuid=#{supplieruuid}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from orders
     where UUID = #{uuid,jdbcType=VARCHAR}

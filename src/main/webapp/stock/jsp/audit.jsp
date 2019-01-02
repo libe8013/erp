@@ -34,6 +34,7 @@
             <input type="text"  id="shend" name="shend" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
         </div>
     </div>
+    <div class="layui-inline" style="margin-top: 10px;">
     <form class="layui-form" method="post">
         <div class="layui-form-item">
             <label class="layui-form-label">类型：</label>
@@ -44,7 +45,10 @@
             </div>
         </div>
     </form>
+    </div>
+    <div class="layui-inline">
     <button class="layui-btn" id="queryInvrecord">查询</button>
+    </div>
 </div>
 <div>
     <table class="layui-table" lay-filter="InverecordEdit" id="InverecordTab">

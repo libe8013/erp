@@ -13,7 +13,7 @@ layui.use(['table','layer','jquery','form','laydate'],function () {
     table.on('tool(InverecordEdit)',function (obj) {
         var data = obj.data;
         layer.confirm('确定执行修改操作嘛?', function(index){
-            editRole(data.UUID,index);
+            editRole(data);
         });
     })
 
@@ -38,7 +38,7 @@ function initdata() {
 function intiTable(table) {
     table.render({
         elem:'#InverecordTab',
-        height:450,
+        height:600,
         id:'InverecordTab',
         toolbar : '#toolbarTop',
         url : '',
@@ -46,15 +46,32 @@ function intiTable(table) {
         cols:[[
             {type:'checkbox',fixed:'left',width:'4%'},
             {field:'sname', width:'10%', title: '仓库',align:'center'},
-            {field:'gname', width:'10%', title: '商品',align:'center'},
-            {field:'stNum', width:'10%', title: '数量',align:'center'},
-            {field:'type', width:'10%', title: '类型',align:'center'},
-            {field:'createtime', width:'10%', title: '登录日期',align:'center'},
-            {field:'checktime', width:'10%', title: '审核日期',align:'center'},
-            {field:'ename', width:'10%', title: '登记人',align:'center'},
-            {field:'ename', width:'10%', title: '审核人',align:'center'},
-            {field:'state', width:'10%', title: '状态',align:'center'},
-            {field:'操作', width:'10%', title: '操作',align:'center',toolbar:'#crud'}
+            {field:'gname', width:'8%', title: '商品',align:'center'},
+            {field:'goodsuuid', hide:true},
+            {field:'storeuuid', hide:true},
+            // {field:'stNum', width:'8%', title: '数量',align:'center'},
+            {field:'num', width:'8%', title: '数量',align:'center'},
+            {field:'type', width:'8%', title: '类型',align:'center',templet:function (obj) {
+                    if(obj.type=="0"){
+                        return "盘盈";
+                    }else{
+                        return "盘亏";
+                    }
+                }},
+            {field:'createtime', width:'10%', title: '登录日期',align:'center',templet:function (obj) {
+                    return createTime(obj.createtime);
+                }},
+            {field:'checktime', width:'10%', title: '审核日期',align:'center',templet:function (obj) {
+                if(obj.checktime!=null && obj.checktime!="" && obj.checktime!=undefined){
+                    return createTime(obj.checktime);
+                }else{
+                    return "";
+                }
+                }},
+            {field:'ename', width:'8%', title: '登记人',align:'center'},
+            {field:'checktime', width:'8%', title: '审核人',align:'center'},
+            {field:'state', width:'8%', title: '状态',align:'center'},
+            {field:'操作', width:'8%', title: '操作',align:'center',toolbar:'#crud'}
         ]],
     })
 }
@@ -88,17 +105,31 @@ function queryRegister() {
 }
 
 
+function createTime(v){
+    var date = new Date(v);
+    var y = date.getFullYear();
+    var m = date.getMonth()+1;
+    m = m<10?'0'+m:m;
+    var d = date.getDate();
+    d = d<10?("0"+d):d;
+    var h = date.getHours();
+    h = h<10?("0"+h):h;
+    var M = date.getMinutes();
+    M = M<10?("0"+M):M;
+    var str = y+"-"+m+"-"+d+" "+h+":"+M;
+    return str;
+}
 
-function editRole(uuid,index) {
+function editRole(data) {
     $.ajax({
         url: path+'/stock/updAudit',
-        data:{uuid:uuid,state:'已审核'},//前端的id，接收的参数
+        data:{uuid:data.UUID,num:data.num,type:data.type,goodsuuid:data.goodsuuid,storeuuid:data.storeuuid},//前端的id，接收的参数
         dataType : 'json',
         type : 'post',
         async : false,
-        success : function (message) {//   这里面的data是后天穿过来的返回值
-            layui.layer.msg(message.message);
-            layer.close(index);
+        success : function (data) {//   这里面的data是后天穿过来的返回值
+            layer.close(layer.index);
+            layui.layer.msg(data.message);
             queryRegister();
         },
     });

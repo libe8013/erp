@@ -29,7 +29,7 @@ public class StoreOperController {
 
     @RequestMapping("/queryRecordsPager")
     @ResponseBody
-    public Map<String,Object> queryRecordsPager(String empName, String sname, String gname, Integer num, HttpServletRequest req){
+    public Map<String,Object> queryRecordsPager(String empName, String sname, String gname, Integer num,String type, HttpServletRequest req){
         StoreOperVo storeOperVo = new StoreOperVo();
         Goods goods = new Goods();
         Store store = new Store();
@@ -43,6 +43,7 @@ public class StoreOperController {
         storeOperVo.setGoods(goods);
         storeOperVo.setStore(store);
         storeOperVo.setStoreDetail(storeDetail);
+        storeOperVo.setType(type);
         PageBean pageBean = new PageBean();
         pageBean.setRequest(req);
         List<Map<String, Object>> list = storeOperService.queryRecordsPager(storeOperVo, pageBean);

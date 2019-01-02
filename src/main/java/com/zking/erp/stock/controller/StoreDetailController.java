@@ -47,4 +47,22 @@ public class StoreDetailController {
         return map;
     }
 
+
+    @RequestMapping("/queryWarning")
+    @ResponseBody
+    public Map<String,Object> queryWarning(HttpServletRequest req){
+        PageBean pageBean = new PageBean();
+        pageBean.setRequest(req);
+        List<Map<String, Object>> maps = storeDetailService.queryWarningPager(pageBean);
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",pageBean.getTotal());
+        map.put("data",maps);
+
+        return map;
+    }
+
 }

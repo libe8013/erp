@@ -83,6 +83,21 @@ function initTable(data){
             {field:'price', width:'12%', title: '价格',align:'center'},
             {field:'num', width:'12%', title: '数量',align:'center'},
             {field:'money', width:'12%', title: '金额',align:'center'},
+            {field:'storeuuid', width:'12%', title: '仓库',align:'center',
+                templet : function(row){
+                    var result='';
+                    $.ajax({
+                        url : path+'/store/querySingleStore',
+                        data : {uuid:row.storeuuid},
+                        dataType : 'json',
+                        type : 'post',
+                        async : false,
+                        success : function (data) {
+                            result=data.name;
+                        }
+                    });
+                    return result;
+                }},
             {field:'state', width:'12%', title: '状态',align:'center'}
         ]],
     });

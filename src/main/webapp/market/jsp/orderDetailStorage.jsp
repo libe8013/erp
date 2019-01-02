@@ -9,7 +9,7 @@
 <html>
 <head>
     <%@include file="/common/head.jsp"%>
-    <script src="${ctx}/purchase/js/orderDetailStorage.js"></script>
+    <script src="${ctx}/market/js/orderDetailStorage.js"></script>
 </head>
 <body>
 <form class="layui-form layui-form-pane" action="">
@@ -45,12 +45,12 @@
                 </div>
             </div>
 
-            <div class="layui-inline">
-                <label class="layui-form-label">库管员</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="ender" readonly autocomplete="off" class="layui-input">
-                </div>
-            </div>
+            <%--<div class="layui-inline">--%>
+                <%--<label class="layui-form-label">库管员</label>--%>
+                <%--<div class="layui-input-inline">--%>
+                    <%--<input type="text" id="ender" readonly autocomplete="off" class="layui-input">--%>
+                <%--</div>--%>
+            <%--</div>--%>
 
             <div class="layui-inline">
                 <label class="layui-form-label">下单日期</label>
@@ -58,16 +58,17 @@
                     <input type="text" readonly id="createtime" lay-verify="required"  autocomplete="off" class="layui-input">
                 </div>
             </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">出库日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly id="endtime" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
         </div>
 
         <div>
 
-            <div class="layui-inline">
-                <label class="layui-form-label">入库日期</label>
-                <div class="layui-input-inline" style="width: 260px;">
-                    <input type="text" readonly id="endtime" lay-verify="required" autocomplete="off" class="layui-input">
-                </div>
-            </div>
+
         </div>
     </div>
 </form>
@@ -105,12 +106,12 @@
                 <label class="layui-form-label">仓库：</label>
                 <div class="layui-input-inline">
                     <select name="storeuuid" id="store" lay-verify="storeuuid" lay-search="">
-                        <option value="0">请选择仓库</option>
+                        <%--<option value="0">请选择仓库</option>--%>
                     </select>
                 </div>
         </div>
         <div class="layui-inline" style="margin-top: 15px;margin-left: 40%;">
-            <a class="layui-btn" lay-submit lay-filter="Storage" id="addStorage">入库</a>
+            <a class="layui-btn" lay-submit lay-filter="Storage" id="addStorage">出库</a>
         </div>
     </div>
     </form>

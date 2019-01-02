@@ -10,6 +10,7 @@ import com.zking.erp.market.model.OrderDetail;
 import com.zking.erp.market.model.Orders;
 import com.zking.erp.market.service.IOrderDetailService;
 import com.zking.erp.market.service.IOrdersService;
+import com.zking.erp.market.vo.OrderDetailVo;
 import com.zking.erp.market.vo.OrdersVo;
 import com.zking.erp.personnel.model.Emp;
 import com.zking.erp.stock.model.StoreDetail;
@@ -77,7 +78,7 @@ public class OrdersController {
     @ResponseBody
     public Map<String,Object> queryPurchasePager(Orders orders,HttpServletRequest req) throws ParseException {
         Map<String,Object> map = new HashMap<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         PageBean pageBean = new PageBean();
         pageBean.setRequest(req);
@@ -88,6 +89,71 @@ public class OrdersController {
         map.put("msg","");
         map.put("count",pageBean.getTotal());
         map.put("data",orders1);
+
+        return map;
+    }
+
+    @RequestMapping("/addOrdersMarket")
+    @ResponseBody
+    public Map<String,Object> addOrdersMarket(OrdersVo goods, HttpServletRequest req, String goodsJson) throws IOException {
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        HttpSession session = req.getSession();
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<Map<String,Object>> goodsLst = mapper.readValue(goodsJson, new TypeReference<List<Map<String,Object>>>() {});
+
+        List<Map<String,Object>> maps = new ArrayList<>();
+
+        //uuid
+        String ordersuuid = UUID.randomUUID().toString().replace("-","");
+
+        Boolean b=true;
+
+        for (int i=0;i<goodsLst.size();i++){
+            OrderDetail od = new OrderDetail();
+            od.setGoodsuuid(goodsLst.get(i).get("uuid").toString());
+            od.setSupplieruuid(goods.getSupplieruuid());
+            List<OrderDetail> orderDetails = orderDetailService.queryGoodsOrderdetailMarket(od);
+            if(orderDetails.size()!=0){
+                b = false;
+                for (OrderDetail orderDetail : orderDetails) {
+                    orderDetail.setNum(orderDetail.getNum()+Integer.parseInt(goodsLst.get(i).get("num").toString()));
+                    orderDetail.setMoney(orderDetail.getMoney()+(Float.parseFloat(goodsLst.get(i).get("money").toString())));
+                    orderDetailService.updateByPrimaryKeySelective(orderDetail);
+                }
+            }
+            Map<String,Object> orderDetail = new HashMap<>();
+            String ordersDetailuuid = UUID.randomUUID().toString().replace("-","");
+            orderDetail.put("uuid",ordersDetailuuid);
+            orderDetail.put("goodsuuid",goodsLst.get(i).get("uuid"));
+            orderDetail.put("goodsname",goodsLst.get(i).get("name"));
+            orderDetail.put("price",goodsLst.get(i).get("inprice"));
+            orderDetail.put("num",goodsLst.get(i).get("num"));
+            orderDetail.put("money",goodsLst.get(i).get("money"));
+            orderDetail.put("state",goodsLst.get(i).get("state"));
+            orderDetail.put("ordersuuid",ordersuuid);
+            maps.add(orderDetail);
+        }
+
+        goods.setUuid(ordersuuid);
+        //createtime
+        goods.setCreatetime(new Date());
+        //creater
+        Emp emp = (Emp) session.getAttribute("emp");
+
+        //下单人改成当前登录用户
+        goods.setCreater(emp.getUuid());
+
+        if(b){
+            ordersService.addOrders(goods,maps);
+        }
+
+        String message = "添加成功";
+
+        map.put("message",message);
+        map.put("code",1);
 
         return map;
     }
@@ -114,10 +180,10 @@ public class OrdersController {
             orderDetail.put("uuid",ordersDetailuuid);
             orderDetail.put("goodsuuid",goodsLst.get(i).get("uuid"));
             orderDetail.put("goodsname",goodsLst.get(i).get("name"));
-            orderDetail.put("price",goodsLst.get(i).get("outprice"));
+            orderDetail.put("price",goodsLst.get(i).get("inprice"));
             orderDetail.put("num",goodsLst.get(i).get("num"));
             orderDetail.put("money",goodsLst.get(i).get("money"));
-            orderDetail.put("state","未入库");
+            orderDetail.put("state",goodsLst.get(i).get("state"));
             orderDetail.put("ordersuuid",ordersuuid);
             maps.add(orderDetail);
         }
@@ -219,17 +285,17 @@ public class OrdersController {
 
 
         String message = null;
+        Boolean b = true;
         try {
             orderDetail.setEndtime(new Date());
             orderDetail.setState("已入库");
-            orderDetail.setStoreuuid(store.getEmpuuid());
-            orderDetail.setEnder(emp.getUuid());
+            orderDetail.setStoreuuid(store.getUuid());
+            orderDetail.setEnder(store.getEmpuuid());
             orderDetailService.updateByPrimaryKeySelective(orderDetail);
 
-            OrderDetail oDetail = new OrderDetail();
+            OrderDetailVo oDetail = new OrderDetailVo();
             oDetail.setOrdersuuid(orderDetail.getOrdersuuid());
             List<OrderDetail> orderDetails = orderDetailService.queryOrderDetail(oDetail);
-            Boolean b = true;
             for (OrderDetail detail : orderDetails) {
                 if(detail.getState().equals("未入库")){
                     b = false;
@@ -275,8 +341,98 @@ public class OrdersController {
 
 
         map.put("message",message);
+        map.put("close",b);
 
         return map;
+    }
+
+    @RequestMapping("/Marketstorage")
+    @ResponseBody
+    public Map<String,Object> MarketStorage(OrderDetail orderDetail,HttpServletRequest req){
+        Map<String,Object> map = new HashMap<>();
+        HttpSession session = req.getSession();
+
+        Store store = storeService.selectByPrimaryKey(orderDetail.getStoreuuid());
+
+        Emp emp = (Emp) session.getAttribute("emp");
+
+
+        String message = null;
+        Boolean b = true;
+        try {
+            orderDetail.setEndtime(new Date());
+            orderDetail.setState("已出库");
+            orderDetail.setStoreuuid(store.getUuid());
+            orderDetail.setEnder(store.getEmpuuid());
+            orderDetailService.updateByPrimaryKeySelective(orderDetail);
+
+            OrderDetailVo oDetail = new OrderDetailVo();
+            oDetail.setOrdersuuid(orderDetail.getOrdersuuid());
+            List<OrderDetail> orderDetails = orderDetailService.queryOrderDetail(oDetail);
+            for (OrderDetail detail : orderDetails) {
+                if(detail.getState().equals("未出库")){
+                    b = false;
+                    break;
+                }
+            }
+
+            if(b){
+                Orders orders = new Orders();
+                orders.setUuid(orderDetail.getOrdersuuid());
+                orders.setEnder(store.getEmpuuid());
+                orders.setEndtime(new Date());
+                orders.setState("已出库");
+                ordersService.updateByPrimaryKeySelective(orders);
+            }
+
+            com.zking.erp.stock.model.StoreDetail storeDetail = new StoreDetail();
+//            storeDetail.setUuid(StoreDetailUUID);
+            storeDetail.setStoreuuid(store.getUuid());
+            storeDetail.setGoodsuuid(orderDetail.getGoodsuuid());
+            storeDetail.setNum(orderDetail.getNum());
+            StoreDetail storeDetail1 = storeDetailService.querySingleStoreDetail(storeDetail);
+            if(null!=storeDetail1){
+                storeDetail1.setNum(storeDetail1.getNum()-storeDetail.getNum());
+                storeDetailService.updateByPrimaryKeySelective(storeDetail1);
+            }else{
+                storeDetailService.insert(storeDetail);
+            }
+
+            StoreOper storeOper = new StoreOper();
+            storeOper.setUuid(UUID.randomUUID().toString().replace("-",""));
+            storeOper.setEmpuuid(emp.getUuid());
+            storeOper.setStoreuuid(store.getUuid());
+            storeOper.setGoodsuuid(orderDetail.getGoodsuuid());
+            storeOper.setNum(storeDetail.getNum());
+            storeOper.setOpertime(new Date());
+            storeOper.setType("出库");
+            storeOperService.insert(storeOper);
+            message = "出库成功";
+        } catch (Exception e) {
+            message = "入库失败";
+        }
+
+
+        map.put("success",b);
+        map.put("message",message);
+
+        return map;
+    }
+
+    @RequestMapping("/queryClientGoods")
+    @ResponseBody
+    public List<Map<String,Object>> queryClientGoods(Orders orders){
+        List<Map<String,Object>> orderDetails = ordersService.queryClientGoods(orders);
+
+        return orderDetails;
+    }
+
+    @RequestMapping("/querySupplierGoods")
+    @ResponseBody
+    public List<Map<String,Object>> querySupplierGoods(Orders orders){
+        List<Map<String,Object>> orderDetails = ordersService.querySupplierGoods(orders);
+
+        return orderDetails;
     }
 
 }

@@ -12,9 +12,11 @@ layui.use(['jquery','table','layer'],function () {
 
     custom_rule();
 
-    table.on('tool(orderDetailAuditFilter)',function (obj) {
+    //监听行单击事件（单击事件为：rowDouble）
+    table.on('row(orderDetailAuditFilter)', function(obj){
         var data = obj.data;
-        if(obj.event=='OrderDetailAffirm'){
+        if(data.state!="已出库"){
+            var tr = obj.tr;
             var storage = $('#storageDiv').html();
             layer.open({
                 skin : 'layer-ext-Select',
@@ -23,17 +25,15 @@ layui.use(['jquery','table','layer'],function () {
                 shadeClose: true, //点击遮罩关闭
                 content: storage
             });
-            initSelect(null,'store');
-
-
+            initSelect(null,'store',data);
 
             layui.form.val('goodsStorage',data);
         }
-    })
+
+    });
 
     layui.form.on('submit(Storage)',function (obj) {
         var data = obj.field;
-
         Storage(data)
         parent.queryOrdersStorage();
         return false;
@@ -60,7 +60,7 @@ function getOrderDetail(uuid){
 
 function Storage(data){
     $.ajax({
-        url : path+'/orders/storage',
+        url : path+'/orders/Marketstorage',
         data : data,
         dataType : 'json',
         type : 'post',
@@ -68,8 +68,18 @@ function Storage(data){
         success : function (data) {
             parent.layer.msg(data.message);
             // parent.queryOrders();
-            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-            parent.layer.close(index);
+            if(data.close){
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                parent.layer.close(index);
+            }else{
+                layer.close(layer.index);
+                var uuid = $('#uuid').val();
+                var data = getOrderDetail(uuid);
+                layui.table.reload('orderDetailTable',{
+                    data : data
+                });
+            }
+
         }
     });
 }
@@ -84,15 +94,15 @@ function initTable(data){
         page: true, //开启分页
         cols: [[ //表头
             // {field:'uuid', width:'18%', title: '商品编号',align:'center',width:'2%'},
-            {field:'goodsuuid', width:'18%', title: '商品编号',align:'center'},
+            // {field:'goodsuuid', width:'18%', title: '商品编号',align:'center'},
             {field:'goodsname', width:'14%', title: '商品名称',align:'center'},
             {field:'price', width:'12%', title: '价格',align:'center'},
             {field:'num', width:'12%', title: '数量',align:'center'},
             {field:'money', width:'12%', title: '金额',align:'center'},
             {field:'state', width:'12%', title: '状态',align:'center'},
             {field:'button', width:'12%', title: '操作',align:'center',templet:function (row) {
-                if(row.state=='未入库'){
-                    return '<button class="layui-btn layui-btn-normal layui-btn-sm" id="OrdersAffirm" lay-event="OrderDetailAffirm">订单入库</button>';
+                if(row.state=='未出库'){
+                    return '<button class="layui-btn layui-btn-normal layui-btn-sm" id="OrdersAffirm" lay-event="OrderDetailAffirm">订单出库</button>';
                 }else{
                     return '';
                 }
@@ -101,29 +111,32 @@ function initTable(data){
     });
 }
 
-function initSelect(id,htmlid){
+function initSelect(id,htmlid,data){
     var form = layui.form;
     // alert();
-    $.get(path + '/store/queryStoreLikePager', {}, function (data) {
+    $.get(path + '/store/queryStoreGoodsUUID', {goodsuuid:data.goodsuuid,num:data.num}, function (data) {
         var goodsType = "";
-        if (data.data != null) {
-            $.each(data.data, function (index, item) {
+        if (data != null && data.length!=0) {
+            goodsType+="<option value=\"0\">请选择仓库</option>";
+            $.each(data, function (index, item) {
                 if (item.uuid){
                     if(id!=null && id!=0 && item.uuid==id){
-                        goodsType += "<option class='generate' selected='selected' value='" + item.uuid + "'>" + item.name + "</option>";
+                        goodsType += "<option class='generate' selected='selected' value='" + item.STOREUUID + "'>" + item.name + "</option>";
                     }else{
-                        goodsType += "<option class='generate' value='" + item.uuid + "'>" + item.name + "</option>";
+                        goodsType += "<option class='generate' value='" + item.STOREUUID + "'>" + item.name + "</option>";
                     }
                 }else{
-                    goodsType += "<option value='" + item.uuid + "'>" + item.name + "</option>";
+                    goodsType += "<option value='" + item.STOREUUID + "'>" + item.name + "</option>";
                 }
             });
-            $("select[id='"+htmlid+"']").append(goodsType);
             //反选
             // $("select[name='???']").val($("#???").val());
-            //append后必须从新渲染
-            form.render('select');
+        }else{
+            goodsType+="<option value='0'>商品库存不足请联系采购员</option>";
         }
+        $("select[id='"+htmlid+"']").append(goodsType);
+        //append后必须从新渲染
+        form.render('select');
     });
 }
 

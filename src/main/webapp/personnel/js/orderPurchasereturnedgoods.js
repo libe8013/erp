@@ -1,5 +1,4 @@
 var path;
-var index;
 var GoodsResult;
 var supplierUUID;
 layui.use(['jquery','form','layer','table'],function () {
@@ -18,7 +17,6 @@ layui.use(['jquery','form','layer','table'],function () {
                 selectedValue = settings.selectedValue;
             var html = [];
             for(var i=0, item; i < data.length; i++){
-                if(data[i].storeuuid==supplierUUID && data[i].inventory>0){
                     item = data[i];
                     html.push('<option value="');
                     html.push(item[valueField]);
@@ -29,7 +27,6 @@ layui.use(['jquery','form','layer','table'],function () {
                     html.push('>');
                     html.push(item[textField]);
                     html.push('</option>');
-                }
             }
 
             return html.join('');
@@ -40,13 +37,13 @@ layui.use(['jquery','form','layer','table'],function () {
     var orderDetailTable = initTable(tableId);
 
     //初始化下拉框
-    initSelect(null,'storeuuid');
+    initSelect(null,'supplieruuid');
     //定义事件集合
     var active = {
         addRow : function () {//添加行方法
             var uuid = createUUID();
             var oldData = table.cache[tableId];
-            var newData = {id:uuid,uuid:null,outprice:null,num:null,money:null,inventory:null};
+            var newData = {id:uuid,uuid:null,inprice:null,num:null,money:null,inventory:null};
             oldData.push(newData);
             orderDetailTable.reload({
                 data : oldData
@@ -59,7 +56,7 @@ layui.use(['jquery','form','layer','table'],function () {
                     if(oldData[j].id==obj.id){
                         delete oldData[j]['money'];
                         delete oldData[j]['num'];
-                        delete oldData[j]['outprice'];
+                        delete oldData[j]['inprice'];
                         delete oldData[j]['uuid'];
                         delete oldData[j]['inventory']
                         orderDetailTable.reload({
@@ -76,7 +73,7 @@ layui.use(['jquery','form','layer','table'],function () {
                         if(oldData[j].id==obj.id){
                             delete oldData[j]['money'];
                             delete oldData[j]['num'];
-                            delete oldData[j]['outprice'];
+                            delete oldData[j]['inprice'];
                             delete oldData[j]['uuid'];
                             delete oldData[j]['inventory']
                         }
@@ -88,19 +85,19 @@ layui.use(['jquery','form','layer','table'],function () {
                     return;
                 }
                 if(row.id == obj.id){
+                    obj.num=0;
                     $.extend(oldData[i], obj);
 
                     for(var j=0;j<GoodsResult.length;j++){
                         if(obj.uuid==GoodsResult[j].uuid){
-                            var outprice = {outprice:GoodsResult[j].outprice}
-                            $.extend(oldData[i],outprice);
+                            var inprice = {inprice:GoodsResult[j].inprice}
+                            $.extend(oldData[i],inprice);
                             break;
                         }
                     }
                     break;
                 }
             }
-
             orderDetailTable.reload({
                 data : oldData
             });
@@ -111,7 +108,7 @@ layui.use(['jquery','form','layer','table'],function () {
             var oldData = table.cache[tableId];
             for(var i=0, row; i < oldData.length; i++){
                 row = oldData[i];
-                if(!row || !row.uuid){
+                if(!row || !row.id){
                     oldData.splice(i, 1);    //删除一项
                 }
                 continue;
@@ -127,10 +124,10 @@ layui.use(['jquery','form','layer','table'],function () {
         },
         saveOrders: function(){
             var oldData = table.cache[tableId];
-            var supplieruuid = $('#storeuuid option:selected').val();
+            var supplieruuid = $('#supplieruuid option:selected').val();
 
-            if(supplieruuid==0 || supplieruuid==null){
-                layer.msg("请选择仓库！", { icon: 5 }); //提示
+            if(supplieruuid==0 || supplieruuid==null || supplieruuid==""){
+                layer.msg("请选择供应商！", { icon: 5 }); //提示
                 return;
             }
             if(oldData.length==0){
@@ -157,23 +154,26 @@ layui.use(['jquery','form','layer','table'],function () {
                 var ordersDeatildata = {
                     uuid : oldData[i].uuid,
                     num : oldData[i].num,
-                    money : oldData[i].money
+                    money : oldData[i].money,
+                    state : '未出库'
                 };
                 json.push(queryGoods(ordersDeatildata));
             }
 
-
             var Goodsjson = JSON.stringify(json);	//使用JSON.stringify() 格式化输出JSON字符串
             $.ajax({
                 url : path+'/returnedorders/addReturnedGoods',
-                data : {type:"采购",state:'未审核',storeuuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
+                data : {type:"采购",state:'未审核',supplieruuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
                 dataType : 'json',
                 type : 'post',
                 async : false,
                 success : function (data) {
                     layer.msg(data.message); //提示
-                    activeByType("removeAll");
-                    $('#ff')[0].reset();
+                    if(data.success){
+                        activeByType("removeAll");
+                        $('#ff')[0].reset();
+                    }
+
                 }
             });
         }
@@ -191,8 +191,8 @@ layui.use(['jquery','form','layer','table'],function () {
 
     //注册按钮事件
     $(document).on('click','#addRow', function () {
-        if(supplierUUID==''||supplierUUID==null){
-            layer.msg('请选择仓库');
+        if(supplierUUID==''||supplierUUID==null || supplierUUID==0){
+            layer.msg('请选择供应商');
             return;
         }
         var type = $(this).data('type');//获取当前点击按钮的data-type属性值
@@ -225,26 +225,50 @@ layui.use(['jquery','form','layer','table'],function () {
             }
         });
 
+        var oldData = table.cache[tableId];
+
+        var isNum = 0;
+
+        for(var i=0;i<GoodsResult.length;i++){
+            if(GoodsResult[i].uuid==data.uuid){
+                isNum = GoodsResult[i].inventory;
+            }
+        }
+
         if(!data.uuid){
             layer.msg('请选择商品');
+            for(var i=0,row;i<oldData.length;i++){
+                row = oldData[i];
+                if(row.id==data.id){
+                    $.extend(oldData[i],{num:0});
+                    break;
+                }
+            }
             return;
         }
 
         var num = data.num;
-        var reg = /^[-]{0,1}[0-9]{1,}$/;
-
+        var reg = /^[0-9]{1,}$/;
         if(!reg.test(num)){
             layer.msg('请输入数字');
+            for(var i=0,row;i<oldData.length;i++){
+                row = oldData[i];
+                if(row.id==data.id){
+                    $.extend(oldData[i],{num:isNum});
+                    break;
+                }
+            }
+            orderDetailTable.reload({
+                data : oldData
+            });
             return;
         }
-
-        var oldData = table.cache[tableId];
 
         for(var i=0,row;i<oldData.length;i++){
             row = oldData[i];
             if(row.id==data.id){
-                if(row.outprice!=null){
-                    var money = {money:(data.outprice*data.num)};
+                if(row.inprice!=null){
+                    var money = {money:(data.inprice*data.num)};
                     if(b){
                         $.extend(oldData[i],{num:value});
                         layer.msg("库存只有"+value+"哦");
@@ -270,13 +294,17 @@ layui.use(['jquery','form','layer','table'],function () {
     });
 
     form.on('select(supplier)', function(data){
+        if(data.value==0){
+            activeByType('removeAll');
+            return;
+        }
         supplierUUID=data.value;
         GoodsResult = getGoods(supplierUUID);
         var oldData = table.cache[tableId];
         for (var i=0;i<oldData.length;i++){
             delete oldData[i]['money'];
             delete oldData[i]['num'];
-            delete oldData[i]['outprice'];
+            delete oldData[i]['inprice'];
             delete oldData[i]['uuid'];
             delete oldData[i]['inventory']
         }
@@ -288,7 +316,6 @@ layui.use(['jquery','form','layer','table'],function () {
     //监听工具条
     table.on('tool(orderDetailTab)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-        // console.log(event);
 
         switch(event){
             case "goods":
@@ -334,9 +361,9 @@ function initTable(tableId){
                         return '<a lay-event="goods"></a><select name="uuid" id="goods'+obj.LAY_INDEX+'" class="name" lay-filter="goods"><option value=""></option>' + options + '</select>';
                     }
                 }},
-            {field:'outprice', width:'12%', title: '价格',align:'center',templet : function (row) {
+            {field:'inprice', width:'12%', title: '价格',align:'center',templet : function (row) {
                     if(row.uuid!=null){
-                        return row.outprice+'$';
+                        return row.inprice+'$';
                     }else{
                         return '';
                     }}
@@ -344,6 +371,11 @@ function initTable(tableId){
             {field:'num', width:'12%', title: '数量',align:'center', edit: 'text',templet:function (row) {
                     if(row.uuid!=null){
                         var num = row.num!=null ? parseInt(row.num) : 0;
+
+                        if(isNaN(num)){
+                            num=0;
+                        }
+
                         return '<div lay-event="editNum">'+num+'</div>';
                     }else{
                         return '<div lay-event="editNum"></div>';
@@ -351,7 +383,7 @@ function initTable(tableId){
                 }},
             {field:'money', width:'12%', title: '金额',align:'center',templet : function (row) {
                     if(row.uuid!=null){
-                        var num = row.num!=null ? parseInt(row.num)*row.outprice : 0;
+                        var num = row.num!=null ? parseInt(row.num)*row.inprice : 0;
                         return num+'$';
                     }else {
                         return '';
@@ -392,7 +424,7 @@ function initTable(tableId){
 
 function initSelect(id,htmlid){
     var form = layui.form;
-    $.get(path + '/store/queryStoreLikePager', {}, function (data) {
+    $.get(path + '/supplier/querySupplierLikePager', {type:'0'}, function (data) {
         var goodsType = "";
         if (data.data != null) {
             $.each(data.data, function (index, item) {
@@ -439,8 +471,8 @@ var createUUID = (function (uuidRegEx, uuidReplacer) {
 function getGoods(supplierUUID){
     var result = [];
     $.ajax({
-        url : path+'/store/queryStoreGoodsSupplier',
-        data : {supplierid:supplierUUID},
+        url : path+'/orders/querySupplierGoods',
+        data : {supplieruuid:supplierUUID},
         dataType : 'json',
         type : 'post',
         async : false,
@@ -461,6 +493,7 @@ function queryGoods(data){
             result = GoodsResult[i];
             result.num=data.num;
             result.money=data.money;
+            result.state=data.state;
             break;
         }
     }

@@ -3,6 +3,7 @@ package com.zking.erp.market.service.imp;
 import com.zking.erp.market.mapper.OrderDetailMapper;
 import com.zking.erp.market.model.OrderDetail;
 import com.zking.erp.market.service.IOrderDetailService;
+import com.zking.erp.market.vo.OrdersVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,4 +60,10 @@ public class OrderDetailImp implements IOrderDetailService{
     public List<OrderDetail> queryOrderDetail(OrderDetail orderDetail) {
         return orderDetailMapper.queryOrderDetail(orderDetail);
     }
+
+    @Override
+    public List<OrderDetail> queryGoodsOrderdetailMarket(OrderDetail orderDetail) {
+        return orderDetailMapper.queryGoodsOrderdetailMarket(orderDetail);
+    }
+
 }

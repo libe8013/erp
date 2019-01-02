@@ -29,7 +29,9 @@ layui.use(['jquery','table','layer'],function () {
     table.on('row(orderDetailAuditFilter)', function(obj){
         var data = obj.data;
         //标注选中样式
-        store(obj);
+        if(data.state!="已出库"){
+            store(obj);
+        }
     });
 
 });
@@ -62,8 +64,17 @@ function returnStorage(data){
         success : function (data) {
             parent.layer.msg(data.message);
             // parent.queryOrders();
-            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-            parent.layer.close(index);
+            if(data.close){
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                parent.layer.close(index);
+            }else{
+                layer.close(layer.index);
+                var uuid = $('#uuid').val();
+                var data = getReturnOrderDetail(uuid);
+                layui.table.reload('orderDetailTable',{
+                    data : data
+                });
+            }
         }
     });
 }
@@ -78,12 +89,27 @@ function initTable(data){
         page: true, //开启分页
         cols: [[ //表头
             // {field:'uuid', width:'18%', title: '商品编号',align:'center',width:'2%'},
-            {field:'goodsuuid', width:'18%', title: '商品编号',align:'center'},
-            {field:'goodsname', width:'14%', title: '商品名称',align:'center'},
-            {field:'price', width:'12%', title: '价格',align:'center'},
-            {field:'num', width:'12%', title: '数量',align:'center'},
-            {field:'money', width:'12%', title: '金额',align:'center'},
-            {field:'state', width:'12%', title: '状态',align:'center'},
+            {field:'goodsuuid', width:'16%', title: '商品编号',align:'center'},
+            {field:'goodsname', width:'12%', title: '商品名称',align:'center'},
+            {field:'price', width:'10%', title: '价格',align:'center'},
+            {field:'num', width:'10%', title: '数量',align:'center'},
+            {field:'money', width:'10%', title: '金额',align:'center'},
+            {field:'state', width:'10%', title: '状态',align:'center'},
+            {field:'storeuuid', width:'12%', title: '仓库',align:'center',
+                templet : function(row){
+                    var result='';
+                    $.ajax({
+                        url : path+'/store/querySingleStore',
+                        data : {uuid:row.storeuuid},
+                        dataType : 'json',
+                        type : 'post',
+                        async : false,
+                        success : function (data) {
+                            result=data.name;
+                        }
+                    });
+                    return result;
+                }},
             {field:'button', width:'12%', title: '操作',align:'center',templet:function (row) {
                 if(row.state=='未出库'){
                     return '<button class="layui-btn layui-btn-normal layui-btn-sm" id="OrdersAffirm" lay-event="OrderDetailAffirm">订单出库</button>';
@@ -134,8 +160,9 @@ function custom_rule(){
 
 function store(obj) {
     var data = obj.data;
-    data["storeuuid"]=$('#storeuuid').val();
-    data["storename"]=$('#storename').val();
+    // data["storeuuid"]=$('#storeuuid').val();
+    var storename = $('tr td[data-content='+data.storeuuid+']').text();
+    data["storename"]=storename;
     // if(obj.event=='OrderDetailAffirm'){
         var storage = $('#storageDiv').html();
         layer.open({
@@ -146,7 +173,6 @@ function store(obj) {
             content: storage
         });
         // initSelect(data.storeuuid,'store');
-
         layui.form.val('goodsStorage',data);
     // }
 }

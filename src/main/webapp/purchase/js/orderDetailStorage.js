@@ -29,7 +29,9 @@ layui.use(['jquery','table','layer'],function () {
     table.on('row(orderDetailAuditFilter)', function(obj){
         var data = obj.data;
         //标注选中样式
-        store(obj);
+        if(data.state!="已入库") {
+            store(obj);
+        }
     });
 
 });
@@ -61,8 +63,18 @@ function Storage(data){
         success : function (data) {
             parent.layer.msg(data.message);
             // parent.queryOrders();
-            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-            parent.layer.close(index);
+            if(data.close){
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                parent.layer.close(index);
+            }else{
+                layer.close(layer.index);
+                var uuid = $('#uuid').val();
+                var data = getOrderDetail(uuid);
+                layui.table.reload('orderDetailTable',{
+                    data : data
+                });
+            }
+
         }
     });
 }
@@ -85,7 +97,7 @@ function initTable(data){
             {field:'state', width:'12%', title: '状态',align:'center'},
             {field:'button', width:'12%', title: '操作',align:'center',templet:function (row) {
                 if(row.state=='未入库'){
-                    return '<button class="layui-btn layui-btn-normal layui-btn-sm" id="OrdersAffirm" lay-event="OrderDetailAffirm">订单出库</button>';
+                    return '<button class="layui-btn layui-btn-normal layui-btn-sm" id="OrdersAffirm">订单入库</button>';
                 }else{
                     return '';
                 }

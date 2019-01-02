@@ -10,7 +10,7 @@ layui.use(['table','layer','jquery'],function(){
 function initTable(table) {
     table.render({
         elem:'#queryStoreTypeTab',
-        height:312,
+        height:600,
         id:'StoreTypeTab',//区分表的id
         page:true,//开始分页
         cols:[[//表头数据

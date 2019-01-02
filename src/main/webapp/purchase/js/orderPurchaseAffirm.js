@@ -153,10 +153,10 @@ function querySingleOrderDetail(data,tr){
         success : function (layero,index) {
             var body = layer.getChildFrame('body',index);
             var inputBody = body.find('input');
-            var supplier = $(''+tr.selector+' td[data-content='+data.supplieruuid+']').text();
-            var creater = $(''+tr.selector+' td[data-content='+data.creater+']').text();
-            var checker = $(''+tr.selector+' td[data-content='+data.checker+']').text();
-            var ender = $(''+tr.selector+' td[data-content='+data.ender+']').text();
+            var supplier = $(''+tr.selector+' td[data-field="supplieruuid"]').text();
+            var creater = $(''+tr.selector+' td[data-field="creater"]').text();
+            var checker = $(''+tr.selector+' td[data-field="checker"]').text();
+            var ender = $(''+tr.selector+' td[data-field="ender"]').text();
             data["supplieruuid"] = supplier;
             data["createrUUID"] = data.creater;
             data["creater"] = creater;

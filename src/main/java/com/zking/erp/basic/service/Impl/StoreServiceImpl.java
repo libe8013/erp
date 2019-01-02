@@ -63,4 +63,19 @@ public class StoreServiceImpl implements IStoreService {
     public List<Map<String, Object>> queryStoreGoodsSupplier(StoreVo storeVo) {
         return storeMapper.queryStoreGoodsSupplier(storeVo);
     }
+
+    @Override
+    public List<Map<String, Object>> queryStoreGoodsUUID(StoreDetail storeDetail) {
+        return storeMapper.queryStoreGoodsUUID(storeDetail);
+    }
+
+    @Override
+    public List<Goods> queryStoreDetailGoods() {
+        return storeMapper.queryStoreDetailGoods();
+    }
+
+    @Override
+    public List<Store> queryStoreGoods(String goodsuuid) {
+        return storeMapper.queryStoreGoods(goodsuuid);
+    }
 }

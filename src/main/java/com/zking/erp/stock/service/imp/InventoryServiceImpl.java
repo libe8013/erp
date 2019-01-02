@@ -19,7 +19,7 @@ public class InventoryServiceImpl implements IInventoryService {
 
     @Override
     public int insert(Inventory record) {
-        return 0;
+        return inventoryMapper.insert(record);
     }
 
     @Override

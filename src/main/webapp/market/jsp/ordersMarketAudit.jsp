@@ -9,7 +9,7 @@
 <html>
 <head>
     <%@include file="/common/head.jsp"%>
-    <script src="${ctx}/purchase/js/orderPurchaseAudit.js"></script>
+    <script src="${ctx}/market/js/orderMarketAudit.js"></script>
 </head>
 <body>
 <div>
@@ -19,9 +19,7 @@
             <div class="layui-input-inline">
                 <select id="state" lay-verify="" lay-search="">
                     <option value="">全部</option>
-                    <option value="未审核">未审核</option>
                     <option value="已审核">已审核</option>
-                    <option value="已确定">已确定</option>
                     <option value="未出库">未出库</option>
                     <option value="已出库">已出库</option>
                 </select>

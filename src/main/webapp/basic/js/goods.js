@@ -135,7 +135,7 @@ function initSelect(id,htmlid){
 function initSelectSupplier(id,htmlid){
     var form = layui.form;
     // alert();
-    $.get(path + '/supplier/querySupplierLikePager', {}, function (data) {
+    $.get(path + '/supplier/querySupplierLikePager', {type:0}, function (data) {
         var goodsType = "";
         if (data.data != null) {
             $.each(data.data, function (index, item) {
@@ -277,7 +277,7 @@ function edit(obj){
     index = layer.open({
         skin : 'layer-ext-Select',
         type: 1,
-        area: ['720px' , '470px'],
+        area: ['720px' , '425px'],
         shadeClose: true, //点击遮罩关闭
         content: editDiv,
         title : '编辑商品信息',

@@ -1,6 +1,8 @@
 package com.zking.erp.market.service;
 
 import com.zking.erp.base.util.PageBean;
+import com.zking.erp.basic.model.Goods;
+import com.zking.erp.market.model.OrderDetail;
 import com.zking.erp.market.model.Orders;
 import com.zking.erp.market.vo.OrdersVo;
 
@@ -40,4 +42,19 @@ public interface IOrdersService {
      * @return
      */
     int addOrders(OrdersVo goods, List<Map<String,Object>> mpas);
+
+    /**
+     * 查询客户对应的商品订单
+     * @param orders
+     * @return
+     */
+    List<Map<String,Object>> queryClientGoods(Orders orders);
+
+    /**
+     * 查询供应商对应的商品订单
+     * @param orders
+     * @return
+     */
+    List<Map<String,Object>> querySupplierGoods(Orders orders);
+
 }

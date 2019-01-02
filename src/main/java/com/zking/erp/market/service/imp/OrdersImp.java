@@ -75,5 +75,15 @@ public class OrdersImp implements IOrdersService{
         return orderDetailMapper.addOrdersDetail(maps);
     }
 
+    @Override
+    public List<Map<String, Object>> queryClientGoods(Orders orders) {
+        return ordersMapper.queryClientGoods(orders);
+    }
+
+    @Override
+    public List<Map<String, Object>> querySupplierGoods(Orders orders) {
+        return ordersMapper.querySupplierGoods(orders);
+    }
+
 
 }

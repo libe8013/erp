@@ -34,4 +34,12 @@ public interface StoreDetailMapper {
     StoreDetail querySingleStoreDetail(StoreDetail storeDetail);
 
     List<StoreDetail> queryStoreDetail(StoreDetail storeDetail);
+
+    /**
+     * 库存预警查询
+     * @return
+     */
+    List<Map<String,Object>> queryWarning();
+
+    StoreDetail querySingleStore(StoreDetail storeDetail);
 }

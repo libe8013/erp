@@ -61,4 +61,9 @@ public class EmpServiceImpl implements IEmpService {
     public List<Emp> Login(Emp emp) {
         return empMapper.Login(emp);
     }
+
+    @Override
+    public List<Emp> queryEmpLikePager(Emp emp) {
+        return empMapper.queryEmpLikePager(emp);
+    }
 }

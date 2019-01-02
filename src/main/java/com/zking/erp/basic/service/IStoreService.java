@@ -28,4 +28,19 @@ public interface IStoreService {
     Map<String,Object> queryGoodsStore(StoreVo storeVo);
 
     List<Map<String,Object>> queryStoreGoodsSupplier(StoreVo storeVo);
+
+    List<Map<String,Object>> queryStoreGoodsUUID(StoreDetail goods);
+
+    /**
+     * 查询仓库里有得商品
+     * @return
+     */
+    List<Goods> queryStoreDetailGoods();
+
+    /**
+     * 查询仓库里对应的商品
+     * @param goodsuuid
+     * @return
+     */
+    List<Store> queryStoreGoods(String goodsuuid);
 }

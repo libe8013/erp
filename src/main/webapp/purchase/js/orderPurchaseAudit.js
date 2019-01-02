@@ -10,13 +10,6 @@ layui.use(['jquery','form','layer','table'],function () {
         queryOrders();
     });
 
-    function throttle(method,context){
-        clearTimeout(method.tId);
-        method.tId=setTimeout(function(){
-            method.call(context);
-        },100);
-    }
-
     table.on('tool(ordersTab)',function (obj) {
         var data = obj.data;
         var tr = obj.tr;
@@ -134,7 +127,7 @@ function initTable(){
 
 function queryOrders() {
     var state = $('#state option:selected').val();
-    var url = path+'/orders/queryPurchasePager?1=1&type=采购';
+    var url = path+'/orders/queryPurchasePager?1=1&type=采购&state=未审核';
 
     if(null!=state && ''!=state && 0!=state){
         url+='&state='+state;
@@ -158,10 +151,10 @@ function querySingleOrderDetail(data,tr){
         success : function (layero,index) {
             var body = layer.getChildFrame('body',index);
             var inputBody = body.find('input');
-            var supplier = $(''+tr.selector+' td[data-content='+data.supplieruuid+']').text();
-            var creater = $(''+tr.selector+' td[data-content='+data.creater+']').text();
-            var checker = $(''+tr.selector+' td[data-content='+data.checker+']').text();
-            var ender = $(''+tr.selector+' td[data-content='+data.ender+']').text();
+            var supplier = $(''+tr.selector+' td[data-field="supplieruuid"]').text();
+            var creater = $(''+tr.selector+' td[data-field="creater"]').text();
+            var checker = $(''+tr.selector+' td[data-field="checker"]').text();
+            var ender = $(''+tr.selector+' td[data-field="ender"]').text();
             data["supplieruuid"] = supplier;
             data["createrUUID"] = data.creater;
             data["creater"] = creater;

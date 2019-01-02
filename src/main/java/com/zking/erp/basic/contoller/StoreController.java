@@ -123,4 +123,28 @@ public class StoreController {
         return store1;
     }
 
+    @RequestMapping("/queryStoreGoodsUUID")
+    @ResponseBody
+    public List<Map<String,Object>> queryStoreGoodsUUID(StoreDetail storeDetail){
+        List<Map<String, Object>> maps = storeService.queryStoreGoodsUUID(storeDetail);
+
+        return maps;
+    }
+
+    @RequestMapping("/queryStoredetailGoods")
+    @ResponseBody
+    public List<Goods> queryStoredetailGoods(){
+        List<Goods> goods = storeService.queryStoreDetailGoods();
+
+        return goods;
+    }
+
+    @RequestMapping("/queryStoreGoods")
+    @ResponseBody
+    public List<Store> queryStoreGoods(String goodsuuid){
+        List<Store> stores = storeService.queryStoreGoods(goodsuuid);
+
+        return stores;
+    }
+
 }

@@ -30,4 +30,6 @@ public interface IEmpService {
     int updatePwd(Emp emp);
 
     List<Emp> Login(Emp emp);
+
+    List<Emp> queryEmpLikePager(Emp emp);
 }

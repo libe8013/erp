@@ -29,6 +29,8 @@ public class OrderDetail implements Serializable{
 
     private String goodsuuid;
 
+    private String supplieruuid;
+
     public OrderDetail(String uuid, String goodsname, Float price, Integer num, Float money, Date endtime, String ender, String storeuuid, String state, String ordersuuid, String goodsuuid) {
         this.uuid = uuid;
         this.goodsname = goodsname;
@@ -41,6 +43,14 @@ public class OrderDetail implements Serializable{
         this.state = state;
         this.ordersuuid = ordersuuid;
         this.goodsuuid = goodsuuid;
+    }
+
+    public String getSupplieruuid() {
+        return supplieruuid;
+    }
+
+    public void setSupplieruuid(String supplieruuid) {
+        this.supplieruuid = supplieruuid;
     }
 
     public OrderDetail() {

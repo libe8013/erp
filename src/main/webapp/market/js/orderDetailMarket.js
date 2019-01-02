@@ -53,6 +53,23 @@ layui.use(['jquery','form','layer','table'],function () {
             var oldData = table.cache[tableId];
             for(var i=0, row; i < oldData.length; i++){
                 row = oldData[i];
+                if(row.uuid==obj.uuid && oldData.length>=2){
+                    for(var j=0;j<oldData.length;j++){
+                        if(oldData[j].id==obj.id){
+                            delete oldData[j]['money'];
+                            delete oldData[j]['num'];
+                            delete oldData[j]['inprice'];
+                            delete oldData[j]['uuid'];
+                            delete oldData[j]['inventory']
+                        }
+                    }
+                    layer.msg('已有该商品');
+                    orderDetailTable.reload({
+                        data : oldData
+                    });
+                    return;
+                }
+
                 if(row.id == obj.id){
                     $.extend(oldData[i], obj);
 
@@ -77,7 +94,7 @@ layui.use(['jquery','form','layer','table'],function () {
             var oldData = table.cache[tableId];
             for(var i=0, row; i < oldData.length; i++){
                 row = oldData[i];
-                if(!row || !row.uuid){
+                if(!row || !row.id){
                     oldData.splice(i, 1);    //删除一项
                 }
                 continue;
@@ -123,15 +140,15 @@ layui.use(['jquery','form','layer','table'],function () {
                 var ordersDeatildata = {
                     uuid : oldData[i].uuid,
                     num : oldData[i].num,
-                    money : oldData[i].money
+                    money : oldData[i].money,
+                    state : '未出库'
                 };
                 json.push(queryGoods(ordersDeatildata));
             }
 
-
             var Goodsjson = JSON.stringify(json);	//使用JSON.stringify() 格式化输出JSON字符串
             $.ajax({
-                url : path+'/orders/addOrders',
+                url : path+'/orders/addOrdersMarket',
                 data : {type:"销售",state:'未出库',supplieruuid:supplieruuid,totalmoney:totalmoney,goodsJson:Goodsjson},
                 dataType : 'json',
                 type : 'post',
@@ -175,8 +192,17 @@ layui.use(['jquery','form','layer','table'],function () {
             data=obj.data,//得到修改后的值
             field=obj.field;//得到字段
 
+        var oldData = table.cache[tableId];
+
         if(!data.uuid){
             layer.msg('请选择商品');
+            for(var i=0,row;i<oldData.length;i++){
+                row = oldData[i];
+                if(row.id==data.id){
+                    $.extend(oldData[i],{num:0});
+                    break;
+                }
+            }
             return;
         }
 
@@ -188,7 +214,6 @@ layui.use(['jquery','form','layer','table'],function () {
             return;
         }
 
-        var oldData = table.cache[tableId];
 
         for(var i=0,row;i<oldData.length;i++){
             row = oldData[i];
@@ -282,6 +307,11 @@ function initTable(tableId){
             {field:'num', width:'12%', title: '数量',align:'center', edit: 'text',templet:function (row) {
                     if(row.uuid!=null){
                         var num = row.num!=null ? parseInt(row.num) : 0;
+
+                        if(isNaN(num)){
+                            num=0;
+                        }
+
                         return '<div lay-event="editNum">'+num+'</div>';
                     }else{
                         return '<div lay-event="editNum"></div>';
@@ -364,13 +394,13 @@ var createUUID = (function (uuidRegEx, uuidReplacer) {
 function getGoods(supplierUUID){
     var result = [];
     $.ajax({
-        url : path+'/goods/queryGoodsLikePager',
+        url : path+'/store/queryStoredetailGoods',
         data : {},
         dataType : 'json',
         type : 'post',
         async : false,
         success : function (data) {
-            result = data.data;
+            result = data;
         },
         error:function(result) {
 
@@ -386,6 +416,7 @@ function queryGoods(data){
             result = GoodsResult[i];
             result.num=data.num;
             result.money=data.money;
+            result.state=data.state;
             break;
         }
     }

@@ -117,7 +117,7 @@ function initTable(){
 }
 
 function queryOrdersStorage() {
-    var url = path+'/orders/queryPurchasePager?1=1&type=销售';
+    var url = path+'/orders/queryPurchasePager?1=1&type=销售&state=未出库';
 
     var starttime = $('#starttime').val();
 

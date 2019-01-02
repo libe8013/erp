@@ -10,13 +10,6 @@ layui.use(['jquery','form','layer','table'],function () {
         queryOrders();
     });
 
-    function throttle(method,context){
-        clearTimeout(method.tId);
-        method.tId=setTimeout(function(){
-            method.call(context);
-        },100);
-    }
-
     table.on('tool(ordersTab)',function (obj) {
         var data = obj.data;
         var tr = obj.tr;

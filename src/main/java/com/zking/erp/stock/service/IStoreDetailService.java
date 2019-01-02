@@ -35,4 +35,12 @@ public interface IStoreDetailService {
      * @return
      */
     List<StoreDetail> queryStoreDetail(StoreDetail storeDetail);
+
+    /**
+     * 库存预警查询
+     * @return
+     */
+    List<Map<String,Object>> queryWarningPager(PageBean pageBean);
+
+    StoreDetail querySingleStore(StoreDetail storeDetail);
 }

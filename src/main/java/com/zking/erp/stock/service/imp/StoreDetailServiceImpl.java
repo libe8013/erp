@@ -46,5 +46,15 @@ public class StoreDetailServiceImpl implements IStoreDetailService {
         return storeDetailMapper.queryStoreDetail(storeDetail);
     }
 
+    @Override
+    public List<Map<String, Object>> queryWarningPager(PageBean pageBean) {
+        return storeDetailMapper.queryWarning();
+    }
+
+    @Override
+    public StoreDetail querySingleStore(StoreDetail storeDetail) {
+        return storeDetailMapper.querySingleStore(storeDetail);
+    }
+
 
 }

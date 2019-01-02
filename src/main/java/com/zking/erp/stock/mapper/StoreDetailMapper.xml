@@ -48,6 +48,15 @@
       and goodsuuid=#{goodsuuid}
     </if>
   </select>
+    <select id="queryWarning" resultType="map">
+      SELECT g.uuid AS goodsuuid,g.name AS goodsname,sd.num AS inventory,od.num,s.empuuid FROM store s,storedetail sd,orderdetail od,orders o,goods g
+      WHERE s.uuid=sd.storeuuid AND od.goodsuuid=g.uuid
+      AND sd.goodsuuid=od.goodsuuid AND od.state='未出库' AND o.uuid=od.ordersuuid AND o.type='销售'
+    </select>
+  <select id="querySingleStore" resultType="com.zking.erp.stock.model.StoreDetail"
+          parameterType="com.zking.erp.stock.model.StoreDetail">
+    SELECT * FROM storedetail WHERE storeuuid=#{storeuuid} AND goodsuuid=#{goodsuuid}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from storedetail
     where UUID = #{uuid,jdbcType=VARCHAR}

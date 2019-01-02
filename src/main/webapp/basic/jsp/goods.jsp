@@ -121,12 +121,12 @@
     <div>
         <form id="ff1" lay-filter="goodsEdit" class="layui-form" method="post" autocomplete="off">
             <div>
-                <div class="layui-inline" style="padding-top: 15px;padding-left: 20px;">
-                    <label class="layui-form-label">商品编号：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="uuid" name="uuid" readonly style="width: 265px;" class="layui-input"/>
-                    </div>
-                </div>
+                <%--<div class="layui-inline" style="padding-top: 15px;padding-left: 20px;">--%>
+                    <%--<label class="layui-form-label">商品编号：</label>--%>
+                    <%--<div class="layui-input-inline">--%>
+                        <%--<input type="text" id="uuid" name="uuid" readonly style="width: 265px;" class="layui-input"/>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="layui-inline" style="padding:20px;">
                     <label class="layui-form-label">商品名称：</label>
                     <div class="layui-input-inline">

@@ -20,9 +20,6 @@ public class OrderDetailController {
     @RequestMapping("/OrderDetailquery")
     public String OrderDetailquery(OrderDetail orderDetail ){
         List<OrderDetail> list=orderDetailService.OrderDetailquery(orderDetail);
-        for (OrderDetail detail : list) {
-            System.out.println(detail);
-        }
 
         return null;
     }

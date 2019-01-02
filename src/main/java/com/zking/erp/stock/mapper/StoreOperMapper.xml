@@ -30,15 +30,15 @@
     </if>
     <!--<if test=""></if>-->
     <if test="null!=store.name and ''!=store.name">
-      and sname = #{store.name}
+      and s.name = #{store.name}
     </if>
     <if test="null!=goods.name and ''!=goods.name">
-      and gname = #{goods.name}
+      and g.name = #{goods.name}
     </if>
     <if test="null!=type and ''!=type">
       and sp.type = #{type}
     </if>
-
+    GROUP BY g.uuid
 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
