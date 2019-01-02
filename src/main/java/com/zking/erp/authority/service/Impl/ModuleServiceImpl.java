@@ -54,4 +54,11 @@ public class ModuleServiceImpl implements IModuleService {
     public List<Map<String, Object>> queryModuleAll(Module module) {
         return moduleMapper.queryModuleAll(module);
     }
+
+    @Override
+    public List<Module> queryModuleUrl(String pid) {
+        return moduleMapper.queryModuleUrl(pid);
+    }
+
+
 }

@@ -26,4 +26,6 @@ public interface IModuleService {
      * @return
      */
     List<Map<String,Object>> queryModuleAll(Module module);
+
+    List<Module> queryModuleUrl(String pid);
 }

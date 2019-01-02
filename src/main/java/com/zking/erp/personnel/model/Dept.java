@@ -1,7 +1,9 @@
 package com.zking.erp.personnel.model;
 
-import java.io.Serializable;
+import lombok.ToString;
 
+import java.io.Serializable;
+@ToString
 public class Dept implements Serializable {
     private String uuid;
 

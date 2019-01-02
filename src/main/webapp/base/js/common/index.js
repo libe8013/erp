@@ -1,5 +1,5 @@
 var path;
-layui.use(['tree','element','jquery'],function () {
+layui.use(['tree','layer','element','jquery'],function () {
     $ = layui.jquery;
     path = $('#path').val();
     initTree();
@@ -51,4 +51,15 @@ function initTab(text,url,id) {
         element.tabDelete("demo", $(this).parent("li").attr('lay-id'));
     }), element.tabChange("demo", r.length - 1);
 
+}
+
+
+
+// 推出登录
+function logout() {
+    layer.confirm('您确定要退出本次登录',function (a) {
+        if (a){
+            location.href=path+'/emp/LoginOut'
+        }
+    });
 }

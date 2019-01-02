@@ -47,14 +47,16 @@
 </script>
 <%--修改界面--%>
 <script type="text/html" id="upd">
+    <form class="layui-form" lay-filter="editForm" method="post" autocomplete="off">
     <div class="layui-form-item" style="padding:20px;">
         <input type="hidden" class="layui-input" id="id" name="id" />
         <label class="layui-form-label">角色名称：</label>
         <div class="layui-input-inline">
-            <input type="text" id="name" name="name" lay-verify="required" placeholder="请输入您要修改的角色" class="layui-input"/>
+            <input type="text" id="name" name="rolename" lay-verify="required" placeholder="请输入您要修改的角色" class="layui-input"/>
         </div>
         <button class="layui-btn" id="edit">确认修改</button>
     </div>
+    </form>
 </script>
 </body>
 </html>

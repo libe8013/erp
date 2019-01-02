@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.erp.log.mapper.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.erp.log.model.Log" >
+    <constructor >
+      <arg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="empid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="moduleid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="createDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.erp.log.model.Log" >
+    insert into t_log (id, empid, ip, 
+      moduleid, createDate, content
+      )
+    values (#{id,jdbcType=VARCHAR}, #{empid,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{moduleid,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.erp.log.model.Log" >
+    insert into t_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="empid != null" >
+        empid,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="moduleid != null" >
+        moduleid,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="empid != null" >
+        #{empid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleid != null" >
+        #{moduleid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="queryLogPage" resultType="com.zking.erp.log.model.Log"
+            parameterType="com.zking.erp.log.model.Log">
+      select * from t_log where 1=1
+      <if test="null!=empid and ''!=empid">
+        and empid like concat(concat('%',#{empid},'%'))
+      </if>
+      <if test="null!=ip and ''!=ip">
+        and ip like concat(concat('%',#{ip},'%'))
+      </if>
+      order by createDate DESC
+    </select>
+</mapper>

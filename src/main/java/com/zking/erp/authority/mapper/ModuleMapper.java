@@ -37,5 +37,5 @@ public interface ModuleMapper {
     List<Map<String,Object>> queryModuleAll(Module module);
 
 
-
+    List<Module> queryModuleUrl(String pid);
 }

@@ -1,7 +1,10 @@
 package com.zking.erp.authority.model;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 
+@ToString
 public class Module implements Serializable{
     private String id;
 

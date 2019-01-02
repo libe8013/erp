@@ -1,7 +1,10 @@
 package com.zking.erp.personnel.vo;
 
 import com.zking.erp.authority.model.EmpRole;
+import com.zking.erp.authority.model.Module;
 import com.zking.erp.authority.model.Role;
+import com.zking.erp.authority.model.RoleModule;
+import com.zking.erp.personnel.model.Dept;
 import com.zking.erp.personnel.model.Emp;
 
 public class EmpVo extends Emp {
@@ -10,24 +13,63 @@ public class EmpVo extends Emp {
 
     private EmpRole empRole;
 
-    private String context;
+    private Module module;
 
-    private String title;
+    private RoleModule roleModule;
 
-    public String getTitle() {
-        return title;
+    public Module getModule() {
+        return module;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
-    public String getContext() {
-        return context;
+    public RoleModule getRoleModule() {
+        return roleModule;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setRoleModule(RoleModule roleModule) {
+        this.roleModule = roleModule;
+    }
+
+    private Dept empdept;
+
+    private String deptuuid;
+    private String deptname;
+
+    private String endtime;
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
+    public Dept getEmpdept() {
+        return empdept;
+    }
+
+    public void setEmpdept(Dept empdept) {
+        this.empdept = empdept;
+    }
+
+    public String getDeptuuid() {
+        return deptuuid;
+    }
+
+    public void setDeptuuid(String deptuuid) {
+        this.deptuuid = deptuuid;
+    }
+
+    public String getDeptname() {
+        return deptname;
+    }
+
+    public void setDeptname(String deptname) {
+        this.deptname = deptname;
     }
 
     public EmpRole getEmpRole() {

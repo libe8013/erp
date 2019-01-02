@@ -5,6 +5,16 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+
+    <!--定义组件扫描器，指定需要扫描的包-->
+    <context:component-scan base-package="com.zking.erp"/>
+
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+    <bean class="com.zking.erp.authority.Interceptor.CustomInterceptor" />
+    </mvc:interceptors>
+
     <!--1.开启扫描-->
     <context:component-scan base-package="com.zking.erp" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -20,10 +30,10 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--4.静态资源访问-->
-    <!--<mvc:resources location="WEB-INF/images/" mapping="/images/**"/>-->
-    <!--<mvc:resources location="/css/" mapping="/css/**"/>-->
-    <!--<mvc:resources location="/js/" mapping="/js/**"/>-->
-    <!--<mvc:resources location="/base/js/" mapping="/js/**"/>-->
+    <!--<mvc:resources location="webapp/base/images/" mapping="/images/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/base/js/" mapping="/js/**"/>-->
 
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -55,8 +65,13 @@
             </list>
         </property>
     </bean>
-
     <!--spring mvc就会对进入DispatcherServlet的URL进行筛查，如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理，如果不是静态资源的请求，才由DispatcherServlet继续处理。-->
     <mvc:default-servlet-handler />
+
+
+
+
+
+
 
 </beans>

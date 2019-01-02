@@ -19,17 +19,81 @@
     UUID, USERNAME, PWD, NAME, GENDER, EMAIL, TELE, ADDRESS, BIRTHDAY, DEPUUID
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
   </select>
-    <select id="queryEmpLikePager" resultType="com.zking.erp.personnel.model.Emp"
-            parameterType="com.zking.erp.personnel.model.Emp">
-      SELECT
-      <include refid="Base_Column_List"/>
-      from emp where 1=1
-    </select>
+
+  <select id="queryEmpListPager" resultType="map"  parameterType="com.zking.erp.personnel.vo.EmpVo">
+    select  a.uuid,a.username,a.name,a.gender,a.email,a.tele,a.address,a.birthday,b.name as deptname
+    from emp a,dep b where a.depuuid=b.uuid
+    <if test="null!=username and ''!=username">
+      and a.username like concat(concat('%',#{username}),'%')
+    </if>
+    <if test="null!=name and ''!=name">
+      and a.name like concat(concat('%',#{name}),'%')
+    </if>
+    <if test="null!=tele and ''!=tele">
+      and a.tele like concat(concat('%',#{tele}),'%')
+    </if>
+    <if test="null!=address and ''!=address">
+      and a.address like concat(concat('%',#{address}),'%')
+    </if>
+    <if test="null!=email and ''!=email">
+      and a.email like concat(concat('%',#{email}),'%')
+    </if>
+    <if test="null!=endtime and null!=birthday">
+      and birthday BETWEEN #{birthday} AND #{endtime}
+    </if>
+    <if test="null!=depuuid and ''!=depuuid">
+      and a.depuuid like concat(concat('%',#{depuuid}),'%')
+    </if>
+    <if test="null!=gender and ''!=gender">
+      and a.gender like concat(concat('%',#{gender}),'%')
+    </if>
+    order by a.stort desc
+  </select>
+  <select id="queryEmp2ListPager" resultType="map" parameterType="com.zking.erp.personnel.vo.EmpVo">
+    select  a.uuid,a.username,a.name,a.gender,a.email,a.tele,a.address,a.birthday,b.name as deptname
+    from emp a,dep b where a.depuuid=b.uuid
+    <if test="null!=username and ''!=username">
+      and a.username like concat(concat('%',#{username}),'%')
+    </if>
+    <if test="null!=name and ''!=name">
+      and a.name like concat(concat('%',#{name}),'%')
+    </if>
+    <if test="null!=tele and ''!=tele">
+      and a.tele like concat(concat('%',#{tele}),'%')
+    </if>
+    <if test="null!=address and ''!=address">
+      and a.address like concat(concat('%',#{address}),'%')
+    </if>
+    <if test="null!=email and ''!=email">
+      and a.email like concat(concat('%',#{email}),'%')
+    </if>
+    <if test="null!=endtime and null!=birthday">
+      and birthday BETWEEN #{birthday} AND #{endtime}
+    </if>
+    <if test="null!=depuuid and ''!=depuuid">
+      and a.depuuid like concat(concat('%',#{depuuid}),'%')
+    </if>
+    <if test="null!=gender and ''!=gender">
+      and a.gender like concat(concat('%',#{gender}),'%')
+    </if>
+    order by a.stort desc
+  </select>
+  <select id="queryDeptList" resultType="com.zking.erp.personnel.model.Dept"
+          parameterType="com.zking.erp.personnel.model.Dept">
+  select uuid,name from dep
+  </select>
+
+  <select id="queryEmpLikePager" resultType="com.zking.erp.personnel.model.Emp"
+          parameterType="com.zking.erp.personnel.model.Emp">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from emp where 1=1
+  </select>
   <select id="queryEmpStoreRole" resultType="map" parameterType="com.zking.erp.authority.model.Role">
     SELECT e.uuid,r.*,e.name FROM emp e,t_emp_role er,t_role r WHERE e.uuid=er.`userid` AND er.`roleid`=r.`id`
     <if test="null!=id and ''!=id">
@@ -39,6 +103,13 @@
   <select id="Login" resultType="com.zking.erp.personnel.model.Emp" parameterType="com.zking.erp.personnel.model.Emp">
     SELECT * from emp where username=#{username} and pwd=#{pwd}
   </select>
+  <select id="queryEmpModule" resultType="com.zking.erp.authority.model.Module"
+          parameterType="com.zking.erp.personnel.vo.EmpVo">
+    SELECT m.id,m.text,m.url,m.icon,m.sort,m.pid FROM emp u,t_emp_role ur,t_role r,t_role_module rm,t_module m
+						 WHERE u.uuid=ur.userid AND ur.roleid=r.id AND
+						r.id=rm.roleid AND rm.moduleid=m.id AND u.username=#{username}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from emp
     where UUID = #{uuid,jdbcType=VARCHAR}
@@ -123,7 +194,7 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.erp.personnel.model.Emp" >
     update emp
     <set >
-      <if test="username != null" >
+      <if test="username!= null" >
         USERNAME = #{username,jdbcType=VARCHAR},
       </if>
       <if test="pwd != null" >

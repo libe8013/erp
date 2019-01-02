@@ -12,10 +12,23 @@
     UUID, NAME, TELE
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from dep
     where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <select id="queryDeptListPager" resultType="com.zking.erp.personnel.model.Dept"
+          parameterType="com.zking.erp.personnel.model.Dept">
+    select uuid,name,tele
+
+    from dep where 1=1
+    <if test="null!=name and ''!=name ">
+      and name  like concat(concat('%',#{name}),'%')
+    </if>
+    <if test="tele!=null and ''!=tele">
+      and tele like concat(concat('%',#{tele}),'%')
+    </if>
+    order by stort desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from dep

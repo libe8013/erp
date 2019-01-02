@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.zking.erp.authority.model.Module;
 import com.zking.erp.authority.service.IModuleService;
+import com.zking.erp.personnel.model.Emp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +30,11 @@ public class ModuleController {
      */
     @RequestMapping("/queryModuleLike")
     @ResponseBody
-    public List<Map<String,Object>> queryModuleLike(Module module){
+    public List<Map<String,Object>> queryModuleLike(Module module, HttpServletRequest req){
 
-        List<Module> lst = moduleService.queryModuleLike(module);
+        Emp emp = (Emp) req.getSession().getAttribute("emp");
+
+        List<Module> lst = emp.getModules();
 
         List<Map<String,Object>> listPid = new ArrayList<>();
 
@@ -69,7 +73,7 @@ public class ModuleController {
         for (int i=0;i<list.size();i++){
             List<Map<String,Object>> maps = new ArrayList<>();
             Map<String, Object> map = list.get(i);
-            if(map.get("VALUE").equals("-1") && maps.size()==0){
+            if(map.get("pid").equals("-1") && maps.size()==0){
                 lmap.add(map);
             }
         }
@@ -84,7 +88,7 @@ public class ModuleController {
     public Map<String,Object> getNode(Map<String,Object> map,List<Map<String,Object>> list,boolean b){
         List<Map<String,Object>> maps = new ArrayList<>();
         for (Map<String, Object> m : list) {
-            if(map.get("id").equals(m.get("VALUE")) && b){
+            if(map.get("value").equals(m.get("pid")) && b){
                 Map<String, Object> node = getNode(m, list, b);
                 maps.add(node);
             }
@@ -123,6 +127,17 @@ public class ModuleController {
             map.put("children",maps);
         }
 
+        return map;
+    }
+
+    @RequestMapping("/queryModuleUrl")
+    @ResponseBody
+    public Map<String,Object> queryModuleUrl(String pid){
+        Module module = new Module();
+        module.setPid(pid);
+        List<Module> list = moduleService.queryModuleUrl(pid);
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("data",list);
         return map;
     }
 
